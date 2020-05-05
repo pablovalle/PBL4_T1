@@ -1,1 +1,6 @@
+<<<<<<< HEAD
 jonelga el mas listo
+=======
+jonelga
+goro
+>>>>>>> a7f0bcc5435e85e9d53237ce00ea80b4c31aa799
