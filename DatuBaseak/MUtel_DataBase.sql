@@ -1,0 +1,52 @@
+CREATE DATABASE if NOT EXISTS MUtel;
+
+USE MUtel;
+
+CREATE TABLE if NOT EXISTS Usuario(
+Username VARCHAR(20) PRIMARY KEY,
+Nombre VARCHAR(20) NOT NULL ,
+Apellidos VARCHAR(50),
+Email VARCHAR(50) NOT NULL );
+
+CREATE TABLE if NOT EXISTS Hotel(
+idHotel SMALLINT UNSIGNED PRIMARY KEY,
+nombre VARCHAR(30) NOT NULL,
+ciudad VARCHAR(30) NOT NULL,
+numHabitaciones SMALLINT UNSIGNED,
+pisos SMALLINT UNSIGNED,
+clave SMALLINT UNSIGNED NOT NULL,
+MasterKey SMALLINT UNSIGNED NOT NULL);
+
+CREATE TABLE if NOT EXISTS Trabajador(
+idEmpleado SMALLINT UNSIGNED PRIMARY KEY,
+nombre VARCHAR(20) NOT NULL,
+apellido VARCHAR(50),
+idHotel SMALLINT UNSIGNED,
+CONSTRAINT trabajador_fk FOREIGN KEY (idHotel) REFERENCES Hotel(idHotel));
+
+CREATE TABLE if NOT EXISTS Habitacion(
+numHabitacion SMALLINT UNSIGNED,
+idHotel SMALLINT UNSIGNED,
+aforo SMALLINT UNSIGNED NOT NULL,
+orientacion VARCHAR(20),
+estado VARCHAR(20),
+CONSTRAINT habitacion_pk PRIMARY KEY (numHabitacion, idHotel),
+CONSTRAINT habitacion_fk FOREIGN KEY (idHotel) REFERENCES Hotel(idHotel));
+
+CREATE TABLE if NOT EXISTS Tarea(
+fecha DATE PRIMARY KEY,
+idEmpleado SMALLINT UNSIGNED,
+numHabitacion SMALLINT UNSIGNED,
+CONSTRAINT tarea_fk1 FOREIGN KEY (idEmpleado) REFERENCES Trabajador (idEmpleado),
+CONSTRAINT tarea_fk2 FOREIGN KEY (numHabitacion) REFERENCES Habitacion (numHabitacion));
+
+CREATE TABLE if NOT EXISTS reserva(
+idReserva SMALLINT UNSIGNED PRIMARY KEY,
+checkin DATE NOT NULL,
+checkout DATE NOT NULL,
+llave SMALLINT UNSIGNED NOT NULL,
+username VARCHAR(20),
+idHotel SMALLINT UNSIGNED,
+numHabitacion SMALLINT UNSIGNED,
+CONSTRAINT reserva_fk1 FOREIGN KEY (username) REFERENCES Usuario(username),
+CONSTRAINT reserva_fk2 FOREIGN KEY (idHotel,numHabitacion) REFERENCES Habitacion(idHotel,numHabitacion));
