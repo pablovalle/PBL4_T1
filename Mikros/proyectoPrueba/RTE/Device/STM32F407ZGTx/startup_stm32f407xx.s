@@ -70,6 +70,7 @@ __heap_limit
                 EXPORT  __Vectors
                 EXPORT  __Vectors_End
                 EXPORT  __Vectors_Size
+				IMPORT ourExti0Handler
 
 __Vectors       DCD     __initial_sp               ; Top of Stack
                 DCD     Reset_Handler              ; Reset Handler
@@ -95,7 +96,7 @@ __Vectors       DCD     __initial_sp               ; Top of Stack
                 DCD     RTC_WKUP_IRQHandler               ; RTC Wakeup through the EXTI line                       
                 DCD     FLASH_IRQHandler                  ; FLASH                                           
                 DCD     RCC_IRQHandler                    ; RCC                                             
-                DCD     EXTI0_IRQHandler                  ; EXTI Line0                                             
+                DCD     ourExti0Handler                  ; EXTI Line0                                             
                 DCD     EXTI1_IRQHandler                  ; EXTI Line1                                             
                 DCD     EXTI2_IRQHandler                  ; EXTI Line2                                             
                 DCD     EXTI3_IRQHandler                  ; EXTI Line3                                             
