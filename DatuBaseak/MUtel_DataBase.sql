@@ -30,13 +30,17 @@ idHotel SMALLINT UNSIGNED,
 aforo SMALLINT UNSIGNED NOT NULL,
 orientacion VARCHAR(20),
 estado VARCHAR(20),
+precio SMALLINT UNSIGNED NOT NULL,
+categoria VARCHAR(20),
 CONSTRAINT habitacion_pk PRIMARY KEY (numHabitacion, idHotel),
 CONSTRAINT habitacion_fk FOREIGN KEY (idHotel) REFERENCES Hotel(idHotel));
 
 CREATE TABLE if NOT EXISTS Tarea(
-fecha DATE PRIMARY KEY,
+fecha DATE,
 idEmpleado SMALLINT UNSIGNED,
 numHabitacion SMALLINT UNSIGNED,
+descripción VARCHAR(128),
+CONSTRAINT tarea_pk PRIMARY KEY (fecha,idEmpleado,numHabitacion),
 CONSTRAINT tarea_fk1 FOREIGN KEY (idEmpleado) REFERENCES Trabajador (idEmpleado),
 CONSTRAINT tarea_fk2 FOREIGN KEY (numHabitacion) REFERENCES Habitacion (numHabitacion));
 
@@ -48,5 +52,6 @@ llave SMALLINT UNSIGNED NOT NULL,
 username VARCHAR(20),
 idHotel SMALLINT UNSIGNED,
 numHabitacion SMALLINT UNSIGNED,
+precioActual SMALLINT UNSIGNED NOT NULL,
 CONSTRAINT reserva_fk1 FOREIGN KEY (username) REFERENCES Usuario(username),
 CONSTRAINT reserva_fk2 FOREIGN KEY (idHotel,numHabitacion) REFERENCES Habitacion(idHotel,numHabitacion));
