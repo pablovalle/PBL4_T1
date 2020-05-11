@@ -1,8 +1,9 @@
 import java.sql.*;
 
-import com.mysql.jdbc.PreparedStatement;
+
 public class Conexion {
-	private static final String driver = "com.mysql.jdbc.Driver";
+	private static final String driver = "com.mysql.cj.jdbc.Driver";
+	//private static final String driver = "com.mysql.jdbc.Driver";
 	private static final String usuario = "root";
 	private static final String password = "";
 	private static final String url = "jdbc:mysql://localhost:3306/mutel";
@@ -53,7 +54,7 @@ public class Conexion {
 		try {
 			Statement s = conn.createStatement();
 			ResultSet rs = s.executeQuery("select * from usuario") ;
-			
+			if(rs.getRow()==0) System.out.println("vacio");
 			while(rs.next()) {
 				System.out.println (rs.getString (1) + " " + rs.getString (2)+ " "  + rs.getString(3) + " " + rs.getString(4));
 			}
