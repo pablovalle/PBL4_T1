@@ -1,4 +1,3 @@
-
 import java.sql.*;
 public class Conexion {
 	private static final String driver = "com.mysql.jdbc.Driver";
