@@ -36,13 +36,14 @@ CONSTRAINT habitacion_pk PRIMARY KEY (numHabitacion, idHotel),
 CONSTRAINT habitacion_fk FOREIGN KEY (idHotel) REFERENCES Hotel(idHotel));
 
 CREATE TABLE if NOT EXISTS Tarea(
-fecha DATE,
+idTarea SMALLINT UNSIGNED PRIMARY KEY,
+idHotel SMALLINT UNSIGNED,
+fecha DATE NOT NULL ,
 idEmpleado SMALLINT UNSIGNED,
 numHabitacion SMALLINT UNSIGNED,
 descripción VARCHAR(128),
-CONSTRAINT tarea_pk PRIMARY KEY (fecha,idEmpleado,numHabitacion),
 CONSTRAINT tarea_fk1 FOREIGN KEY (idEmpleado) REFERENCES Trabajador (idEmpleado),
-CONSTRAINT tarea_fk2 FOREIGN KEY (numHabitacion) REFERENCES Habitacion (numHabitacion));
+CONSTRAINT tarea_fk2 FOREIGN KEY (numHabitacion, idHotel) REFERENCES Habitacion (numHabitacion, idHotel));
 
 CREATE TABLE if NOT EXISTS reserva(
 idReserva SMALLINT UNSIGNED PRIMARY KEY,
