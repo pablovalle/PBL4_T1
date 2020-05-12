@@ -28,11 +28,13 @@ uint32_t pos_password;
 enum estado {ESPERA, ENVIO, LECTURA};
 
 void initGPIO(void);
+void turnOffAllLeds(void);
+uint32_t blockingReadFromUart(COM com, uint8_t *pMsg, uint8_t endChar, uint8_t maxSize);
+void resetPassword();
 
 int main(void)
 {
-  int i /*, n=0*/; // n para la lectura
-//	uint32_t valor;
+  int i , n=0; // n para la lectura
   uint32_t val;
 	char str_temp[128];
 	char str[128];
@@ -66,8 +68,9 @@ int main(void)
 			estado_actual = ENVIO;
 		}
 		else if (estado_actual == ENVIO){
+			turnOffAllLeds(); // TODO : Luz naranja parpadeando mientras llega la respuesta?
 			for (i = 0; i < N_DIGITOS_PASSWORD; i++){
-				sprintf(str_temp, "%01X\r ", password[i]);
+				sprintf(str_temp, "%01X\r", password[i]);
 				strcat(str, str_temp);
 			}
 		   	str[strlen(str)] = '\n';			
@@ -75,20 +78,41 @@ int main(void)
 			estado_actual = LECTURA;
 		}
 		else if (estado_actual == LECTURA){
-			/*
-			i=blockingReadFromUart(USED_COM_PORT,(uint8_t *)(str+n), '$',10);
+			
+			i=blockingReadFromUart(USED_COM_PORT,(uint8_t *)(str+n), '$',5);
+			
 			if(i!=0)
 			{
 				n+=i;
 				if(str[n-1]=='$')
 				{
-					for(i=0;i<n;i++) str[i]=toupper(str[i]);
-					writeToUart(USED_COM_PORT,(uint8_t *)str,n);
+					if (strcmp(str, "OK$")){
+						setGpioPinValue(GPIOF, ledPins[0], 1);
+						writeToUart(USED_COM_PORT,(uint8_t *)str ,strlen(str));
+						strcpy(str, "");
+					}
+					else if (strcmp(str, "EZ$")){
+						setGpioPinValue(GPIOF, ledPins[2], 1);
+						writeToUart(USED_COM_PORT,(uint8_t *)str ,strlen(str));
+						strcpy(str, "");
+					}
+					
+				
 					n=0;
+					
+					for (i = 0; i < 2000000; i++);
+					
+					//for (i=0; i < 4; i++) waitSysTick();
+					
+					resetPassword();
+					turnOffAllLeds();
+        	estado_actual = ESPERA;
+
 				}
-				else togleGpioPinValue(GPIOF, LED_PIN);
+				
+				
 			}
-			*/
+			
 		}
     for(i=0;i<2;i++) waitSysTick();
   }
@@ -105,8 +129,6 @@ void initGPIO(void)
 		initGpioPinMode(GPIOF, ledPins[i], GPIO_Mode_OUT) ;
 }
 
-
-/*
 uint32_t blockingReadFromUart(COM com, uint8_t *pMsg, uint8_t endChar, uint8_t maxSize)
 {
   uint32_t n=0, byteCount=0;
@@ -118,8 +140,19 @@ uint32_t blockingReadFromUart(COM com, uint8_t *pMsg, uint8_t endChar, uint8_t m
 	}while((pMsg[byteCount-1]!=endChar) && (byteCount<maxSize));
 	
 	return byteCount;
-}*/
+}
 
+void resetPassword(){
+	int i;
+	for (i = 0; i < N_DIGITOS_PASSWORD; i++) password[i] = 0;
+	pos_password = 0;
+}
+
+void turnOffAllLeds(void){
+	int i;
+	for (i = 0; i < N_LEDS; i++) setGpioPinValue(GPIOF, ledPins[i], 0);
+	
+}
 
 
 // TODO? -> Vaciar el vector password  (pos_password = 0) al darle al TAMPER
