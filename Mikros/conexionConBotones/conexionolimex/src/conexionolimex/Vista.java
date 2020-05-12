@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 public class Vista extends JFrame {
 
-	JButton bEmpezar, bApagar, bSiguiente, bConectar;
+	JButton bEmpezar, bApagar,  bConectar;
 	
 	TwoWaySerialComm controlador;
 	
@@ -34,20 +34,18 @@ public class Vista extends JFrame {
 		
 		bEmpezar = new JButton();
 		bApagar = new JButton();
-		bSiguiente = new JButton();
 		bConectar = new JButton();
 		
 		bConectar = crearBoton(bConectar, "conectar");
 		bEmpezar = crearBoton(bEmpezar, "ok");
 		bApagar = crearBoton(bApagar, "no");
-		bSiguiente = crearBoton(bSiguiente, "siguiente");
+		
 		//activarDesactivar();
 		
 		
 		
 		panel.add(bConectar);
 		panel.add(bEmpezar);
-		panel.add(bSiguiente);
 		panel.add(bApagar);
 		
 		return panel;
