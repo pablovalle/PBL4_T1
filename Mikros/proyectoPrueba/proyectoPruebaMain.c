@@ -89,15 +89,15 @@ int main(void)
 					if (strcmp(str, "OK$")){
 						setGpioPinValue(GPIOF, ledPins[0], 1);
 						writeToUart(USED_COM_PORT,(uint8_t *)str ,strlen(str));
-						strcpy(str, "");
+						*str = '\0';
 					}
 					else if (strcmp(str, "EZ$")){
 						setGpioPinValue(GPIOF, ledPins[2], 1);
 						writeToUart(USED_COM_PORT,(uint8_t *)str ,strlen(str));
-						strcpy(str, "");
+						*str = '\0';
 					}
 					
-				
+				  i = 0;
 					n=0;
 					
 					for (i = 0; i < 2000000; i++);
@@ -114,7 +114,7 @@ int main(void)
 			}
 			
 		}
-    for(i=0;i<2;i++) waitSysTick();
+ //   for(i=0;i<2;i++) waitSysTick();
   }
 }
 
