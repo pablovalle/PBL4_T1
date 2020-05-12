@@ -38,6 +38,7 @@ int main(void)
   uint32_t val;
 	char str_temp[128];
 	char str[128];
+	char str2[128];
 	enum estado estado_actual;
 	char str_sarrera[] = "mufitDeberiaHaberIdoAlPBLDay\r\n";
 	
@@ -75,35 +76,34 @@ int main(void)
 			}
 		   	str[strlen(str)] = '\n';			
 				writeToUart(USED_COM_PORT, (uint8_t*) str, strlen(str));
-			estado_actual = LECTURA;
+				strcpy(str, "\0");
+		   	estado_actual = LECTURA;
 		}
 		else if (estado_actual == LECTURA){
 			
-			i=blockingReadFromUart(USED_COM_PORT,(uint8_t *)(str+n), '$',5);
+			i=blockingReadFromUart(USED_COM_PORT,(uint8_t *)(str2+n), '$',20);
 			
 			if(i!=0)
 			{
 				n+=i;
-				if(str[n-1]=='$')
+				if(str2[n-1]=='$')
 				{
-					if (strcmp(str, "OK$")){
+					if (strcmp(str2, "OK$")==0){
 						setGpioPinValue(GPIOF, ledPins[0], 1);
-						writeToUart(USED_COM_PORT,(uint8_t *)str ,strlen(str));
-						*str = '\0';
+						writeToUart(USED_COM_PORT,(uint8_t *)str2 ,strlen(str2));
+						strcpy(str2, "\0");
 					}
-					else if (strcmp(str, "EZ$")){
+					else if (strcmp(str2, "EZ$")==0){
 						setGpioPinValue(GPIOF, ledPins[2], 1);
-						writeToUart(USED_COM_PORT,(uint8_t *)str ,strlen(str));
-						*str = '\0';
+						writeToUart(USED_COM_PORT,(uint8_t *)str2 ,strlen(str2));
+						strcpy(str2, "\0");
 					}
 					
 				  i = 0;
 					n=0;
 					
 					for (i = 0; i < 2000000; i++);
-					
-					//for (i=0; i < 4; i++) waitSysTick();
-					
+
 					resetPassword();
 					turnOffAllLeds();
         	estado_actual = ESPERA;
