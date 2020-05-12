@@ -1,34 +1,31 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JList;
-import javax.swing.JSplitPane;
-import javax.swing.JTextField;
-import javax.swing.ListModel;
-
-import java.awt.GridLayout;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import javax.swing.JButton;
-import javax.swing.DefaultComboBoxModel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import com.toedter.calendar.JCalendar;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
+
+import com.toedter.calendar.JCalendar;
 
 public class Ventana extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField tfCiudad;
-	
+	JList<Habitacion> list;
 	Conexion conn = new Conexion();
 	DAOHabitacion habitacionDao;
-	
 
 	/**
 	 * Create the frame.
@@ -103,21 +100,24 @@ public class Ventana extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				conn.Conectar();
 				//conn.filtrar(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem());
-				habitacionDao.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem());
-				
-				
+				Habitacion[] listaHabitaciones=habitacionDao.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem());
+				list.setListData(listaHabitaciones);
                 conn.desconectar();
+                
 			}
 		});
 		panel.add(btnFiltrar, BorderLayout.SOUTH);
 		
-		JList list = new JList();
+		list = new JList<Habitacion>();
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list.setCellRenderer(new Renderer());
 		
 		
-		JScrollPane scrollPane = new JScrollPane(list);
+		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setToolTipText("");
+		scrollPane.setViewportView(list);
 		contentPane.add(scrollPane, BorderLayout.CENTER);
+		
 		
 		
 		

@@ -1,9 +1,11 @@
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
-import com.mysql.jdbc.Statement;
+
 
 public class DAOHabitacion {
 	private static final String url = "jdbc:mysql://localhost:3306/mutel";
@@ -11,12 +13,12 @@ public class DAOHabitacion {
 	private static final String password = "";
 	
 
-	static public ArrayList<Habitacion> filtrarHabitaciones(String ciudad, int personas){
-		ArrayList<Habitacion> lista = new ArrayList<Habitacion>();
+	static public Habitacion[] filtrarHabitaciones(String ciudad, int personas){
+		List<Habitacion> lista = new ArrayList<Habitacion>();
 		try {
 			if(ciudad.equals("")) ciudad="%";
 			
-			Statement stm = (Statement) DriverManager.getConnection(url,usuario,password).createStatement();
+			Statement stm = DriverManager.getConnection(url,usuario,password).createStatement();
 			
 			String strSQL = "SELECT ha.numHabitacion, ho.nombre, ha.aforo, ha.orientacion, ha.precio, ha.categoria"
 					+ " FROM habitacion ha JOIN hotel ho on ha.IdHotel = ho.IdHotel"
@@ -32,6 +34,6 @@ public class DAOHabitacion {
 			e.printStackTrace();
 		}		
 		lista.forEach(System.out::println);
-		return lista;		
+		return lista.toArray(new Habitacion[0]);		
 	}
 }
