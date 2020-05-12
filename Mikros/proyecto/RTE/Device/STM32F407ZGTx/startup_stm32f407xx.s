@@ -71,6 +71,7 @@ __heap_limit
                 EXPORT  __Vectors_End
                 EXPORT  __Vectors_Size
 				IMPORT ourExti0Handler
+				IMPORT ourExti13Handler
 
 __Vectors       DCD     __initial_sp               ; Top of Stack
                 DCD     Reset_Handler              ; Reset Handler
@@ -130,7 +131,7 @@ __Vectors       DCD     __initial_sp               ; Top of Stack
                 DCD     USART1_IRQHandler                 ; USART1                                          
                 DCD     USART2_IRQHandler                 ; USART2                                          
                 DCD     USART3_IRQHandler                 ; USART3                                          
-                DCD     EXTI15_10_IRQHandler              ; External Line[15:10]s                                  
+                DCD     ourExti13Handler          	     ; External Line[15:10]s                                  
                 DCD     RTC_Alarm_IRQHandler              ; RTC Alarm (A and B) through EXTI Line                  
                 DCD     OTG_FS_WKUP_IRQHandler            ; USB OTG FS Wakeup through EXTI line                        
                 DCD     TIM8_BRK_TIM12_IRQHandler         ; TIM8 Break and TIM12                  

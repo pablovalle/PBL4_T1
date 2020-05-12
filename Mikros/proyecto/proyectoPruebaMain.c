@@ -12,13 +12,10 @@
 #include "ourAdc.h"
 #include "ourCom.h"
 
-#define EXTI_HASIERA 0x40013C00
-#define EXTI_PR_OFFSET 0x14
 
 #define USED_COM_PORT COM1
 #define N_LEDS 4
 #define N_DIGITOS_PASSWORD 4
-
 
 uint32_t ledPins[N_LEDS]={6,7,8,9};
 
@@ -30,7 +27,7 @@ enum estado {ESPERA, ENVIO, LECTURA};
 void initGPIO(void);
 void turnOffAllLeds(void);
 uint32_t blockingReadFromUart(COM com, uint8_t *pMsg, uint8_t endChar, uint8_t maxSize);
-void resetPassword();
+void resetPassword(void);
 
 int main(void)
 {
@@ -107,14 +104,10 @@ int main(void)
 					resetPassword();
 					turnOffAllLeds();
         	estado_actual = ESPERA;
-
-				}
-				
-				
+				}			
 			}
-			
 		}
- //   for(i=0;i<2;i++) waitSysTick();
+
   }
 }
 
@@ -132,7 +125,6 @@ void initGPIO(void)
 uint32_t blockingReadFromUart(COM com, uint8_t *pMsg, uint8_t endChar, uint8_t maxSize)
 {
   uint32_t n=0, byteCount=0;
-  
   do
 	{
 		n=readFromUart(com, pMsg+byteCount, maxSize-byteCount);
@@ -151,19 +143,16 @@ void resetPassword(){
 void turnOffAllLeds(void){
 	int i;
 	for (i = 0; i < N_LEDS; i++) setGpioPinValue(GPIOF, ledPins[i], 0);
-	
 }
 
+// TODO : Mugitu bi handlerrak OurExti.c-ra
 
-// TODO? -> Vaciar el vector password  (pos_password = 0) al darle al TAMPER
-
-void ourExti0Handler(void)
-{
-  uint32_t *p;
-
-  p=(uint32_t*)(EXTI_HASIERA+EXTI_PR_OFFSET);
-  *p|=0x01;
-  
+void ourExti0Handler(void){
+	EXTI->PR |= 0x01; 
 	if (pos_password < N_DIGITOS_PASSWORD) pos_password += 1;
- 
+}
+
+void ourExti13Handler(void){
+	EXTI->PR |= 0x01<<13;
+	resetPassword();
 }
