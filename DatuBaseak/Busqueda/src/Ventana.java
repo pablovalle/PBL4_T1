@@ -21,6 +21,12 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JCalendar;
+import java.awt.Font;
+import java.awt.Color;
+import javax.swing.UIManager;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.SwingConstants;
 
 
 
@@ -56,8 +62,10 @@ public class Ventana extends JFrame {
 		
 		JPanel panel_1 = new JPanel();
 		Opciones.add(panel_1);
+		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JButton btnReservas = new JButton("Mis Reservas");
+		btnReservas.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		panel_1.add(btnReservas);
 		
 		JPanel panel_4 = new JPanel();
@@ -67,43 +75,57 @@ public class Ventana extends JFrame {
 		Opciones.add(panel_1_1);
 		
 		JLabel lblNewLabel = new JLabel("Ciudad:");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		panel_1_1.add(lblNewLabel);
 		
-		tfCiudad = new JTextField();
-		tfCiudad.setColumns(10);
-		aniadirAutocompletar();
-		panel_1_1.add(tfCiudad);
 		
 		JPanel panel_5 = new JPanel();
 		Opciones.add(panel_5);
 		
+		tfCiudad = new JTextField();
+		tfCiudad.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		panel_5.add(tfCiudad);
+		aniadirAutocompletar();
+		tfCiudad.setColumns(10);
+		
 		JPanel panel_2 = new JPanel();
 		Opciones.add(panel_2);
 		
-		JLabel lblNewLabel_1 = new JLabel("Personas");
+		JLabel lblNewLabel_1 = new JLabel("Personas:");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		panel_2.add(lblNewLabel_1);
-		
-		JComboBox cbPersonas = new JComboBox();
-		cbPersonas.setModel(new DefaultComboBoxModel(new Integer[] {1, 2, 3, 4}));
-		panel_2.add(cbPersonas);
 		
 		JPanel panel_6 = new JPanel();
 		Opciones.add(panel_6);
+		
+		JComboBox cbPersonas = new JComboBox();
+		cbPersonas.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		panel_6.add(cbPersonas);
+		cbPersonas.setModel(new DefaultComboBoxModel(new Integer[] {1, 2, 3, 4}));
 		
 		JPanel panel_3 = new JPanel();
 		Opciones.add(panel_3);
 		panel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JCalendar calendar = new JCalendar();
+		calendar.getDayChooser().setWeekOfYearVisible(false);
+		calendar.getDayChooser().setDecorationBackgroundColor(new Color(0, 0, 0));
+		calendar.getDayChooser().setWeekdayForeground(new Color(255, 255, 255));
+		calendar.getDayChooser().setSundayForeground(new Color(255, 0, 0));
 		panel_3.add(calendar);
 		
 		JPanel panel_7 = new JPanel();
 		Opciones.add(panel_7);
 		
 		JCalendar calendar_1 = new JCalendar();
+		calendar_1.getDayChooser().setWeekOfYearVisible(false);
+		calendar_1.getDayChooser().setWeekdayForeground(new Color(255, 255, 255));
+		calendar_1.getDayChooser().setSundayForeground(new Color(255, 0, 0));
+		calendar_1.setDecorationBackgroundColor(new Color(0, 0, 0));
 		panel_7.add(calendar_1);
 		
 		JButton btnFiltrar = new JButton("Filtrar");
+		btnFiltrar.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnFiltrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				conn.Conectar();
