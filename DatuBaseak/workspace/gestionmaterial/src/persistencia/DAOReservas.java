@@ -59,7 +59,7 @@ public class DAOReservas {
 	    try
 	    {
 	      stmt=PoolConexiones.getConexion().createStatement();
-	      DateTimeFormatter formatter =   DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm");
+	      DateTimeFormatter formatter =   DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	      strDateTime = ahora.format(formatter);
 	      strSQL="SELECT count(*)" +
 	             " FROM Reserva"+

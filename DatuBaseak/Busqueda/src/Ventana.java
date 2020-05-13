@@ -4,6 +4,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -14,18 +16,23 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JCalendar;
 
+
+
 public class Ventana extends JFrame {
 
+	private static final String COMMIT_ACTION = "commit";
 	private JPanel contentPane;
 	private JTextField tfCiudad;
 	JList<Habitacion> list;
 	Conexion conn = new Conexion();
 	DAOHabitacion habitacionDao;
+	List<String>nombreCiudades;
 
 	/**
 	 * Create the frame.
@@ -64,6 +71,7 @@ public class Ventana extends JFrame {
 		
 		tfCiudad = new JTextField();
 		tfCiudad.setColumns(10);
+		aniadirAutocompletar();
 		panel_1_1.add(tfCiudad);
 		
 		JPanel panel_5 = new JPanel();
@@ -100,7 +108,7 @@ public class Ventana extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				conn.Conectar();
 				//conn.filtrar(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem());
-				Habitacion[] listaHabitaciones=habitacionDao.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem());
+				Habitacion[] listaHabitaciones=habitacionDao.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendar.getDate(),calendar_1.getDate());
 				list.setListData(listaHabitaciones);
                 conn.desconectar();
                 
@@ -123,6 +131,13 @@ public class Ventana extends JFrame {
 		
 	
 		
+	}
+	private void aniadirAutocompletar() {
+		nombreCiudades=DAOHotel.getCiudades();
+		Autocomplete autoComplete = new Autocomplete(tfCiudad, nombreCiudades);
+		tfCiudad.getDocument().addDocumentListener(autoComplete);
+		tfCiudad.getInputMap().put(KeyStroke.getKeyStroke("TAB"), COMMIT_ACTION);
+		tfCiudad.getActionMap().put(COMMIT_ACTION, autoComplete.new CommitAction());		
 	}
 	/**
 	 * Launch the application.
