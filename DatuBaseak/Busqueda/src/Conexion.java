@@ -2,8 +2,8 @@ import java.sql.*;
 
 
 public class Conexion {
-	//private static final String driver = "com.mysql.cj.jdbc.Driver";
-	private static final String driver = "com.mysql.jdbc.Driver";
+	private static final String driver = "com.mysql.cj.jdbc.Driver";
+	//private static final String driver = "com.mysql.jdbc.Driver";
 	private static final String usuario = "root";
 	private static final String password = "";
 	private static final String url = "jdbc:mysql://localhost:3306/mutel";
@@ -66,13 +66,13 @@ public class Conexion {
 	public void filtrar(String ciudad, int personas) {
 		try {
 			Statement s = conn.createStatement();
-			ResultSet rs = s.executeQuery("SELECT ho.nombre\r\n" + 
+			ResultSet rs = s.executeQuery("SELECT ho.nombre, ha.numHabitacion\r\n" + 
 					"FROM hotel ho JOIN habitacion ha ON ho.idHotel=ha.idHotel\r\n" + 
 					"WHERE ho.ciudad = '"+ ciudad +"' AND ha.aforo = +"+personas);
 			
 			if(!rs.isBeforeFirst()) System.out.println("No hay hoteles con esas caracterisicas");
 			while(rs.next()) {
-				System.out.println (rs.getString (1));
+				System.out.println (rs.getString (1)+" "+ rs.getString(2));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

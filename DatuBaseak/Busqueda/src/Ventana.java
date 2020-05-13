@@ -1,56 +1,81 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JList;
-import javax.swing.JSplitPane;
-import javax.swing.JTextField;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import javax.swing.JButton;
-import javax.swing.DefaultComboBoxModel;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.KeyStroke;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
+
+import com.toedter.calendar.JCalendar;
+
+
 
 public class Ventana extends JFrame {
 
+	private static final String COMMIT_ACTION = "commit";
 	private JPanel contentPane;
 	private JTextField tfCiudad;
-	
+	JList<Habitacion> list;
+	Conexion conn = new Conexion();
+	DAOHabitacion habitacionDao;
+	List<String>nombreCiudades;
 
 	/**
 	 * Create the frame.
 	 */
 	public Ventana() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 952, 572);
+		setBounds(100, 100, 963, 780);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		JPanel Opciones = new JPanel();
-		contentPane.add(Opciones, BorderLayout.WEST);
-		Opciones.setLayout(new GridLayout(4, 1, 0, 0));
-		
 		JPanel panel = new JPanel();
-		Opciones.add(panel);
+		contentPane.add(panel, BorderLayout.WEST);
+		panel.setLayout(new BorderLayout(0, 0));
 		
-		JButton btnReservas = new JButton("Mis Reservas");
-		panel.add(btnReservas);
+		JPanel Opciones = new JPanel();
+		panel.add(Opciones, BorderLayout.NORTH);
+		Opciones.setLayout(new GridLayout(4, 2, 0, 0));
 		
 		JPanel panel_1 = new JPanel();
 		Opciones.add(panel_1);
 		
+		JButton btnReservas = new JButton("Mis Reservas");
+		panel_1.add(btnReservas);
+		
+		JPanel panel_4 = new JPanel();
+		Opciones.add(panel_4);
+		
+		JPanel panel_1_1 = new JPanel();
+		Opciones.add(panel_1_1);
+		
 		JLabel lblNewLabel = new JLabel("Ciudad:");
-		panel_1.add(lblNewLabel);
+		panel_1_1.add(lblNewLabel);
 		
 		tfCiudad = new JTextField();
-		panel_1.add(tfCiudad);
 		tfCiudad.setColumns(10);
+		aniadirAutocompletar();
+		panel_1_1.add(tfCiudad);
+		
+		JPanel panel_5 = new JPanel();
+		Opciones.add(panel_5);
 		
 		JPanel panel_2 = new JPanel();
 		Opciones.add(panel_2);
@@ -62,20 +87,57 @@ public class Ventana extends JFrame {
 		cbPersonas.setModel(new DefaultComboBoxModel(new Integer[] {1, 2, 3, 4}));
 		panel_2.add(cbPersonas);
 		
+		JPanel panel_6 = new JPanel();
+		Opciones.add(panel_6);
+		
 		JPanel panel_3 = new JPanel();
 		Opciones.add(panel_3);
+		panel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JCalendar calendar = new JCalendar();
+		panel_3.add(calendar);
+		
+		JPanel panel_7 = new JPanel();
+		Opciones.add(panel_7);
+		
+		JCalendar calendar_1 = new JCalendar();
+		panel_7.add(calendar_1);
 		
 		JButton btnFiltrar = new JButton("Filtrar");
 		btnFiltrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Conexion conn = new Conexion();
 				conn.Conectar();
-				conn.filtrar(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem());
-				conn.desconectar();
-				
+				//conn.filtrar(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem());
+				Habitacion[] listaHabitaciones=habitacionDao.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendar.getDate(),calendar_1.getDate());
+				list.setListData(listaHabitaciones);
+                conn.desconectar();
+                
 			}
 		});
-		panel_3.add(btnFiltrar);
+		panel.add(btnFiltrar, BorderLayout.SOUTH);
+		
+		list = new JList<Habitacion>();
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list.setCellRenderer(new Renderer());
+		
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setToolTipText("");
+		scrollPane.setViewportView(list);
+		contentPane.add(scrollPane, BorderLayout.CENTER);
+		
+		
+		
+		
+	
+		
+	}
+	private void aniadirAutocompletar() {
+		nombreCiudades=DAOHotel.getCiudades();
+		Autocomplete autoComplete = new Autocomplete(tfCiudad, nombreCiudades);
+		tfCiudad.getDocument().addDocumentListener(autoComplete);
+		tfCiudad.getInputMap().put(KeyStroke.getKeyStroke("TAB"), COMMIT_ACTION);
+		tfCiudad.getActionMap().put(COMMIT_ACTION, autoComplete.new CommitAction());		
 	}
 	/**
 	 * Launch the application.
