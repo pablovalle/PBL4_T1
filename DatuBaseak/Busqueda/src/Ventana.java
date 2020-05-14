@@ -65,6 +65,12 @@ public class Ventana extends JFrame {
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JButton btnReservas = new JButton("Mis Reservas");
+		btnReservas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//DialogoReservas dialogoReserva = new DialogoReservas("benat_mutel");
+				//dialogoReserva.setVisible(true);
+			}
+		});
 		btnReservas.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		panel_1.add(btnReservas);
 		
