@@ -1,7 +1,8 @@
+import java.awt.event.ActionListener;
 import java.sql.*;
 
 
-public class Conexion {
+public class Conexion{
 	private static final String driver = "com.mysql.cj.jdbc.Driver";
 	//private static final String driver = "com.mysql.jdbc.Driver";
 	private static final String usuario = "root";

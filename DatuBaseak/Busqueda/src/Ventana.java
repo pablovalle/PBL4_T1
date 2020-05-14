@@ -1,6 +1,8 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,8 +22,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JCalendar;
-import java.awt.Font;
-import java.awt.Color;
 
 
 public class Ventana extends JFrame {
@@ -38,13 +38,14 @@ public class Ventana extends JFrame {
 	Conexion conn = new Conexion();
 	DAOHabitacion habitacionDao;
 	List<String>nombreCiudades;
+	Habitacion[] listaHabitaciones;
 
 	/**
 	 * Create the frame.
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Ventana() {
-		setResizable(false);
+		setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 963, 780);
 		contentPane = new JPanel();
@@ -137,7 +138,7 @@ public class Ventana extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				conn.Conectar();
 				//conn.filtrar(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem());
-				Habitacion[] listaHabitaciones=DAOHabitacion.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendar.getDate(),calendar_1.getDate());
+				listaHabitaciones=DAOHabitacion.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendar.getDate(),calendar_1.getDate());
 				list.setListData(listaHabitaciones);
                 conn.desconectar();
                 
