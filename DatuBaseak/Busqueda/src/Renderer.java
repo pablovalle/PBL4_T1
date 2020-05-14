@@ -8,6 +8,11 @@ import javax.swing.ListCellRenderer;
 
 public class Renderer extends JLabel implements ListCellRenderer<Habitacion> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public Component getListCellRendererComponent(JList<? extends Habitacion> list, Habitacion ha, int index,
 			boolean isSelected, boolean cellHasFocus) {

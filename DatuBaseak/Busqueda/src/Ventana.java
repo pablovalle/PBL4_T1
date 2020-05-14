@@ -4,7 +4,6 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -23,15 +22,14 @@ import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JCalendar;
 import java.awt.Font;
 import java.awt.Color;
-import javax.swing.UIManager;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
-import javax.swing.SwingConstants;
-
 
 
 public class Ventana extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final String COMMIT_ACTION = "commit";
 	private static final String USUARIO="pablo_mutel";
 	private JPanel contentPane;
@@ -44,6 +42,7 @@ public class Ventana extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Ventana() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,6 +67,7 @@ public class Ventana extends JFrame {
 		JButton btnReservas = new JButton("Mis Reservas");
 		btnReservas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				@SuppressWarnings("unused")
 				DialogoReserva dialogoReserva = new DialogoReserva(Ventana.this,"MIS RESERVAS",true,USUARIO);
 				//dialogoReserva.setVisible(true);
 			}
@@ -137,7 +137,7 @@ public class Ventana extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				conn.Conectar();
 				//conn.filtrar(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem());
-				Habitacion[] listaHabitaciones=habitacionDao.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendar.getDate(),calendar_1.getDate());
+				Habitacion[] listaHabitaciones=DAOHabitacion.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendar.getDate(),calendar_1.getDate());
 				list.setListData(listaHabitaciones);
                 conn.desconectar();
                 
