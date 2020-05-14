@@ -7,8 +7,8 @@ import java.util.List;
 
 public class DAOReservas {
 	private static final String url = "jdbc:mysql://localhost:3306/mutel";
-	private static final String usuario = "root";
-	private static final String password = "";
+	private static final String usuario = "huesped";
+	private static final String password = "SoyHuesped";
 	
 	public static Reserva[] getReservas(String username) {
 		List<Reserva>reservasusuario= new ArrayList<>();
