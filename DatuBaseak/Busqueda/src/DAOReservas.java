@@ -16,7 +16,8 @@ public class DAOReservas {
 			Statement stm = DriverManager.getConnection(url,usuario,password).createStatement();
 			String strSQL="SELECT r.idReserva, r.idHotel, r.numHabitacion, r.checkin, r.checkout\r\n" + 
 					"FROM reserva r\r\n" + 
-					"WHERE r.username LIKE '"+ username+ "';";
+					"WHERE r.username LIKE '"+ username+ "'AND r.checkout>=CURDATE()"
+				  + "ORDER BY r.checkin asc;";
 			ResultSet rs = stm.executeQuery(strSQL);
 			while(rs.next()) {
 				reservasusuario.add(new Reserva(rs.getInt(1),rs.getInt(2),rs.getInt(3),

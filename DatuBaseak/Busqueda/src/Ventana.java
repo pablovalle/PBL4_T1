@@ -33,6 +33,7 @@ import javax.swing.SwingConstants;
 public class Ventana extends JFrame {
 
 	private static final String COMMIT_ACTION = "commit";
+	private static final String USUARIO="pablo_mutel";
 	private JPanel contentPane;
 	private JTextField tfCiudad;
 	JList<Habitacion> list;
@@ -67,7 +68,7 @@ public class Ventana extends JFrame {
 		JButton btnReservas = new JButton("Mis Reservas");
 		btnReservas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//DialogoReservas dialogoReserva = new DialogoReservas("benat_mutel");
+				DialogoReserva dialogoReserva = new DialogoReserva(Ventana.this,"MIS RESERVAS",true,USUARIO);
 				//dialogoReserva.setVisible(true);
 			}
 		});
