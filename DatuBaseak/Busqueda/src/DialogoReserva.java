@@ -21,9 +21,9 @@ public class DialogoReserva extends JDialog implements ActionListener{
 		super(ventana,titulo,modo);
 		this.username=username;
 		this.setLocationRelativeTo(ventana);
-		this.setSize(500, 500);
+		this.setSize(900, 700);
 		this.getContentPane().add(crearPanelVentana(), BorderLayout.CENTER);
-		this.setResizable(false);
+		this.setResizable(true);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setVisible(true);
 		
@@ -51,6 +51,8 @@ public class DialogoReserva extends JDialog implements ActionListener{
 		lista = new JList<Reserva>();
 		lista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		lista.setListData(DAOReservas.getReservas(username));
+		lista.setCellRenderer(new RendererMisReservas());
+
 		panel.setViewportView(lista);
 		return panel;
 	}

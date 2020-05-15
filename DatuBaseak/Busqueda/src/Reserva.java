@@ -1,19 +1,19 @@
 
 public class Reserva {
 
-	int idReserva, idHotel, numhabitacion, clavehabita, claveHotel;
-	String checkIn, checkOut;
+	int idReserva, numhabitacion, clavehabita, claveHotel;
+	String nombreHotel, checkIn, checkOut;
 	
-	public Reserva(int idReserva, int idHotel, int numhabitacion,  String checkIn,String checkOut) {
+	public Reserva(int idReserva, String nombreHotel, int numhabitacion,  String checkIn,String checkOut) {
 		this.idReserva = idReserva;
-		this.idHotel = idHotel;
+		this.nombreHotel =nombreHotel;
 		this.numhabitacion = numhabitacion;
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
 	}
 	@Override
 	public String toString() {
-		return "Reserva [idReserva=" + idReserva + ", idHotel=" + idHotel + ", numhabitacion=" + numhabitacion
+		return "Reserva [idReserva=" + idReserva + ", idHotel=" + nombreHotel + ", numhabitacion=" + numhabitacion
 				+ ", checkIn=" + checkIn + ", checkOut=" + checkOut + "]";
 	}
 	public int getIdReserva() {
@@ -22,11 +22,11 @@ public class Reserva {
 	public void setIdReserva(int idReserva) {
 		this.idReserva = idReserva;
 	}
-	public int getIdHotel() {
-		return idHotel;
+	public String getnombreHotel() {
+		return nombreHotel;
 	}
-	public void setIdHotel(int idHotel) {
-		this.idHotel = idHotel;
+	public void setIdHotel(String nombreHotel) {
+		this.nombreHotel = nombreHotel;
 	}
 	public int getNumhabitacion() {
 		return numhabitacion;

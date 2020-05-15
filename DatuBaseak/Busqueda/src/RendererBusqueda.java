@@ -14,7 +14,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-public class Renderer implements ListCellRenderer<Habitacion> {
+public class RendererBusqueda implements ListCellRenderer<Habitacion> {
 
 	/**
 	 * 

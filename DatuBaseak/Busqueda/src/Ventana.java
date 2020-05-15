@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -31,7 +32,7 @@ public class Ventana extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private static final String COMMIT_ACTION = "commit";
-	private static final String USUARIO="pablo_mutel";
+	private static final String USUARIO="irati_mutel";
 	private JPanel contentPane;
 	private JTextField tfCiudad;
 	JList<Habitacion> list;
@@ -148,7 +149,7 @@ public class Ventana extends JFrame {
 		
 		list = new JList<Habitacion>();
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setCellRenderer(new Renderer());
+		list.setCellRenderer(new RendererBusqueda());
 		
 		
 		JScrollPane scrollPane = new JScrollPane();

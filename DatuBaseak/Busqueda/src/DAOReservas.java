@@ -14,13 +14,13 @@ public class DAOReservas {
 		List<Reserva>reservasusuario= new ArrayList<>();
 		try {
 			Statement stm = DriverManager.getConnection(url,usuario,password).createStatement();
-			String strSQL="SELECT r.idReserva, r.idHotel, r.numHabitacion, r.checkin, r.checkout\r\n" + 
-					"FROM reserva r\r\n" + 
+			String strSQL="SELECT r.idReserva, ho.nombre, r.numHabitacion, r.checkin, r.checkout\r\n" + 
+					"FROM reserva r JOIN hotel ho on ho.idHotel=r.idHotel\r\n" + 
 					"WHERE r.username LIKE '"+ username+ "'AND r.checkout>=CURDATE()"
 				  + "ORDER BY r.checkin asc;";
 			ResultSet rs = stm.executeQuery(strSQL);
 			while(rs.next()) {
-				reservasusuario.add(new Reserva(rs.getInt(1),rs.getInt(2),rs.getInt(3),
+				reservasusuario.add(new Reserva(rs.getInt(1),rs.getString(2),rs.getInt(3),
 									String.valueOf(rs.getDate(4)),String.valueOf(rs.getDate(5))));
 			}
 		} catch (SQLException e) {
