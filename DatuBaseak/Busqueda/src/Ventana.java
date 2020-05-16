@@ -4,12 +4,14 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -45,7 +47,13 @@ public class Ventana extends JFrame {
 	 * Create the frame.
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public Ventana() {
+	public Ventana(String string) {
+		super(string);
+		//Ventana frame = new Ventana();
+		this.setVisible(true);
+		ImageIcon ImageIcon = new ImageIcon("img/Logo_PBL4.png");
+		Image image = ImageIcon.getImage();
+		this.setIconImage(image);
 		setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 963, 780);
@@ -177,7 +185,7 @@ public class Ventana extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Ventana frame = new Ventana();
+					Ventana frame = new Ventana("Búsqeda MUTel");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
