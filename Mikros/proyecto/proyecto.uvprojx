@@ -404,15 +404,10 @@
               <FileType>1</FileType>
               <FilePath>.\sysClockAndTick.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lib</GroupName>
-          <Files>
             <File>
-              <FileName>02uartLib.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>.\02uartLib.lib</FilePath>
+              <FileName>ourCom.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ourCom.c</FilePath>
             </File>
           </Files>
         </Group>

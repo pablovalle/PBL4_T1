@@ -404,6 +404,11 @@
               <FileType>1</FileType>
               <FilePath>.\sysClockAndTick.c</FilePath>
             </File>
+            <File>
+              <FileName>ourUsart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ourUsart.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -428,6 +433,11 @@
               <FileName>sysClockAndTick.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\sysClockAndTick.h</FilePath>
+            </File>
+            <File>
+              <FileName>ourUsart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ourUsart.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -72,6 +72,7 @@ __heap_limit
                 EXPORT  __Vectors_Size
 				IMPORT ourExti0Handler
 				IMPORT ourExti13Handler
+				IMPORT gureSystickHandlerra
 
 __Vectors       DCD     __initial_sp               ; Top of Stack
                 DCD     Reset_Handler              ; Reset Handler
@@ -88,7 +89,7 @@ __Vectors       DCD     __initial_sp               ; Top of Stack
                 DCD     DebugMon_Handler           ; Debug Monitor Handler
                 DCD     0                          ; Reserved
                 DCD     PendSV_Handler             ; PendSV Handler
-                DCD     SysTick_Handler            ; SysTick Handler
+                DCD     gureSystickHandlerra       ; SysTick Handler
 
                 ; External Interrupts
                 DCD     WWDG_IRQHandler                   ; Window WatchDog                                        

@@ -3,51 +3,45 @@
 #include <stdio.h>
 #include <ctype.h>
 #include "ourRccGpio.h"
-#include "ourCom.h"
 #include "sysClockAndTick.h"
+#include "ourUsart.h"
+#include "ourCom.h"
 
 #define LED_PIN 6
 
+#define USED_COM COM2
+
 char RxComByte = 0;
 uint8_t buffer[bufferTamaina];
-
 void initLed(void);
 
 int main(void)
 {
-  int i, n=0, a = 0;
-	uint32_t* reg;
+  int i;
 	char rxByte;
 	char str[] = "Give Red LED control input (Y = On, N = off):\r\n";
 
-
-	
   initSysTick(1000);
 	initLed();
 	togleGpioPinValue(GPIOF, LED_PIN);
-  hasieratuUsart6();	
-	USART_idatzi((uint8_t *)"MUFIT PBLDAY\n\n", 16);
+  hasieratuUSART(USED_COM, 9600);	
+	
   while(1){		
-//    n = sprintf((char *)buffer, "a = %d\n", a);
-//		USART_idatzi(buffer, n);
-//		togleGpioPinValue(GPIOF, LED_PIN);
-//		a += 1;
-		USART_idatzi((uint8_t *)str, strlen(str));	
-		rxByte = USART_irakurri();
+
+		USART_idatzi(USED_COM, (uint8_t *)str, strlen(str));	
+		rxByte = USART_irakurri(USED_COM);
 		if (rxByte == 'N' || rxByte == 'n'){
-			setGpioPinValue(GPIOF, LED_PIN, 0);
-			
-			USART_idatzi((uint8_t *)"LED is Off\r\n\r\n", 16);
+			setGpioPinValue(GPIOF, LED_PIN, 0);	
+			USART_idatzi(USED_COM, (uint8_t *)"LED is Off\r\n\r\n", 16);
 		}
 		else if (rxByte == 'Y' || rxByte == 'y'){
 			setGpioPinValue(GPIOF, LED_PIN, 1);
-			USART_idatzi( (uint8_t *)"LED is on\r\n\r\n", 15);
+			USART_idatzi(USED_COM, (uint8_t *)"LED is on\r\n\r\n", 15);
 		}
 		
 		for(i=0;i<2;i++) waitSysTick();
 	}
 }
-
 
 void initLed(void)
 {

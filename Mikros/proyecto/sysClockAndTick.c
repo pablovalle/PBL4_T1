@@ -32,7 +32,7 @@ uint32_t getTime(void)
   return ticks;
 }
 
-void SysTick_Handler(void)
+void gureSystickHandlerra(void)
 {
   ticks++;
 }
