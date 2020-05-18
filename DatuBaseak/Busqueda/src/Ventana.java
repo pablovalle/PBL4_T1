@@ -7,7 +7,6 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -17,17 +16,20 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import com.toedter.calendar.JCalendar;
 
 
-public class Ventana extends JFrame {
+public class Ventana extends JFrame implements ListSelectionListener {
 
 	/**
 	 * 
@@ -42,6 +44,8 @@ public class Ventana extends JFrame {
 	DAOHabitacion habitacionDao;
 	List<String>nombreCiudades;
 	Habitacion[] listaHabitaciones;
+	JCalendar calendarIn;
+	JCalendar calendarOut;
 
 	/**
 	 * Create the frame.
@@ -124,22 +128,22 @@ public class Ventana extends JFrame {
 		Opciones.add(panel_3);
 		panel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JCalendar calendar = new JCalendar();
-		calendar.getDayChooser().setWeekOfYearVisible(false);
-		calendar.getDayChooser().setDecorationBackgroundColor(new Color(0, 0, 0));
-		calendar.getDayChooser().setWeekdayForeground(new Color(255, 255, 255));
-		calendar.getDayChooser().setSundayForeground(new Color(255, 0, 0));
-		panel_3.add(calendar);
+		calendarIn = new JCalendar();
+		calendarIn.getDayChooser().setWeekOfYearVisible(false);
+		calendarIn.getDayChooser().setDecorationBackgroundColor(new Color(0, 0, 0));
+		calendarIn.getDayChooser().setWeekdayForeground(new Color(255, 255, 255));
+		calendarIn.getDayChooser().setSundayForeground(new Color(255, 0, 0));
+		panel_3.add(calendarIn);
 		
 		JPanel panel_7 = new JPanel();
 		Opciones.add(panel_7);
 		
-		JCalendar calendar_1 = new JCalendar();
-		calendar_1.getDayChooser().setWeekOfYearVisible(false);
-		calendar_1.getDayChooser().setWeekdayForeground(new Color(255, 255, 255));
-		calendar_1.getDayChooser().setSundayForeground(new Color(255, 0, 0));
-		calendar_1.setDecorationBackgroundColor(new Color(0, 0, 0));
-		panel_7.add(calendar_1);
+		calendarOut = new JCalendar();
+		calendarOut.getDayChooser().setWeekOfYearVisible(false);
+		calendarOut.getDayChooser().setWeekdayForeground(new Color(255, 255, 255));
+		calendarOut.getDayChooser().setSundayForeground(new Color(255, 0, 0));
+		calendarOut.setDecorationBackgroundColor(new Color(0, 0, 0));
+		panel_7.add(calendarOut);
 		
 		JButton btnFiltrar = new JButton("Filtrar");
 		btnFiltrar.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -147,7 +151,7 @@ public class Ventana extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				conn.Conectar();
 				//conn.filtrar(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem());
-				listaHabitaciones=DAOHabitacion.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendar.getDate(),calendar_1.getDate());
+				listaHabitaciones=DAOHabitacion.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendarIn.getDate(),calendarOut.getDate());
 				list.setListData(listaHabitaciones);
                 conn.desconectar();
                 
@@ -158,7 +162,7 @@ public class Ventana extends JFrame {
 		list = new JList<Habitacion>();
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setCellRenderer(new RendererBusqueda());
-		
+		list.addListSelectionListener(this);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setToolTipText("");
@@ -192,6 +196,20 @@ public class Ventana extends JFrame {
 				}
 			}
 		});
+	}
+	@Override
+	public void valueChanged(ListSelectionEvent arg0) {
+		int seleccionado = list.getSelectedIndex();
+		if(seleccionado != -1 ) {
+			DialogoReservar confirmarReserva = new DialogoReservar(this, "Confirmar Reserva", true,list.getSelectedValue(),calendarIn.getDate(),calendarOut.getDate() );
+			confirmarReserva.setVisible(true);
+			list.clearSelection();
+			
+		}
+		else if (seleccionado==-1) {
+			
+		}
+		
 	}
 
 }

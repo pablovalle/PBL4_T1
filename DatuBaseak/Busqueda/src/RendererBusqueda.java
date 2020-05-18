@@ -30,6 +30,9 @@ public class RendererBusqueda implements ListCellRenderer<Habitacion> {
 		panel.add(crearFotoHabitacion(), BorderLayout.WEST);
 		panel.add(crearDatos(ha,index),BorderLayout.CENTER);
 		
+		if(isSelected) 	panel.setBackground(Color.BLUE);
+		else panel.setBackground(Color.WHITE);
+		
 		panel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(10,10,10,10),
 	        		BorderFactory.createLineBorder(Color.black)));
 	    	       

@@ -7,13 +7,21 @@ public class Habitacion {
 	String orientacion;
 	int precio;
 	String categoria;
-	public Habitacion(int numhabitacion, String hotel, int aforo, String orientacion, int precio, String categoria) {
+	String ciudad;
+	public Habitacion(int numhabitacion, String hotel, int aforo, String orientacion, int precio, String categoria, String ciudad) {
 		this.numhabitacion = numhabitacion;
 		this.hotel = hotel;
 		this.aforo = aforo;
 		this.orientacion = orientacion;
 		this.precio = precio;
 		this.categoria = categoria;
+		this.ciudad = ciudad;
+	}
+	public String getCiudad() {
+		return ciudad;
+	}
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
 	}
 	public int getNumhabitacion() {
 		return numhabitacion;

@@ -28,7 +28,7 @@ public class DAOHabitacion {
 			/*String strSQL = "SELECT ha.numHabitacion, ho.nombre, ha.aforo, ha.orientacion, ha.precio, ha.categoria"
 					+ " FROM habitacion ha JOIN hotel ho on ha.IdHotel = ho.IdHotel"
 					+ " WHERE ho.ciudad LIKE '"+ ciudad +"' AND ha.aforo ="+personas;*/
-			String strSQL="SELECT haa.numHabitacion, hoo.nombre, haa.aforo, haa.orientacion, haa.precio, haa.categoria\r\n" + 
+			String strSQL="SELECT haa.numHabitacion, hoo.nombre, haa.aforo, haa.orientacion, haa.precio, haa.categoria, hoo.ciudad\r\n" + 
 					"FROM (hotel hoo JOIN habitacion haa ON hoo.idHotel=haa.idHotel) LEFT JOIN \r\n" + 
 					"\r\n" + 
 					"		(SELECT ho.nombre, ha.numHabitacion, r.idReserva\r\n" + 
@@ -47,7 +47,7 @@ public class DAOHabitacion {
 			
 			if(!rs.isBeforeFirst()) System.out.println("No hay hoteles con esas caracterisicas");
 			while(rs.next()) {
-				lista.add(new Habitacion(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getInt(5), rs.getString(6)));
+				lista.add(new Habitacion(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getInt(5), rs.getString(6), rs.getString(7)));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
