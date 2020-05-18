@@ -3,6 +3,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -11,13 +14,15 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 @SuppressWarnings("serial")
-public class DialogoReserva extends JDialog implements ActionListener{
+public class DialogoMisReservas extends JDialog implements ActionListener, ListSelectionListener{
 	JList<Reserva> lista;
 	final String username;
 	JButton btnSalir;
-	public DialogoReserva(JFrame ventana, String titulo, boolean modo,String username) {
+	public DialogoMisReservas(JFrame ventana, String titulo, boolean modo,String username) {
 		super(ventana,titulo,modo);
 		this.username=username;
 		this.setLocationRelativeTo(ventana);
@@ -52,7 +57,7 @@ public class DialogoReserva extends JDialog implements ActionListener{
 		lista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		lista.setListData(DAOReservas.getReservas(username));
 		lista.setCellRenderer(new RendererMisReservas());
-
+		lista.addListSelectionListener(this);
 		panel.setViewportView(lista);
 		return panel;
 	}
@@ -61,6 +66,29 @@ public class DialogoReserva extends JDialog implements ActionListener{
 		if(e.getActionCommand().equals("Salir")) {
 			this.dispose();
 		}
+	}
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		int seleccionado = lista.getSelectedIndex();
+		if(seleccionado!=-1) {
+			if(lista.getSelectedValue().getCheckIn().compareTo(LocalDate.now().toString())<=0) {
+				DialogoGestorClaves dialogo= new DialogoGestorClaves(this,"RECIBIR CLAVES",true,lista.getSelectedValue());
+				dialogo.setVisible(true);
+				lista.clearSelection();
+			}
+			else {
+				DialogoGestorReservas dialogoReserva= new DialogoGestorReservas(this,"CANCELAR RESERVA",true,lista.getSelectedValue());
+				dialogoReserva.setVisible(true);
+				lista.setListData(DAOReservas.getReservas(username));
+				lista.clearSelection();
+			}
+		}
+		
+		
+			
+		
+		
+		
 	}
 	
 }

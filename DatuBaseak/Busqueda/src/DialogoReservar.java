@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -101,7 +102,10 @@ public class DialogoReservar extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						dispose();
-						//crear y guardar reserva en BD
+						boolean result=DAOReservas.crearReserva(habitacion, fechaIn, fechaOut, "irati_mutel");
+						if(!result) {
+							JOptionPane.showMessageDialog(null, "¡NO SE HA PODIDO REALIZAR LA RESERVA!");
+						}
 					}
 				});
 				okButton.setActionCommand("OK");

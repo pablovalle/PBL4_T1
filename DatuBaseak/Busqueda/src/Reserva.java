@@ -4,12 +4,14 @@ public class Reserva {
 	int idReserva, numhabitacion, clavehabita, claveHotel;
 	String nombreHotel, checkIn, checkOut;
 	
-	public Reserva(int idReserva, String nombreHotel, int numhabitacion,  String checkIn,String checkOut) {
+	public Reserva(int idReserva, String nombreHotel, int numhabitacion,  String checkIn,String checkOut, int claveHotel, int claveHabitacion) {
 		this.idReserva = idReserva;
 		this.nombreHotel =nombreHotel;
 		this.numhabitacion = numhabitacion;
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
+		this.claveHotel=claveHotel;
+		this.clavehabita=claveHabitacion;
 	}
 	@Override
 	public String toString() {

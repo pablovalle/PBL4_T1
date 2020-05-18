@@ -1,5 +1,7 @@
 USE mutel;
 
+SET GLOBAL time_zone='+7:00';
+
 DELETE FROM reserva;
 DELETE FROM tarea;
 DELETE FROM trabajador;
@@ -61,22 +63,22 @@ INSERT INTO habitacion VALUE(105,3,3,'interior','vacio',81,'estandar');
 INSERT INTO habitacion VALUE(303,3,4,'interior','vacio',110,'estandar');
 
 /*RESERVAS*/
-INSERT INTO reserva VALUE(1,"2020-05-13","2020-05-14",0000,'jon_mutel',1,101,0);
-INSERT INTO reserva VALUE(2,"2020-05-07","2020-05-14",0001,'pablo_mutel',2,108,123);
-INSERT INTO reserva VALUE(3,"2020-05-13","2020-05-23",0002,'benat_mutel',3,202,543);
-INSERT INTO reserva VALUE(4,"2020-05-10","2020-05-20",0003,'irati_mutel',1,16201,8963);
-INSERT INTO reserva VALUE(5,"2020-05-30","2020-05-31",0004,'irati_mutel',2,401,654);
-INSERT INTO reserva VALUE(6,"2020-05-5","2020-05-17",0005,'pablo_mutel',3,107,231);
-INSERT INTO reserva VALUE(7,"2020-05-13","2020-05-21",0006,'jon_mutel',1,903,1222);
-INSERT INTO reserva VALUE(8,"2020-05-3","2020-05-7",0007,'benat_mutel',2,305,65);
-INSERT INTO reserva VALUE(9,"2020-05-4","2020-05-5",0008,'pablo_mutel',3,303,20);
-INSERT INTO reserva VALUE(10,"2020-05-6","2020-05-8",0009,'benat_mutel',3,303,5643);
-INSERT INTO reserva VALUE(11,"2020-05-16","2020-05-26",0010,'jon_mutel',2,402,983);
-INSERT INTO reserva VALUE(12,"2020-05-24","2020-05-30",0011,'irati_mutel',3,303,87);
-INSERT INTO reserva VALUE(13,"2020-05-8","2020-05-16",0012,'benat_mutel',1,203,12000);
-INSERT INTO reserva VALUE(14,"2020-05-10","2020-05-13",0013,'pablo_mutel',2,106,400);
-INSERT INTO reserva VALUE(15,"2020-05-11","2020-05-14",0014,'irati_mutel',3,105,30);
-INSERT INTO reserva VALUE(16,"2020-05-1","2020-05-4",0015,'pablo_mutel',1,2401,2561);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-05-13","2020-05-14",0000,'jon_mutel',1,101,0);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-05-07","2020-05-14",0001,'pablo_mutel',2,108,123);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-05-13","2020-05-23",0002,'benat_mutel',3,202,543);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-05-10","2020-05-20",0003,'irati_mutel',1,16201,8963);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-05-30","2020-05-31",0004,'irati_mutel',2,401,654);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-05-5","2020-05-17",0005,'pablo_mutel',3,107,231);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-05-13","2020-05-21",0006,'jon_mutel',1,903,1222);
+INSERT INTO reserva(checkin, checkout,llave,username,idHotel,numHabitacion,precioActual)  VALUE("2020-05-3","2020-05-7",0007,'benat_mutel',2,305,65);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-05-4","2020-05-5",0008,'pablo_mutel',3,303,20);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-05-6","2020-05-8",0009,'benat_mutel',3,303,5643);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-05-16","2020-05-26",0010,'jon_mutel',2,402,983);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-05-24","2020-05-30",0011,'irati_mutel',3,303,87);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-05-8","2020-05-16",0012,'benat_mutel',1,203,12000);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-05-10","2020-05-13",0013,'pablo_mutel',2,106,400);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-05-11","2020-05-14",0014,'irati_mutel',3,105,30);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-05-1","2020-05-4",0015,'pablo_mutel',1,2401,2561);
 
 /*TRABAJADORES*/
 INSERT INTO trabajador VALUE(1,'dimitri','esnarov',2,'123456789aA');

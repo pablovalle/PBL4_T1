@@ -2,7 +2,7 @@
 
 /* Huesped*/
 GRANT SELECT ON mutel.usuario TO  huesped@'%' IDENTIFIED BY 'SoyHuesped';
-GRANT SELECT ON mutel.reserva TO huesped@'%' IDENTIFIED BY 'SoyHuesped';
+GRANT SELECT, INSERT, DELETE ON mutel.reserva TO huesped@'%' IDENTIFIED BY 'SoyHuesped';
 GRANT SELECT ON mutel.habitacion TO  huesped@'%' IDENTIFIED BY 'SoyHuesped';
 GRANT SELECT (idHotel, nombre,ciudad,clave) ON  mutel.hotel TO huesped@'%'IDENTIFIED BY 'SoyHuesped';
 /*Trabajador*/

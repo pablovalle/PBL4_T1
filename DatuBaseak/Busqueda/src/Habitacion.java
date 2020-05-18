@@ -6,9 +6,10 @@ public class Habitacion {
 	int aforo;
 	String orientacion;
 	int precio;
+	int idHotel;
 	String categoria;
 	String ciudad;
-	public Habitacion(int numhabitacion, String hotel, int aforo, String orientacion, int precio, String categoria, String ciudad) {
+	public Habitacion(int numhabitacion, String hotel, int aforo, String orientacion, int precio, String categoria, String ciudad, int idHotel) {
 		this.numhabitacion = numhabitacion;
 		this.hotel = hotel;
 		this.aforo = aforo;
@@ -16,7 +17,17 @@ public class Habitacion {
 		this.precio = precio;
 		this.categoria = categoria;
 		this.ciudad = ciudad;
+		this.idHotel=idHotel;
 	}
+	
+	public int getIdHotel() {
+		return idHotel;
+	}
+
+	public void setIdHotel(int idHotel) {
+		this.idHotel = idHotel;
+	}
+
 	public String getCiudad() {
 		return ciudad;
 	}

@@ -36,7 +36,7 @@ public class Ventana extends JFrame implements ListSelectionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	private static final String COMMIT_ACTION = "commit";
-	private static final String USUARIO="irati_mutel";
+	public static final String USUARIO="irati_mutel";
 	private JPanel contentPane;
 	private JTextField tfCiudad;
 	JList<Habitacion> list;
@@ -46,6 +46,7 @@ public class Ventana extends JFrame implements ListSelectionListener {
 	Habitacion[] listaHabitaciones;
 	JCalendar calendarIn;
 	JCalendar calendarOut;
+	JComboBox cbPersonas;
 
 	/**
 	 * Create the frame.
@@ -82,7 +83,7 @@ public class Ventana extends JFrame implements ListSelectionListener {
 		btnReservas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				@SuppressWarnings("unused")
-				DialogoReserva dialogoReserva = new DialogoReserva(Ventana.this,"MIS RESERVAS",true,USUARIO);
+				DialogoMisReservas dialogoReserva = new DialogoMisReservas(Ventana.this,"MIS RESERVAS",true,USUARIO);
 				//dialogoReserva.setVisible(true);
 			}
 		});
@@ -119,7 +120,7 @@ public class Ventana extends JFrame implements ListSelectionListener {
 		JPanel panel_6 = new JPanel();
 		Opciones.add(panel_6);
 		
-		JComboBox cbPersonas = new JComboBox();
+		cbPersonas = new JComboBox();
 		cbPersonas.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		panel_6.add(cbPersonas);
 		cbPersonas.setModel(new DefaultComboBoxModel(new Integer[] {1, 2, 3, 4}));
@@ -203,6 +204,8 @@ public class Ventana extends JFrame implements ListSelectionListener {
 		if(seleccionado != -1 ) {
 			DialogoReservar confirmarReserva = new DialogoReservar(this, "Confirmar Reserva", true,list.getSelectedValue(),calendarIn.getDate(),calendarOut.getDate() );
 			confirmarReserva.setVisible(true);
+			listaHabitaciones=DAOHabitacion.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendarIn.getDate(),calendarOut.getDate());
+			list.setListData(listaHabitaciones);
 			list.clearSelection();
 			
 		}

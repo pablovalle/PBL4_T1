@@ -23,7 +23,7 @@ public class RendererMisReservas implements ListCellRenderer<Reserva> {
 		panel.setSize(150,75);
 		panel.add(crearFotoHabitacion(), BorderLayout.WEST);
 		panel.add(crearDatos(re,index),BorderLayout.CENTER);
-		
+		panel.setBackground(isSelected? Color.BLUE: Color.WHITE);
 		panel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(10,10,10,10),
 	        		BorderFactory.createLineBorder(Color.black)));
 	    	       
@@ -95,7 +95,7 @@ public class RendererMisReservas implements ListCellRenderer<Reserva> {
 		LocalDate today = LocalDate.now(); 
 
 		
-		if(re.getCheckIn().compareTo(String.valueOf(today))>= 0 ) {
+		if(re.getCheckIn().compareTo(String.valueOf(today))> 0 ) {
 			panelAbajo.add(btnCancelar);
 		}
 		else panelAbajo.add(btClave);
