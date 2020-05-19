@@ -45,7 +45,7 @@ idHotel SMALLINT UNSIGNED,
 fecha DATE NOT NULL ,
 idEmpleado SMALLINT UNSIGNED,
 numHabitacion SMALLINT UNSIGNED,
-descripción VARCHAR(128),
+descripcion VARCHAR(128),
 CONSTRAINT tarea_fk1 FOREIGN KEY (idEmpleado) REFERENCES Trabajador (idEmpleado),
 CONSTRAINT tarea_fk2 FOREIGN KEY (numHabitacion, idHotel) REFERENCES Habitacion (numHabitacion, idHotel));
 
