@@ -8,7 +8,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class DAOReservas {
-	private static final String url = "jdbc:mysql://localhost:3306/mutel";
+	private static final String url = "jdbc:mysql://localhost:3306/mutel?serverTimezone=UTC";
 	private static final String usuario = "huesped";
 	private static final String password = "SoyHuesped";
 	

@@ -11,7 +11,7 @@ import java.util.List;
 
 
 public class DAOHabitacion {
-	private static final String url = "jdbc:mysql://localhost:3306/mutel";
+	private static final String url = "jdbc:mysql://localhost:3306/mutel?serverTimezone=UTC";
 	private static final String usuario = "root";
 	private static final String password = "";
 	

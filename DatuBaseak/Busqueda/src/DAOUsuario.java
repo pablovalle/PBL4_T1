@@ -6,7 +6,7 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 public class DAOUsuario {
-	private static final String url = "jdbc:mysql://localhost:3306/mutel";
+	private static final String url = "jdbc:mysql://localhost:3306/mutel?serverTimezone=UTC";
 	private static final String usuario = "root";
 	private static final String password = "";
 	private static final String driver = "com.mysql.cj.jdbc.Driver";

@@ -7,7 +7,7 @@ public class Conexion{
 	//private static final String driver = "com.mysql.jdbc.Driver";
 	private static final String usuario = "root";
 	private static final String password = "";
-	private static final String url = "jdbc:mysql://localhost:3306/mutel";
+	private static final String url = "jdbc:mysql://localhost:3306/mutel?serverTimezone=UTC";
 	
 	Connection conn = null;
 	
