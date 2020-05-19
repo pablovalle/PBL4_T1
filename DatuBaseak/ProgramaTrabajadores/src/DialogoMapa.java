@@ -1,17 +1,18 @@
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.DefaultComboBoxModel;
 
-public class DialogoMapa extends JDialog {
+public class DialogoMapa extends JDialog implements ActionListener {
 
 	private final JPanel contentPanel = new JPanel();
 
@@ -40,11 +41,19 @@ public class DialogoMapa extends JDialog {
 		}
 		{
 			JButton btnSalir = new JButton("Salir");
+			btnSalir.addActionListener(this);
 			contentPanel.add(btnSalir, BorderLayout.SOUTH);
+			
 		}
 		MiPanelMapa panelMapa=new MiPanelMapa("img/Hotel.jpg");
 		contentPanel.add(panelMapa, BorderLayout.CENTER);
 
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		this.dispose();
+		
 	}
 
 }

@@ -14,7 +14,7 @@ public class Conexion{
 	
 	public void Conectar() {
 		try{
-			//Class.forName(driver);		
+			Class.forName(driver);		
 			conn = DriverManager.getConnection(url, usuario, password);
 		
 			if (conn != null) {

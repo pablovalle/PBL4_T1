@@ -6,7 +6,7 @@ GRANT SELECT, INSERT, DELETE ON mutel.reserva TO huesped@'%' IDENTIFIED BY 'SoyH
 GRANT SELECT ON mutel.habitacion TO  huesped@'%' IDENTIFIED BY 'SoyHuesped';
 GRANT SELECT (idHotel, nombre,ciudad,clave) ON  mutel.hotel TO huesped@'%'IDENTIFIED BY 'SoyHuesped';
 /*Trabajador*/
-GRANT SELECT ON mutel.tarea TO trabajador@'%' IDENTIFIED BY 'SoyTrabajador';
+GRANT SELECT,UPDATE ON mutel.tarea TO trabajador@'%' IDENTIFIED BY 'SoyTrabajador';
 GRANT SELECT ON mutel.trabajador TO trabajador@'%' IDENTIFIED BY 'SoyTrabajador';
 GRANT SELECT ON mutel.trabajador TO trabajador@'%' IDENTIFIED BY 'SoyTrabajador';
 GRANT SELECT (MasterKey, idHotel) ON mutel.hotel TO trabajador@'%' IDENTIFIED BY 'SoyTrabajador';

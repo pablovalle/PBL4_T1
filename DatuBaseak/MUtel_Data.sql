@@ -84,3 +84,9 @@ INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,prec
 INSERT INTO trabajador VALUE(1,'dimitri','esnarov',2,'123456789aA');
 INSERT INTO trabajador VALUE(1,'abdul','elyamahi',1,'123456789aA');
 INSERT INTO trabajador VALUE(1,'santiago','abascal',3,'123456789aA');
+
+/*TAREA*/
+INSERT INTO tarea (idHotel,fecha,idEmpleado,numHabitacion,descripcion, estado) VALUE(1,"2020-05-19",1,101,"Realizar mantenimiento del inodoro",FALSE);
+INSERT INTO tarea (idHotel,fecha,idEmpleado,numHabitacion,descripcion, estado) VALUE(2,"2020-05-19",1,108,"Realizar mantenimiento del frigo",FALSE);
+INSERT INTO tarea (idHotel,fecha,idEmpleado,numHabitacion,descripcion, estado) VALUE(3,"2020-05-19",1,106,"Realizar mantenimiento de la cama",FALSE);
+INSERT INTO tarea (idHotel,fecha,idEmpleado,numHabitacion,descripcion, estado) VALUE(1,"2020-05-19",1,102,"Realizar mantenimiento del baño",FALSE);

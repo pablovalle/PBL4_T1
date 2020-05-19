@@ -62,7 +62,6 @@ public class DAOUsuario {
 		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			ret=false;
 		}
 		
 		return ret;

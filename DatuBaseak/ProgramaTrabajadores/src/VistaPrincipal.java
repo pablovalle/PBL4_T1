@@ -3,7 +3,10 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.JList;
 import java.awt.GridLayout;
 import javax.swing.JButton;
@@ -12,15 +15,22 @@ import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class VistaPrincipal extends JFrame {
+public class VistaPrincipal extends JFrame implements ListSelectionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	Tarea[] listaTareas;
-	int idTrabajador = 1;
-
+	JList<Tarea> list ;
+	Trabajador trabajador;
+	JScrollPane spanel;
 	public VistaPrincipal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
+
+		trabajador= new Trabajador(1,1);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -30,10 +40,13 @@ public class VistaPrincipal extends JFrame {
 		contentPane.add(panel, BorderLayout.NORTH);
 		panel.setLayout(new BorderLayout(0, 0));
 		
-		JList list = new JList();
-		panel.add(list, BorderLayout.CENTER);
-		listaTareas=DAOTarea.getTareas(idTrabajador);
+		list = new JList();
+		spanel= new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		listaTareas=DAOTarea.getTareas(trabajador);
+		list.addListSelectionListener(this);
 		list.setListData(listaTareas);
+		spanel.setViewportView(list);
+		panel.add(spanel, BorderLayout.CENTER);
 		
 		JPanel panel_1 = new JPanel();
 		panel.add(panel_1, BorderLayout.NORTH);
@@ -69,6 +82,19 @@ public class VistaPrincipal extends JFrame {
 				}
 			}
 		});
+	}
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		int seleccionado=list.getSelectedIndex();
+		if(seleccionado!=-1) {
+			DialogoTarea dialogo= new DialogoTarea(this, "Terminar Tarea", true,list.getSelectedValue());
+			dialogo.setVisible(true);
+			listaTareas=DAOTarea.getTareas(trabajador);
+			list.setListData(listaTareas);
+			list.clearSelection();
+			
+		}
+		
 	}
 
 }
