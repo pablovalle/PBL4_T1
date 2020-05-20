@@ -38,23 +38,40 @@ public class MiPanelMapa extends JPanel {
 	protected void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub
 		  g.drawImage(img, 0, 0, null);
-		  g.setColor(Color.RED);
+		  g.setColor(seleccionarColor(0));
 		  g.fillOval(33, 150, 15, 15);
-		  g.setColor(Color.BLUE);
+		  g.setColor(seleccionarColor(1));
 		  g.fillOval(33, 208, 15, 15);
-		  g.setColor(Color.RED);
+		  g.setColor(seleccionarColor(2));
 		  g.fillOval(108, 150, 15, 15);
+		  g.setColor(seleccionarColor(3));
 		  g.fillOval(94, 208, 15, 15);
-		  g.setColor(Color.BLUE);
+		  g.setColor(seleccionarColor(4));
 		  g.fillOval(170, 208, 15, 15);
+		  g.setColor(seleccionarColor(5));
 		  g.fillOval(155, 150, 15, 15);
-		  g.setColor(Color.GREEN);
+		  g.setColor(seleccionarColor(6));
 		  g.fillOval(217, 208, 15, 15);
+		  g.setColor(seleccionarColor(7));
 		  g.fillOval(232, 150, 15, 15);
+		  g.setColor(seleccionarColor(8));
 		  g.fillOval(292, 208, 15, 15);
+		  g.setColor(seleccionarColor(9));
 		  g.fillOval(275, 150, 15, 15);
+		  g.setColor(seleccionarColor(10));
 		  g.fillOval(355, 208, 15, 15);
+		  g.setColor(seleccionarColor(11));
 		  g.fillOval(355, 150, 15, 15);
+	}
+
+	private Color seleccionarColor(int i) {
+		Color color= null;
+		switch(estados[i]) {
+		case "hecho": color=Color.GREEN; break;
+		case "para hacer":color= Color.RED; break;
+		case "vacio":color= Color.BLACK; break;
+		}
+		return color;
 	}
 
 }
