@@ -1,19 +1,21 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.JList;
-import java.awt.GridLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class VistaPrincipal extends JFrame implements ListSelectionListener {
 
@@ -45,6 +47,7 @@ public class VistaPrincipal extends JFrame implements ListSelectionListener {
 		listaTareas=DAOTarea.getTareas(trabajador);
 		list.addListSelectionListener(this);
 		list.setListData(listaTareas);
+		list.setCellRenderer(new Renderer());
 		spanel.setViewportView(list);
 		panel.add(spanel, BorderLayout.CENTER);
 		
@@ -61,8 +64,10 @@ public class VistaPrincipal extends JFrame implements ListSelectionListener {
 		});
 		panel_1.add(btnNewButton);
 		
-		JLabel lblNewLabel = new JLabel("Fecha actual");
+		JLabel lblNewLabel = new JLabel("Fecha actual");		
+		lblNewLabel.setText(String.valueOf(LocalDate.now()));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		panel_1.add(lblNewLabel);
 		
 		JButton btnNewButton_1 = new JButton("Cerrar Sesion");
