@@ -11,10 +11,9 @@ import javax.swing.JPanel;
 public class MiPanelMapa extends JPanel {
 
 	private Image img;
+	private String[] estados;
 
-	
-
-	public MiPanelMapa(String image) {
+	public MiPanelMapa(String image, String[] estados) {
 	    try {
 			this.img = ImageIO.read(new File(image));
 		} catch (IOException e) {
@@ -27,7 +26,12 @@ public class MiPanelMapa extends JPanel {
 	    setMaximumSize(size);
 	    setSize(size);
 	    setLayout(null);
+	   this.estados=estados ;
 	    
+	}
+
+	public void setEstados(String[] estados) {
+		this.estados = estados;
 	}
 
 	@Override
