@@ -15,3 +15,4 @@
 .\objects\pruebaenviomain.o: C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.14.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 .\objects\pruebaenviomain.o: ourUsart.h
 .\objects\pruebaenviomain.o: ourCom.h
+.\objects\pruebaenviomain.o: ourBuffer.h

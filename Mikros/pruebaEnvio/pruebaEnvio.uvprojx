@@ -409,6 +409,11 @@
               <FileType>1</FileType>
               <FilePath>.\ourUsart.c</FilePath>
             </File>
+            <File>
+              <FileName>ourBuffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ourBuffer.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -438,6 +443,11 @@
               <FileName>ourUsart.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\ourUsart.h</FilePath>
+            </File>
+            <File>
+              <FileName>ourBuffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ourBuffer.h</FilePath>
             </File>
           </Files>
         </Group>

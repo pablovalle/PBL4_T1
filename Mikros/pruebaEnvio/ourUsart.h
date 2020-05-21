@@ -26,6 +26,9 @@
 
 #define USART_FLAG_TXE 0x01<<7
 
+#define RCC_USART6_EN 0x01<<5
+#define RCC_USART3_EN 0x01
+
 void hasieratuUSART6GPIO(void);
 void hasieratuUSART3GPIO(void);
 void hasieratuUSART(USART_TypeDef* usart, uint32_t baudRate);
