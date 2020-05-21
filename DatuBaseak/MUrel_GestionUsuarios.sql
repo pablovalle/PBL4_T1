@@ -12,7 +12,7 @@ GRANT SELECT ON mutel.trabajador TO trabajador@'%' IDENTIFIED BY 'SoyTrabajador'
 GRANT SELECT (MasterKey, idHotel) ON mutel.hotel TO trabajador@'%' IDENTIFIED BY 'SoyTrabajador';
 GRANT DROP ON mutel.tarea to trabajador@'%' IDENTIFIED BY 'SoyTrabajador'; 
 GRANT UPDATE (estado) ON mutel.habitacion TO trabajador@'%' IDENTIFIED BY 'SoyTrabajador';
-GRANT SELECT (estado) ON mutel.habitacion TO trabajador@'%' IDENTIFIED BY 'SoyTrabajador';
+habitacionGRANT SELECT (numHabitacion) ON mutel.habitacion TO trabajador@'%' IDENTIFIED BY 'SoyTrabajador';
 GRANT SELECT (pisos) ON mutel.hotel TO trabajador@'%' IDENTIFIED BY 'SoyTrabajador';
 /*Admin Hotel*/
 GRANT INSERT ON mutel.tarea to adminHotel@'%' IDENTIFIED BY 'SoyAdminHotel';
