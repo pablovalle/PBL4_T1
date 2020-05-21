@@ -26,17 +26,29 @@ public class Principal {
 		System.out.println("Introduzca el id del hotel: ");
 		int id= teclado.nextInt();
 		teclado.nextLine();
+		System.out.println("Introduzca el precio maximo de luxury: ");
+		int maxLux= teclado.nextInt();
+		teclado.nextLine();
+		System.out.println("Introduzca el precio minimo de luxury: ");
+		int minLux= teclado.nextInt();
+		teclado.nextLine();
+		System.out.println("Introduzca el precio maximo de estandar: ");
+		int maxest= teclado.nextInt();
+		teclado.nextLine();
+		System.out.println("Introduzca el precio minimo de estandar: ");
+		int minest= teclado.nextInt();
+		teclado.nextLine();
 		int seed=(int) (Math.random()*2);
 		String tipo;
 		int aforo;
 		int precio;
 		for(int i=0; i<pisos; i++) {
 			for(int j=0; j<12; j++) {
-				seed=(int) (Math.random()*2);
-				if(seed==1) {
+				seed=(int) (Math.random()*4);
+				if(seed!=5) {
 					tipo="estandar";
 					aforo=(int)(Math.random()*4)+1;
-					precio=random.nextInt(1000)+10;
+					precio=random.nextInt(maxest)+minest;
 				}
 				else {
 					tipo="luxury";
@@ -47,7 +59,7 @@ public class Principal {
 					else {
 						aforo=3;
 					}
-					precio=random.nextInt(100000)+1000;
+					precio=random.nextInt(maxLux)+minLux;
 				}
 			    printWriter.printf("INSERT INTO habitacion VALUE("+((i+1)*100+j+1)+","+id+","+aforo+",'exterior','vacio',"+precio+",'"+tipo+"');\n");
 			}
