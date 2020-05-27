@@ -40,6 +40,8 @@ void hasieratuUSART6GPIO(void){
 	setGpioPinAF(GPIOG, USART6_RX, USART6_AF);
 }
 
+
+
 void USART6_IRQHandler(uint8_t *msg, uint32_t *pRx_counter){
 	if (USART6->SR & USART_SR_RXNE){ //Se han recibido los datos
 		msg[*pRx_counter] = USART6->DR;

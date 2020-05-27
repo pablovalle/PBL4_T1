@@ -5,13 +5,13 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdio.h>
-
-#include "ourRccGpio.h"
 #include "sysClockandTick.h"
+#include "ourRccGpio.h"
 #include "ourExti.h"
 #include "ourAdc.h"
 #include "ourCom.h"
-
+#include "ourUsart.h"
+#include "ourBuffer.h"
 
 #define USED_COM_PORT COM1
 #define N_LEDS 4
@@ -22,41 +22,57 @@ uint32_t ledPins[N_LEDS]={6,7,8,9};
 uint32_t password[N_DIGITOS_PASSWORD];
 uint32_t pos_password;
 
-enum estado {ESPERA, ENVIO, LECTURA};
+enum estado {INIT, ESCRIBIR_CONTRASENA, ENVIAR_CONTRASENA, COMPROBAR_CONTRASENA, INTERIOR};
+
+enum tipoPuerta {RECEPCION, HABITACION};
+
+volatile enum estado estado_actual;
+volatile 	int estadoHabitacion;
 
 void initGPIO(void);
 void turnOffAllLeds(void);
-uint32_t blockingReadFromUart(uint8_t *pMsg, uint8_t endChar, uint8_t maxSize);
 void resetPassword(void);
+void cambiarEstadoHabitacion(void);
 
 int main(void)
 {
-  int i , n=0; // n para la lectura
+  int i ;
   uint32_t val;
 	char str_temp[128];
 	char str[128];
 	char str2[128];
-	enum estado estado_actual;
-	char str_sarrera[] = "wellcome\n";
+	
+	enum tipoPuerta puerta;
+	char str_sarrera[] = "MUFit al PBLDay\n";
 	
 	pos_password = 0;
-	estado_actual = ESPERA;
+	estado_actual = INIT;
 	
 	initSysTick(1000);
-	hasieratuUsart6();
-	//initCom(USED_COM_PORT,9600);	
+	initBuffer();
+	hasieratuUSART(USED_COM_PORT, 9600); 	
 	enablePA0interruptOnExti0WhenRising();
   initGPIO();
-	initAdc01();
-	
-	USART_idatzi((uint8_t*)str_sarrera , strlen(str_sarrera));
+	initAdc01();	
+	USART_idatzi(USED_COM_PORT, (uint8_t *) str_sarrera, strlen(str_sarrera));
 	
   for(;;)
   {
-		// TODO : egoera bakoitzeko zatia funtzio batean jarri, txukunago egoteko
-		
-		if (estado_actual == ESPERA){
-			//USART_idatzi((uint8_t*) "estado espera\n", 14);
+		switch(estado_actual){
+			case INIT:
+			USART_irakurriBufferrera(USED_COM_PORT, (uint8_t*) str, 20, '$');	
+			jasoBufferretik(USED_COM_PORT, (uint8_t*) str2, 20);
+			if (strcmp(str2, "Puerta recepcion") == 0){
+				puerta = RECEPCION;
+			}
+			else if (strcmp(str2, "Puerta habitacion") == 0){
+				puerta = HABITACION;
+			}
+			estado_actual = ESCRIBIR_CONTRASENA;
+			
+			break;
+			case ESCRIBIR_CONTRASENA:
+
 			while (pos_password < N_DIGITOS_PASSWORD){
 				val=sinchronousGetSample(); 
 				val=val>>8; 
@@ -65,46 +81,50 @@ int main(void)
 					password[pos_password] = val;
 				}
 			}
-			estado_actual = ENVIO;
-		}
-		else if (estado_actual == ENVIO){
-		//	USART_idatzi((uint8_t*) "estado envio\n", 13);
+			estado_actual = ENVIAR_CONTRASENA;
+			break;
+			case ENVIAR_CONTRASENA:
+		
 			turnOffAllLeds(); // TODO : Luz naranja parpadeando mientras llega la respuesta?
+			str[0] = '\0';
 			for (i = 0; i < N_DIGITOS_PASSWORD; i++){
-				sprintf(str_temp, "%01X\r", password[i]);
+				sprintf(str_temp, "%01X", password[i]);
 				strcat(str, str_temp);
 			}
-		   	str[strlen(str)] = '\n';			
-				USART_idatzi((uint8_t*) str, strlen(str));
+		   	str[strlen(str)] = '$';
+				str[strlen(str)] = '\0';
+				USART_idatzi(USED_COM_PORT, (uint8_t*) str, strlen(str));
 				strcpy(str, "\0");
-		   	estado_actual = LECTURA;
-		}
-		else if (estado_actual == LECTURA){
-		//	USART_idatzi((uint8_t*) "estado lectura\n", 15);
-			str2[0] = USART_irakurri();
-			//i=blockingReadFromUart((uint8_t *)(str2+n), '$',20);
-			while (!strlen(str2));
-			if(i!=0)
-			{
-				n+=i;
-				//if(str2[n-1]=='$')				{
-					if (str2[0] == 'N'){
-						setGpioPinValue(GPIOF, ledPins[2], 1);
-						USART_idatzi((uint8_t*)"lol no\n", 7);		
-					}
-					if (str2[0] == 'K'){
-						setGpioPinValue(GPIOF, ledPins[0], 1);
-		        USART_idatzi((uint8_t*)"lol yes\n", 8);
-					}
-				  i = 0;
-					n=0;
-					//for (i = 0; i < 3; i++) waitSysTick();
-					for (i = 0; i < 2000000; i++);
-					resetPassword();
-					turnOffAllLeds();
-        	estado_actual = ESPERA;
-				//}			
+		   	estado_actual = COMPROBAR_CONTRASENA;
+			break;
+			case COMPROBAR_CONTRASENA:
+      // $- arte irakurtzen
+			USART_irakurriBufferrera(USED_COM_PORT, (uint8_t*) str, 20, '$');	
+			jasoBufferretik(USED_COM_PORT, (uint8_t*) str2, 20);
+			if (strcmp(str2, "Error")== 0){
+				setGpioPinValue(GPIOF, ledPins[2], 1);
 			}
+			if (strcmp(str2, "Correcto")== 0){
+				setGpioPinValue(GPIOF, ledPins[0], 1);
+			}
+			//for (i = 0; i < 3; i++) waitSysTick();
+			for (i = 0; i < 2000000; i++);
+			resetPassword();
+			turnOffAllLeds();
+			if (puerta == RECEPCION) estado_actual = ESCRIBIR_CONTRASENA;
+			else if (puerta == HABITACION) estado_actual = INTERIOR;
+			break;
+			case INTERIOR:
+
+			USART_irakurriBufferrera(USED_COM_PORT, (uint8_t*)str2, 20, '$');
+			jasoBufferretik(USED_COM_PORT, (uint8_t*) str2, 20);
+			
+			if (strcmp(str2, "Limpieza SI")==0) estadoHabitacion = 1;
+			else estadoHabitacion = 0;
+			while(estado_actual == INTERIOR){
+				setGpioPinValue(GPIOF, ledPins[1], estadoHabitacion);
+			}
+			break;
 		}
 
   }
@@ -121,18 +141,6 @@ void initGPIO(void)
 		initGpioPinMode(GPIOF, ledPins[i], GPIO_Mode_OUT) ;
 }
 
-uint32_t blockingReadFromUart( uint8_t *pMsg, uint8_t endChar, uint8_t maxSize)
-{
-  uint32_t n=0, byteCount=0;
-  do
-	{
-		n = USART_irakurri();
-		//n=USART_irakurri( pMsg+byteCount, maxSize-byteCount);
-    byteCount+=n;
-	}while((pMsg[byteCount-1]!=endChar) && (byteCount<maxSize));
-	
-	return byteCount;
-}
 
 void resetPassword(){
 	int i;
@@ -145,14 +153,21 @@ void turnOffAllLeds(void){
 	for (i = 0; i < N_LEDS; i++) setGpioPinValue(GPIOF, ledPins[i], 0);
 }
 
+void cambiarEstadoHabitacion(void){
+	estadoHabitacion = !estadoHabitacion;
+}
+
 // TODO : Mugitu bi handlerrak OurExti.c-ra
 
 void ourExti0Handler(void){
 	EXTI->PR |= 0x01; 
-	if (pos_password < N_DIGITOS_PASSWORD) pos_password += 1;
+	if (estado_actual ==  ESCRIBIR_CONTRASENA && pos_password < N_DIGITOS_PASSWORD) 
+		pos_password += 1;
+	else if (estado_actual == INTERIOR) cambiarEstadoHabitacion();
 }
 
 void ourExti13Handler(void){
 	EXTI->PR |= 0x01<<13;
-	resetPassword();
+	if (estado_actual ==  ESCRIBIR_CONTRASENA) resetPassword();
+	else if (estado_actual == INTERIOR) estado_actual = ESCRIBIR_CONTRASENA;
 }

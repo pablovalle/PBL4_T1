@@ -409,6 +409,16 @@
               <FileType>1</FileType>
               <FilePath>.\ourCom.c</FilePath>
             </File>
+            <File>
+              <FileName>ourBuffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ourBuffer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ourUsart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ourUsart.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -438,6 +448,16 @@
               <FileName>sysClockAndTick.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\sysClockAndTick.h</FilePath>
+            </File>
+            <File>
+              <FileName>ourBuffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ourBuffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>ourUsart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ourUsart.h</FilePath>
             </File>
           </Files>
         </Group>
