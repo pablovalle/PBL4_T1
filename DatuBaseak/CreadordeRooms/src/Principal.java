@@ -45,7 +45,7 @@ public class Principal {
 		for(int i=0; i<pisos; i++) {
 			for(int j=0; j<12; j++) {
 				seed=(int) (Math.random()*4);
-				if(seed!=5) {
+				if(seed!=1) {
 					tipo="estandar";
 					aforo=(int)(Math.random()*4)+1;
 					precio=random.nextInt(maxest)+minest;
