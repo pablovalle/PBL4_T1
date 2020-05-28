@@ -12,7 +12,7 @@ public class DAOHotel {
 		String[] pisos = null;
 		try {
 			Statement stm = DriverManager.getConnection(url,usuario,password).createStatement();
-			String strSQL="SELECT pisos FROM hotel WHERE idHotel="+idHotel+";";
+			String strSQL="CALL getPisos("+idHotel+");";
 			ResultSet rs = stm.executeQuery(strSQL);
 			if(rs.next()) {
 				pisos=new String[rs.getInt(1)];

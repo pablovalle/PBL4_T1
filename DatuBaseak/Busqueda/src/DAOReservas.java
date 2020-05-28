@@ -1,3 +1,4 @@
+import java.sql.CallableStatement;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,10 +17,7 @@ public class DAOReservas {
 		List<Reserva>reservasusuario= new ArrayList<>();
 		try {
 			Statement stm = DriverManager.getConnection(url,usuario,password).createStatement();
-			String strSQL="SELECT r.idReserva, ho.nombre, r.numHabitacion, r.checkin, r.checkout, ho.clave,r.llave\r\n" + 
-					"FROM reserva r JOIN hotel ho on ho.idHotel=r.idHotel\r\n" + 
-					"WHERE r.username LIKE '"+ username+ "'AND r.checkout>=CURDATE()"
-				  + "ORDER BY r.checkin asc;";
+			String strSQL="CALL getReservas('"+username+"')";
 			ResultSet rs = stm.executeQuery(strSQL);
 			while(rs.next()) {
 				reservasusuario.add(new Reserva(rs.getInt(1),rs.getString(2),rs.getInt(3),
@@ -36,14 +34,16 @@ public class DAOReservas {
 	static public boolean crearReserva(Habitacion habitacion, String checkin, String checkout,String username) {
 		boolean ret=false;
 		try {
-			Statement stm = DriverManager.getConnection(url,usuario,password).createStatement();
-			String strSQL="INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) "
-					+ "VALUES (\""+checkin+"\",\""+checkout+"\","+String.valueOf((int)(Math.random()*10000))+",'"+username+"',"
-					+ ""+habitacion.idHotel+","+habitacion.numhabitacion+","+habitacion.precio+");";
-			int rs = stm.executeUpdate(strSQL);
-			if(rs==1) {
-				ret= true;
-			}
+			CallableStatement sp = DriverManager.getConnection(url,usuario,password).prepareCall(" CALL crearReserva(?,?,?,?,?,?,?)");
+			sp.setString(1, checkin);
+			sp.setString(2, checkout);
+			sp.setInt(3,(int)(Math.random()*10000));
+			sp.setString(4, username);
+			sp.setInt(5, habitacion.getIdHotel());
+			sp.setInt(6, habitacion.getNumhabitacion());
+			sp.setInt(7, habitacion.getPrecio());
+			sp.execute();
+			ret=true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -53,12 +53,11 @@ public class DAOReservas {
 	static public boolean cancelarReserva(Reserva reserva) {
 		boolean ret=false;
 		try {
-			Statement stm = DriverManager.getConnection(url,usuario,password).createStatement();
-			String strSQL="DELETE FROM reserva WHERE idReserva="+reserva.getIdReserva()+";";
-			int rs = stm.executeUpdate(strSQL);
-			if(rs==1) {
-				ret= true;
-			}
+			CallableStatement sp = DriverManager.getConnection(url,usuario,password).prepareCall(" CALL cancelarReserva(?)");
+			sp.setInt(1, reserva.getIdReserva());
+			sp.execute();
+			ret= true;
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -25,23 +25,8 @@ public class DAOHabitacion {
 			DateFormat formatter =new SimpleDateFormat("yyyy-MM-dd");
 			String strFechaIn=formatter.format(fechaIN);
 			String strFechaOut=formatter.format(fechaOut);
-			/*String strSQL = "SELECT ha.numHabitacion, ho.nombre, ha.aforo, ha.orientacion, ha.precio, ha.categoria"
-					+ " FROM habitacion ha JOIN hotel ho on ha.IdHotel = ho.IdHotel"
-					+ " WHERE ho.ciudad LIKE '"+ ciudad +"' AND ha.aforo ="+personas;*/
-			String strSQL="SELECT haa.numHabitacion, hoo.nombre, haa.aforo, haa.orientacion, haa.precio, haa.categoria, hoo.ciudad, hoo.idHotel\r\n" + 
-					"FROM (hotel hoo JOIN habitacion haa ON hoo.idHotel=haa.idHotel) LEFT JOIN \r\n" + 
-					"\r\n" + 
-					"		(SELECT ho.nombre, ha.numHabitacion, r.idReserva\r\n" + 
-					"		FROM (hotel ho JOIN habitacion ha ON ho.idHotel=ha.idHotel) JOIN reserva r ON (r.numHabitacion = ha.numHabitacion AND r.idHotel=ha.idHotel)\r\n" + 
-					"		WHERE (\""+strFechaIn+"\" BETWEEN r.checkin and r.checkout)\r\n" + 
-					"		OR (\""+strFechaOut+"\" BETWEEN r.checkin and r.checkout) \r\n" + 
-					"		OR (r.checkin BETWEEN \""+strFechaIn+"\" AND \""+strFechaOut+"\")\r\n" + 
-					"		GROUP BY ha.numHabitacion,ho.nombre) T1 \r\n" + 
-					"\r\n" + 
-					"ON (hoo.nombre=T1.nombre AND haa.numHabitacion=T1.numHabitacion)\r\n" + 
-					"WHERE hoo.ciudad LIKE '"+ ciudad +"' AND haa.aforo ="+personas+" AND T1.idReserva IS NULL\r\n" + 
-					"GROUP BY haa.numHabitacion,hoo.nombre\r\n" + 
-					"ORDER BY haa.numHabitacion;";
+			
+			String strSQL="CALL filtrarHabitaciones('"+ciudad+"',"+personas+",\""+strFechaIn+"\",\""+strFechaOut+"\");";
 			ResultSet rs = stm.executeQuery(strSQL);
 			
 			
@@ -53,7 +38,7 @@ public class DAOHabitacion {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
-		lista.forEach(System.out::println);
+		
 		return lista.toArray(new Habitacion[0]);		
 	}
 }

@@ -16,7 +16,7 @@ public class DAOHotel {
 		List<String>nombresCiudad= new ArrayList<>();
 		try {
 			Statement stm = DriverManager.getConnection(url,usuario,password).createStatement();
-			String strSQL="SELECT ho.ciudad FROM hotel ho GROUP BY ho.ciudad;";
+			String strSQL="CALL getCiudades();";
 			ResultSet rs = stm.executeQuery(strSQL);
 			while(rs.next()) {
 				nombresCiudad.add(rs.getString(1).toLowerCase());

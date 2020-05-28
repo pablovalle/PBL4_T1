@@ -1,3 +1,4 @@
+import java.sql.CallableStatement;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,12 +15,10 @@ public class DAOHabitacion {
 	public static boolean cambiarEstadoHabitacion(int numHabitacion) {
 		boolean ret=false;
 		try {
-			Statement stm = DriverManager.getConnection(url,usuario,password).createStatement();
-			String strSQL="UPDATE habitacion SET estado='Hecha' WHERE numHabitacoin= "+numHabitacion+";";
-			int rs=stm.executeUpdate(strSQL);
-			if(rs==1) {
-				ret=true;
-			}
+			CallableStatement sp = DriverManager.getConnection(url,usuario,password).prepareCall(" CALL toggleEstadoHabitacion(?)");
+			sp.setInt(1, numHabitacion);
+			sp.execute();
+			ret=true;
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -32,7 +31,7 @@ public class DAOHabitacion {
 		List<String> lista = new ArrayList<String>();
 		try {
 			Statement stm = DriverManager.getConnection(url,usuario,password).createStatement();
-			String strSQL="SELECT estado FROM habitacion WHERE numHabitacion >"+piso*100+" AND numHabitacion<"+(piso+1)*100+";";
+			String strSQL="CALL getHabitacionesPiso("+piso*100+","+(piso+1)*100+");";
 			ResultSet rs = stm.executeQuery(strSQL);
 			while(rs.next()) {
 				lista.add(rs.getString(1));

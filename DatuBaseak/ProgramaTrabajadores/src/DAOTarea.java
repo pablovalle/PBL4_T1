@@ -1,3 +1,4 @@
+import java.sql.CallableStatement;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,8 +17,7 @@ public class DAOTarea {
 		try {
 			Class.forName(driver);
 			Statement stm = DriverManager.getConnection(url,usuario,password).createStatement();
-			String strSQL="SELECT idTarea, fecha, numHabitacion, descripcion FROM tarea"
-					+ " WHERE idEmpleado="+trabajador.getIdTrabajador()+" AND idHotel="+trabajador.getIdHotel()+" AND estado is false ORDER BY fecha ASC;";
+			String strSQL="CALL getTareas("+trabajador.getIdTrabajador()+","+trabajador.getIdHotel()+");";
 			ResultSet rs = stm.executeQuery(strSQL);
 			while(rs.next()) {
 				tareas.add(new Tarea(rs.getInt(1),rs.getString(2), rs.getInt(3),rs.getString(4)));
@@ -36,13 +36,10 @@ public class DAOTarea {
 	public static boolean marcarToggleTarea(Tarea tarea) {
 		boolean ret=false;
 		try {
-			Statement stm = DriverManager.getConnection(url,usuario,password).createStatement();
-			String strSQL="UPDATE tarea SET estado=true WHERE idTarea= "+tarea.getIdTarea()+";";
-			int rs=stm.executeUpdate(strSQL);
-			if(rs==1) {
-				ret=true;
-			}
-			
+			CallableStatement sp = DriverManager.getConnection(url,usuario,password).prepareCall(" CALL toggleTarea(?)");
+			sp.setInt(1, tarea.getIdTarea());
+			sp.execute();
+			ret=true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
