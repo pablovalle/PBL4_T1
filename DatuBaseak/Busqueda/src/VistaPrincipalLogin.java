@@ -30,6 +30,7 @@ public class VistaPrincipalLogin extends JFrame {
 	private static final long serialVersionUID = 1L;
 	final int WIDTH = 550; //500
 	final int HEIGTH = 205; //175
+	String username = null;
 
 	ControladorLogin controladorLogin;
 	
@@ -127,40 +128,19 @@ public class VistaPrincipalLogin extends JFrame {
 			txtPassword.setText("");
 		}
 		else {
+			username = txtUsuario.getText();
 			ret=true;
 		}
 		return ret;
 	}
-	/*public void leerAlumno() {
-		user = null;
-		Usuario aux=null;
-		try(ObjectInputStream in = new ObjectInputStream(new FileInputStream("filesUsers/"+txtUsuario.getText()+".dat"))){
-			/*aux = (Usuario)in.readObject();
-			this.verificarPassword(aux);
-			user = aux;
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			JOptionPane.showMessageDialog(this, "¡No existe ningún usuario con ese nombre!", "¡ERROR!",
-					JOptionPane.ERROR_MESSAGE);
-			txtUsuario.setText("");
-			txtPassword.setText("");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			System.out.println("IO exception\n");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			System.out.println("class not founf exception \n");
-		} catch (ExcepcionLogin e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			JOptionPane.showMessageDialog(this, "¡La contraseña no es correcta!", "¡ERROR!",
-					JOptionPane.ERROR_MESSAGE);
-			txtPassword.setText("");
-		}
-	}*/
+	
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 	
 	
 	public static void main(String[] args) {
@@ -188,6 +168,8 @@ public class VistaPrincipalLogin extends JFrame {
 		@SuppressWarnings("unused")
 		VistaPrincipalLogin programa = new VistaPrincipalLogin();
 	}
+
+
 
 	
 

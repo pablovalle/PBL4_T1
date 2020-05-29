@@ -16,7 +16,7 @@ public class DAOUsuario {
 		try {
 			Class.forName(driver);
 			Statement stm= DriverManager.getConnection(url,usuario,password).createStatement();
-			String strSQL="CALL comprobarUsuario('"+username+"');";
+			String strSQL="CALL comprobarUsername('"+username+"');";
 			ResultSet rs = stm.executeQuery(strSQL);
 			if(rs.isBeforeFirst()) ret=true;
 		} catch (ClassNotFoundException e) {

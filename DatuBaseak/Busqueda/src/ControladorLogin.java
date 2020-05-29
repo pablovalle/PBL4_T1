@@ -25,7 +25,7 @@ public class ControladorLogin implements ActionListener {
 		
 			if(vista.verificar()) {
 				vista.dispose();
-				Ventana menuCentral = new Ventana("Búsqueda MUTel"); // <-- Hay que quitar (para comprobar rÃ¡pido)
+				Ventana menuCentral = new Ventana("Búsqueda MUTel", vista.getUsername()); // <-- Hay que quitar (para comprobar rÃ¡pido)
 				
 			}
 			

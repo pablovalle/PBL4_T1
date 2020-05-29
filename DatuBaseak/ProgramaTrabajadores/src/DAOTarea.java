@@ -29,7 +29,6 @@ public class DAOTarea {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		tareas.forEach(System.out::println);
 		return tareas.toArray(new Tarea[0]);
 	}
 

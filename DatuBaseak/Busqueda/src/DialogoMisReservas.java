@@ -1,10 +1,9 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 import javax.swing.JButton;
@@ -20,13 +19,14 @@ import javax.swing.event.ListSelectionListener;
 @SuppressWarnings("serial")
 public class DialogoMisReservas extends JDialog implements ActionListener, ListSelectionListener{
 	JList<Reserva> lista;
-	final String username;
+	String username;
 	JButton btnSalir;
 	public DialogoMisReservas(JFrame ventana, String titulo, boolean modo,String username) {
 		super(ventana,titulo,modo);
 		this.username=username;
-		this.setLocationRelativeTo(ventana);
 		this.setSize(900, 700);
+		this.setLocation((int)Toolkit.getDefaultToolkit().getScreenSize().width/2 - (int)(this.getSize().getWidth()/2), (int) (java.awt.Toolkit.getDefaultToolkit().getScreenSize().height/2 - (this.getSize().getHeight()/2)));
+		
 		this.getContentPane().add(crearPanelVentana(), BorderLayout.CENTER);
 		this.setResizable(true);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -52,7 +52,7 @@ public class DialogoMisReservas extends JDialog implements ActionListener, ListS
 		return panel;
 	}
 	private Component crearListado() {
-		JScrollPane panel= new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		JScrollPane panel= new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		lista = new JList<Reserva>();
 		lista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		lista.setListData(DAOReservas.getReservas(username));

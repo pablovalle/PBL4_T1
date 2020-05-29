@@ -7,6 +7,7 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -52,11 +53,11 @@ public class DialogoRegistrarUsuario extends JDialog implements ActionListener {
 	public DialogoRegistrarUsuario(JFrame ventana, String titulo, boolean modo) {
 		super(ventana, titulo, modo);
 		this.ventana = ventana;
+		this.setLocation((int)Toolkit.getDefaultToolkit().getScreenSize().width/2 - (int)(this.getSize().getWidth()/2), (int) (java.awt.Toolkit.getDefaultToolkit().getScreenSize().height/2 - (this.getSize().getHeight()/2)));
 		//this.user=null;
 		//panelInfo = new JOptionPane();
 		this.setSize(400, 600);
 		this.getContentPane().add(crearToolBar(), BorderLayout.NORTH);
-		this.setLocationRelativeTo(ventana);
 		ImageIcon ImageIcon = new ImageIcon("img/Logo_MUFit.png");
 		Image image = ImageIcon.getImage();
 		this.setIconImage(image);

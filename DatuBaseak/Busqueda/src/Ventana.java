@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -7,8 +8,10 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -36,7 +39,7 @@ public class Ventana extends JFrame implements ListSelectionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	private static final String COMMIT_ACTION = "commit";
-	public static final String USUARIO="irati_mutel";
+	String usuario;
 	private JPanel contentPane;
 	private JTextField tfCiudad;
 	JList<Habitacion> list;
@@ -50,10 +53,13 @@ public class Ventana extends JFrame implements ListSelectionListener {
 
 	/**
 	 * Create the frame.
+	 * @param useername 
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public Ventana(String string) {
+	public Ventana(String string, String username) {
 		super(string);
+		this.usuario=username;
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		//Ventana frame = new Ventana();
 		this.setVisible(true);
 		ImageIcon ImageIcon = new ImageIcon("img/Logo_PBL4.png");
@@ -61,11 +67,11 @@ public class Ventana extends JFrame implements ListSelectionListener {
 		this.setIconImage(image);
 		setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 963, 780);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
+		
 		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.WEST);
@@ -73,17 +79,19 @@ public class Ventana extends JFrame implements ListSelectionListener {
 		
 		JPanel Opciones = new JPanel();
 		panel.add(Opciones, BorderLayout.NORTH);
+		panel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 		Opciones.setLayout(new GridLayout(4, 2, 0, 0));
 		
 		JPanel panel_1 = new JPanel();
 		Opciones.add(panel_1);
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		contentPane.add(crearPanelAbajo(), BorderLayout.SOUTH);
 		
 		JButton btnReservas = new JButton("Mis Reservas");
 		btnReservas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				@SuppressWarnings("unused")
-				DialogoMisReservas dialogoReserva = new DialogoMisReservas(Ventana.this,"MIS RESERVAS",true,USUARIO);
+				DialogoMisReservas dialogoReserva = new DialogoMisReservas(Ventana.this,"MIS RESERVAS",true,usuario);
 				//dialogoReserva.setVisible(true);
 			}
 		});
@@ -146,19 +154,8 @@ public class Ventana extends JFrame implements ListSelectionListener {
 		calendarOut.setDecorationBackgroundColor(new Color(0, 0, 0));
 		panel_7.add(calendarOut);
 		
-		JButton btnFiltrar = new JButton("Filtrar");
-		btnFiltrar.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnFiltrar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				conn.Conectar();
-				//conn.filtrar(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem());
-				listaHabitaciones=DAOHabitacion.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendarIn.getDate(),calendarOut.getDate());
-				list.setListData(listaHabitaciones);
-                conn.desconectar();
-                
-			}
-		});
-		panel.add(btnFiltrar, BorderLayout.SOUTH);
+
+		panel.add(crearPanelFiltrar(), BorderLayout.SOUTH);
 		
 		list = new JList<Habitacion>();
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -176,6 +173,44 @@ public class Ventana extends JFrame implements ListSelectionListener {
 	
 		
 	}
+	private Component crearPanelFiltrar() {
+		JPanel panel = new JPanel();
+		panel.setBorder(BorderFactory.createEmptyBorder(15,5,0,5));
+		
+		JButton btnFiltrar = new JButton("Filtrar");
+		btnFiltrar.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnFiltrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				conn.Conectar();
+				//conn.filtrar(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem());
+				listaHabitaciones=DAOHabitacion.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendarIn.getDate(),calendarOut.getDate());
+				list.setListData(listaHabitaciones);
+                conn.desconectar();
+                
+			}
+		});
+		
+		panel.add(btnFiltrar);
+		return panel;
+	}
+	private Component crearPanelAbajo() {
+		JPanel panel = new JPanel(new BorderLayout(10,10));
+		panel.setBackground(Color.BLACK);
+		panel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+		JLabel usuario = new JLabel();
+		usuario.setText(this.usuario+"        ");
+		usuario.setForeground(Color.WHITE);
+		usuario.setFont(new Font("Tahoma", Font.BOLD, 16));
+		
+		JLabel lblfecha = new JLabel("Fecha actual");		
+		lblfecha.setText(String.valueOf(LocalDate.now()));
+		lblfecha.setForeground(Color.WHITE);
+		lblfecha.setFont(new Font("Tahoma", Font.BOLD, 16));
+		
+		panel.add(lblfecha, BorderLayout.WEST);
+		panel.add(usuario, BorderLayout.EAST);
+		return panel;
+	}
 	private void aniadirAutocompletar() {
 		nombreCiudades=DAOHotel.getCiudades();
 		Autocomplete autoComplete = new Autocomplete(tfCiudad, nombreCiudades);
@@ -190,7 +225,7 @@ public class Ventana extends JFrame implements ListSelectionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Ventana frame = new Ventana("Búsqeda MUTel");
+					Ventana frame = new Ventana("Búsqeda MUTel", "benat_mutel");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -202,7 +237,7 @@ public class Ventana extends JFrame implements ListSelectionListener {
 	public void valueChanged(ListSelectionEvent arg0) {
 		int seleccionado = list.getSelectedIndex();
 		if(seleccionado != -1 ) {
-			DialogoReservar confirmarReserva = new DialogoReservar(this, "Confirmar Reserva", true,list.getSelectedValue(),calendarIn.getDate(),calendarOut.getDate() );
+			DialogoReservar confirmarReserva = new DialogoReservar(this, "Confirmar Reserva", true,list.getSelectedValue(),calendarIn.getDate(),calendarOut.getDate(), usuario);
 			confirmarReserva.setVisible(true);
 			listaHabitaciones=DAOHabitacion.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendarIn.getDate(),calendarOut.getDate());
 			list.setListData(listaHabitaciones);

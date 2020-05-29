@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 
 public class DialogoTarea extends JDialog implements ActionListener{
 
@@ -24,6 +25,7 @@ public class DialogoTarea extends JDialog implements ActionListener{
 		getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(new BorderLayout(0, 0));
 		this.setSize(300,300);
+		this.setLocation((int)Toolkit.getDefaultToolkit().getScreenSize().width/2 - (int)(this.getSize().getWidth()/2), (int) (java.awt.Toolkit.getDefaultToolkit().getScreenSize().height/2 - (this.getSize().getHeight()/2)));
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setText("¿Está seguro que ha finalizado esta tarea?");

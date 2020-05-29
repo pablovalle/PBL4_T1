@@ -77,7 +77,7 @@ public class RendererBusqueda implements ListCellRenderer<Habitacion> {
 		lbCIudad.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		lbCIudad.setForeground(new Color(0, 0, 0));
 		lbCIudad.setHorizontalAlignment(SwingConstants.CENTER);
-		//lbCIudad.setText(ha.);
+		lbCIudad.setText(ha.getCiudad());
 		panel_5.add(lbCIudad, BorderLayout.CENTER);
 		
 		JPanel panel_6 = new JPanel();

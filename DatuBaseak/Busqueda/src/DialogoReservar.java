@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
@@ -18,9 +19,12 @@ import javax.swing.border.EmptyBorder;
 public class DialogoReservar extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	public DialogoReservar(JFrame ventana, String titulo, boolean modo,Habitacion habitacion, java.util.Date in, java.util.Date out) {
+	String username;
+	public DialogoReservar(JFrame ventana, String titulo, boolean modo,Habitacion habitacion, java.util.Date in, java.util.Date out, String username) {
 		super(ventana,titulo,modo);
+		this.username=username;
 		setBounds(100, 100, 450, 300);
+		this.setLocation((int)Toolkit.getDefaultToolkit().getScreenSize().width/2 - (int)(this.getSize().getWidth()/2), (int) (java.awt.Toolkit.getDefaultToolkit().getScreenSize().height/2 - (this.getSize().getHeight()/2)));
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -102,7 +106,7 @@ public class DialogoReservar extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						dispose();
-						boolean result=DAOReservas.crearReserva(habitacion, fechaIn, fechaOut, "irati_mutel");
+						boolean result=DAOReservas.crearReserva(habitacion, fechaIn, fechaOut, username);
 						if(!result) {
 							JOptionPane.showMessageDialog(null, "¡NO SE HA PODIDO REALIZAR LA RESERVA!");
 						}

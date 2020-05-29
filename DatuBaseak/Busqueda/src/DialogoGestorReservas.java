@@ -1,5 +1,6 @@
 import javax.swing.JDialog;
 import java.awt.BorderLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,6 +18,7 @@ public class DialogoGestorReservas extends JDialog implements ActionListener{
 		this.reserva=selectedValue;
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		this.setSize(300, 300);
+		this.setLocation((int)Toolkit.getDefaultToolkit().getScreenSize().width/2 - (int)(this.getSize().getWidth()/2), (int) (java.awt.Toolkit.getDefaultToolkit().getScreenSize().height/2 - (this.getSize().getHeight()/2)));
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.CENTER);
 		
