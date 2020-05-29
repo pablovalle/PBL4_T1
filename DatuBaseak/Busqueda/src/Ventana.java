@@ -19,7 +19,6 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -42,6 +41,8 @@ public class Ventana extends JFrame implements ListSelectionListener {
 	String usuario;
 	private JPanel contentPane;
 	private JTextField tfCiudad;
+	private JTextField tfPrecioMin;
+	private JTextField tfPrecioMax;
 	JList<Habitacion> list;
 	Conexion conn = new Conexion();
 	DAOHabitacion habitacionDao;
@@ -49,7 +50,8 @@ public class Ventana extends JFrame implements ListSelectionListener {
 	Habitacion[] listaHabitaciones;
 	JCalendar calendarIn;
 	JCalendar calendarOut;
-	JComboBox cbPersonas;
+	JComboBox cbPersonas, cbTipo;
+	
 
 	/**
 	 * Create the frame.
@@ -111,10 +113,16 @@ public class Ventana extends JFrame implements ListSelectionListener {
 		
 		JPanel panel_5 = new JPanel();
 		Opciones.add(panel_5);
+		cbTipo = new JComboBox<String>();
+		
+		JLabel lblTipo = new JLabel("Tipo: ");
+		lblTipo.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		panel_5.add(lblTipo);
+		panel_5.add(cbTipo);
 		
 		tfCiudad = new JTextField();
 		tfCiudad.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		panel_5.add(tfCiudad);
+		panel_1_1.add(tfCiudad);
 		aniadirAutocompletar();
 		tfCiudad.setColumns(10);
 		
@@ -125,13 +133,25 @@ public class Ventana extends JFrame implements ListSelectionListener {
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		panel_2.add(lblNewLabel_1);
 		
-		JPanel panel_6 = new JPanel();
-		Opciones.add(panel_6);
-		
 		cbPersonas = new JComboBox();
 		cbPersonas.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		panel_6.add(cbPersonas);
+		panel_2.add(cbPersonas);
 		cbPersonas.setModel(new DefaultComboBoxModel(new Integer[] {1, 2, 3, 4}));
+		
+		JPanel panel_6 = new JPanel();
+		tfPrecioMax = new JTextField(3);
+		tfPrecioMin = new JTextField(3);
+		JLabel lblmin = new JLabel("Precio minimo: ");
+		JLabel lblmax = new JLabel(" Maximo :");
+		panel_6.add(lblmin);
+		panel_6.add(tfPrecioMin);
+		panel_6.add(lblmax);
+		panel_6.add(tfPrecioMax);
+		
+		Opciones.add(panel_6);
+		
+		
+
 		
 		JPanel panel_3 = new JPanel();
 		Opciones.add(panel_3);
@@ -196,7 +216,7 @@ public class Ventana extends JFrame implements ListSelectionListener {
 	private Component crearPanelAbajo() {
 		JPanel panel = new JPanel(new BorderLayout(10,10));
 		panel.setBackground(Color.BLACK);
-		panel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+		panel.setBorder(BorderFactory.createCompoundBorder(new RectangleBorder(Color.WHITE),BorderFactory.createEmptyBorder(20,20,20,20)));
 		JLabel usuario = new JLabel();
 		usuario.setText(this.usuario+"        ");
 		usuario.setForeground(Color.WHITE);
