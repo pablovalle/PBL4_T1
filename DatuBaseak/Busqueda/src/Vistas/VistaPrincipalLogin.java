@@ -6,10 +6,7 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -25,7 +22,8 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import Controladores.ControladorLogin;
 import DAO.DAOUsuario;
-import Excepciones.ExcepcionLogin;
+import Renderers.RectangleBorder;
+
 
 public class VistaPrincipalLogin extends JFrame {
 
@@ -92,7 +90,7 @@ public class VistaPrincipalLogin extends JFrame {
 	private Component crearPanelBotones() {
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 //		panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
-
+		panel.setBorder(new RectangleBorder(Color.WHITE));
 		btnInicioSesion = new JButton("Iniciar sesión");
 		btnInicioSesion.setToolTipText("Iniciar sesión");
 		btnInicioSesion.setActionCommand("iniciarSesion");

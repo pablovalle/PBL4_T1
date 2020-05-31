@@ -19,6 +19,7 @@ import javax.swing.event.ListSelectionListener;
 
 import DAO.DAOReservas;
 import Objetos.Reserva;
+import Renderers.RectangleBorder;
 import Renderers.RendererMisReservas;
 
 @SuppressWarnings("serial")
@@ -51,6 +52,7 @@ public class DialogoMisReservas extends JDialog implements ActionListener, ListS
 		btnSalir.setActionCommand("Salir");
 		btnSalir.addActionListener(this);
 		btnSalir.setBackground(new Color(255,255,255));
+		panel.setBorder(new RectangleBorder(Color.WHITE));
 		panel.add(btnSalir);
 
 		panel.setBackground(new Color(0,0,0));

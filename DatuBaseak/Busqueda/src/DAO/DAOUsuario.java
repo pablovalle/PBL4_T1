@@ -5,6 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import Excepciones.ExcepcionCampos;
+import Excepciones.ExcepcionPassword;
+import Excepciones.ExcepcionUsername;
+import Objetos.Check;
+
 public class DAOUsuario {
 	private static final String url = "jdbc:mysql://localhost:3306/mutel?serverTimezone=UTC";
 	private static final String usuario = "root";
@@ -48,13 +53,14 @@ public class DAOUsuario {
 		
 		return ret;
 	}
-	static public boolean registrarse(String nombre, String apellidos, String username, String passwoord, String email) {
+	static public boolean registrarse(String nombre, String apellidos, String username, String password1, String password2, String email)throws ExcepcionPassword,ExcepcionUsername, ExcepcionCampos {
 		boolean ret= false;
+		Check.check(password1, password2,username, nombre, apellidos,email);
 		
 	   try {
 			CallableStatement sp = DriverManager.getConnection(url,usuario,password).prepareCall(" CALL registrarse(?,?,?,?,?)");
 			sp.setString(1, username);
-			sp.setString(2, passwoord);
+			sp.setString(2, password1);
 			sp.setString(3, nombre);
 			sp.setString(4, apellidos);
 			sp.setString(5, email);

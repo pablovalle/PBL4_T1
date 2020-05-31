@@ -28,12 +28,10 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 
 import DAO.DAOUsuario;
-import Excepciones.ExcepcionLogin;
-import Excepciones.ExcepcionAltura;
 import Excepciones.ExcepcionCampos;
-import Excepciones.ExcepcionEdad;
 import Excepciones.ExcepcionPassword;
-import Excepciones.ExcepcionPeso;
+import Excepciones.ExcepcionUsername;
+import Renderers.RectangleBorder;
 
 public class DialogoRegistrarUsuario extends JDialog implements ActionListener {
 
@@ -55,10 +53,11 @@ public class DialogoRegistrarUsuario extends JDialog implements ActionListener {
 	public DialogoRegistrarUsuario(JFrame ventana, String titulo, boolean modo) {
 		super(ventana, titulo, modo);
 		this.ventana = ventana;
+		this.setSize(400, 600);
 		this.setLocation((int)Toolkit.getDefaultToolkit().getScreenSize().width/2 - (int)(this.getSize().getWidth()/2), (int) (java.awt.Toolkit.getDefaultToolkit().getScreenSize().height/2 - (this.getSize().getHeight()/2)));
 		//this.user=null;
 		//panelInfo = new JOptionPane();
-		this.setSize(400, 600);
+
 		this.getContentPane().add(crearToolBar(), BorderLayout.NORTH);
 		ImageIcon ImageIcon = new ImageIcon("img/Logo_MUFit.png");
 		Image image = ImageIcon.getImage();
@@ -94,12 +93,12 @@ public class DialogoRegistrarUsuario extends JDialog implements ActionListener {
 	}
 
 	private Container crearPanelVentana() {
-		JPanel panel = new JPanel(new BorderLayout(0, 10));
+		JPanel panel = new JPanel(new BorderLayout(0, 3));
 		panel.setBorder(BorderFactory.createEtchedBorder());
 		panel.add(crearPanelDatosUsuario(), BorderLayout.CENTER);
 		panel.add(crearPanelBotones(), BorderLayout.SOUTH);
 		
-//		panel.setBackground(Color.WHITE);
+		//panel.setBackground(Color.WHITE);
 		panel.setBackground(Color.BLACK);
 		return panel;
 	}
@@ -155,7 +154,7 @@ public class DialogoRegistrarUsuario extends JDialog implements ActionListener {
 
 	private Component crearPanelBotones() {
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
+		panel.setBorder(new RectangleBorder(Color.WHITE));
 
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.setToolTipText("Aceptar");
@@ -183,26 +182,16 @@ public class DialogoRegistrarUsuario extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "aceptar":
-			if(DAOUsuario.registrarse(txtNombre.getText(), txtApellido.getText(), txtNombreUsuario.getText(), String.valueOf(txtPassword1.getPassword()), txtNombreUsuario.getText()+"@mutel.es")) {
-				this.dispose();
-			}
-			else{
-				JOptionPane.showMessageDialog(this, "¡Los datos no son correctos!", "¡ERROR!",
-						JOptionPane.ERROR_MESSAGE);
-			}
-			/*try {
-				user = new Usuario(txtNombre.getText(), txtApellido.getText(), Integer.valueOf(txtEdad.getText()),
-						Double.valueOf(txtPeso.getText()), Double.valueOf(txtAltura.getText()),
-						txtNombreUsuario.getText(), String.valueOf(txtPassword1.getPassword()),
-						String.valueOf(txtPassword2.getPassword()), (rdbtnHombre.isEnabled()) ? true : false);
-				user.incluirUsernameFichero();
-				user.guardarFicheroUsuario();
-				this.dispose();
-		
+			
+			try {
+				if(DAOUsuario.registrarse(txtNombre.getText(), txtApellido.getText(), txtNombreUsuario.getText(), String.valueOf(txtPassword1.getPassword()),String.valueOf(txtPassword2.getPassword()), txtNombreUsuario.getText()+"@mutel.es")) {
+					this.dispose();
+				}
+				else{
+					JOptionPane.showMessageDialog(this, "¡Los datos no son correctos!", "¡ERROR!",
+							JOptionPane.ERROR_MESSAGE);
+				}
 				
-			} catch (NumberFormatException e1) {
-				JOptionPane.showMessageDialog(this, "¡Los datos no son correctos!", "¡ERROR!",
-						JOptionPane.ERROR_MESSAGE);
 			} catch (ExcepcionPassword e1) {
 				if (e1.getMessage().equals("¡Las contraseÃ±as no coinciden!")) {
 					System.out.println(e1.getMessage());
@@ -227,21 +216,9 @@ public class DialogoRegistrarUsuario extends JDialog implements ActionListener {
 					txtPassword1.setText("");
 					txtPassword2.setText("");
 				}
-			} catch (ExcepcionEdad e1) {
-				System.out.println(e1.getMessage());
-				JOptionPane.showMessageDialog(this, "¡No se recomienda esta aplicación a usuarios de tu edad!",
-						"¡CUIDADO!", JOptionPane.WARNING_MESSAGE);
-				txtEdad.setText("");
-			} catch (ExcepcionAltura e1) {
-				System.out.println(e1.getMessage());
-				JOptionPane.showMessageDialog(this, "¡No se recomienda esta aplicación a usuarios de tu altura!",
-						"¡CUIDADO!", JOptionPane.WARNING_MESSAGE);
-				txtAltura.setText("");
-			} catch (ExcepcionPeso e1) {
-				System.out.println(e1.getMessage());
-				JOptionPane.showMessageDialog(this, "¡No se recomienda esta aplicación a usuarios de tu peso!",
-						"¡CUIDADO!", JOptionPane.WARNING_MESSAGE);
-				txtPeso.setText("");
+			
+			
+			
 			} catch (ExcepcionUsername e1) {
 				if (e1.getMessage().equals("¡El nombre de usuario sobrepasa el máximo de caracteres permitidos!")) {
 					System.out.println(e1.getMessage());
@@ -276,7 +253,7 @@ public class DialogoRegistrarUsuario extends JDialog implements ActionListener {
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
-			}*/
+			}
 			this.dispose();
 			break;
 				
