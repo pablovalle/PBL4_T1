@@ -9,6 +9,7 @@ void initSysTick(uint32_t ms);
 uint32_t getSysClockFrequency(void);
 void waitSysTick(void);
 uint32_t getTime(void);
+
 #define HwClockCount (SysTick->VAL)
 
 

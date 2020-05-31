@@ -2,6 +2,7 @@
 #include <stm32f4xx.h>
 #include <core_cm4.h>
 
+
 volatile uint32_t ticks=0;
 volatile uint32_t ticksOld=0;
 
@@ -31,6 +32,7 @@ uint32_t getTime(void)
 {
   return ticks;
 }
+
 
 void SysTick_Handler(void)
 {

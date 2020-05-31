@@ -72,6 +72,8 @@ __heap_limit
                 EXPORT  __Vectors_Size
 				IMPORT ourExti0Handler
 				IMPORT ourExti13Handler
+				IMPORT ourUSART3Handler
+				IMPORT ourUSART6Handler
 
 __Vectors       DCD     __initial_sp               ; Top of Stack
                 DCD     Reset_Handler              ; Reset Handler
@@ -130,7 +132,7 @@ __Vectors       DCD     __initial_sp               ; Top of Stack
                 DCD     SPI2_IRQHandler                   ; SPI2                                            
                 DCD     USART1_IRQHandler                 ; USART1                                          
                 DCD     USART2_IRQHandler                 ; USART2                                          
-                DCD     USART3_IRQHandler                 ; USART3                                          
+                DCD     ourUSART3Handler                  ; USART3                                          
                 DCD     ourExti13Handler          	     ; External Line[15:10]s                                  
                 DCD     RTC_Alarm_IRQHandler              ; RTC Alarm (A and B) through EXTI Line                  
                 DCD     OTG_FS_WKUP_IRQHandler            ; USB OTG FS Wakeup through EXTI line                        
@@ -162,7 +164,7 @@ __Vectors       DCD     __initial_sp               ; Top of Stack
                 DCD     DMA2_Stream5_IRQHandler           ; DMA2 Stream 5                                   
                 DCD     DMA2_Stream6_IRQHandler           ; DMA2 Stream 6                                   
                 DCD     DMA2_Stream7_IRQHandler           ; DMA2 Stream 7                                   
-                DCD     USART6_IRQHandler                 ; USART6                                           
+                DCD     ourUSART6Handler                  ; USART6                                           
                 DCD     I2C3_EV_IRQHandler                ; I2C3 event                                             
                 DCD     I2C3_ER_IRQHandler                ; I2C3 error                                             
                 DCD     OTG_HS_EP1_OUT_IRQHandler         ; USB OTG HS End Point 1 Out                      
