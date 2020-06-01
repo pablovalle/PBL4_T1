@@ -24,7 +24,7 @@ public class DAOHabitacion {
 		int min, max;
 		try {
 			if(ciudad.equals("")) ciudad="%";
-			if(precioMax.equals("")) precioMax = "999999";
+			if(precioMax.equals("")) precioMax = "9999999";
 			if(precioMin.equals("")) precioMin = "0";
 			min=Integer.valueOf(precioMin);
 			max= Integer.valueOf(precioMax);

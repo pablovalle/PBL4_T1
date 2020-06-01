@@ -155,7 +155,11 @@ public class Ventana extends JFrame implements ListSelectionListener {
 		tfPrecioMax = new JTextField(3);
 		tfPrecioMin = new JTextField(3);
 		JLabel lblmin = new JLabel("Precio minimo: ");
+		lblmin.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		JLabel lblmax = new JLabel(" Maximo :");
+		lblmax.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		tfPrecioMax.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		tfPrecioMin.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_6.add(lblmin);
 		panel_6.add(tfPrecioMin);
 		panel_6.add(lblmax);
