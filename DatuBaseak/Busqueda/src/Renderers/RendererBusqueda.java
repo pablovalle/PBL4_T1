@@ -4,10 +4,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -23,17 +22,18 @@ public class RendererBusqueda implements ListCellRenderer<Habitacion> {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	Habitacion habitacion;
 
 	@Override
 	public Component getListCellRendererComponent(JList<? extends Habitacion> list, Habitacion ha, int index,
 			boolean isSelected, boolean cellHasFocus) {
+		this.habitacion=ha;
 		JPanel panel = new JPanel(new BorderLayout(10,10));
 		panel.setSize(150,75);
 		panel.add(crearFotoHabitacion(), BorderLayout.WEST);
 		panel.add(crearDatos(ha,index),BorderLayout.CENTER);
 		
-		if(isSelected) 	panel.setBackground(Color.BLUE);
+		if(isSelected) 	panel.setBackground(Color.BLACK);
 		else panel.setBackground(Color.WHITE);
 		
 		panel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(10,10,10,10),
@@ -153,7 +153,38 @@ public class RendererBusqueda implements ListCellRenderer<Habitacion> {
 
 	private Component crearFotoHabitacion() {
 		JPanel panel= new JPanel();
+		
+		String url=elegir_foto();
+		ImageIcon icon = new ImageIcon(url);
+		JLabel label = new JLabel();
+		label.setSize(50, 50);
+		label.setIcon(icon);
+		panel.add(label);
 		return panel;
+	}
+
+	private String elegir_foto() {
+		String ret;
+		if(habitacion.getHotel().equals("Burj Khalifa")) {
+			if(habitacion.getCategoria().equals("luxury")) {
+				ret="img/luxury_burj.jpeg";
+			}
+			else {
+				ret="img/estandar_burj.jpeg";
+			}
+		}
+		else if(habitacion.getHotel().equals("President Wilson")) {
+			if(habitacion.getCategoria().equals("luxury")) {
+				ret="img/luxury_president.PNG";
+			}
+			else {
+				ret="img/estandar_president.jpg";
+			}
+		}
+		else {
+			ret="img/rinconPepe.jpg";
+		}
+		return ret;
 	}
 
 

@@ -20,6 +20,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -42,7 +43,7 @@ import Renderers.RectangleBorder;
 import Renderers.RendererBusqueda;
 
 
-public class Ventana extends JFrame implements ListSelectionListener {
+public class Ventana extends JFrame implements ListSelectionListener, ActionListener {
 
 	/**
 	 * 
@@ -126,7 +127,7 @@ public class Ventana extends JFrame implements ListSelectionListener {
 		Opciones.add(panel_5);
 		cbTipo = new JComboBox<String>();
 		cbTipo.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		cbTipo.setModel(new DefaultComboBoxModel(new String[] {"estandar","luxury"}));
+		cbTipo.setModel(new DefaultComboBoxModel(new String[] {"no importa","estandar","luxury"}));
 		
 		JLabel lblTipo = new JLabel("Tipo: ");
 		lblTipo.setFont(new Font("Tahoma", Font.PLAIN, 22));
@@ -216,17 +217,7 @@ public class Ventana extends JFrame implements ListSelectionListener {
 		
 		JButton btnFiltrar = new JButton("Filtrar");
 		btnFiltrar.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnFiltrar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				conn.Conectar();
-				//conn.filtrar(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem());
-				listaHabitaciones=DAOHabitacion.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendarIn.getDate(),calendarOut.getDate(), (String) cbTipo.getSelectedItem(), tfPrecioMin.getText(), tfPrecioMax.getText());
-				list.setListData(listaHabitaciones);
-                conn.desconectar();
-                
-			}
-		});
-		
+		btnFiltrar.addActionListener(this);		
 		panel.add(btnFiltrar);
 		return panel;
 	}
@@ -284,6 +275,21 @@ public class Ventana extends JFrame implements ListSelectionListener {
 		else if (seleccionado==-1) {
 			
 		}
+		
+	}
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		conn.Conectar();
+		//conn.filtrar(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem());
+		try {
+			listaHabitaciones=DAOHabitacion.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendarIn.getDate(),calendarOut.getDate(), (String) cbTipo.getSelectedItem(), tfPrecioMin.getText(), tfPrecioMax.getText());
+			
+		} catch (NumberFormatException e1) {
+			JOptionPane.showMessageDialog(this, "¡Los datos no son correctos!", "¡ERROR!",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		list.setListData(listaHabitaciones);
+        conn.desconectar();
 		
 	}
 

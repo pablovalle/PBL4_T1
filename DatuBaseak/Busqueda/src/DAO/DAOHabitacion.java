@@ -19,11 +19,12 @@ public class DAOHabitacion {
 	private static final String password = "";
 	
 
-	static public Habitacion[] filtrarHabitaciones(String ciudad, int personas, Date fechaIN, Date fechaOut, String tipo, String precioMin, String precioMax){
+	static public Habitacion[] filtrarHabitaciones(String ciudad, int personas, Date fechaIN, Date fechaOut, String tipo, String precioMin, String precioMax) throws NumberFormatException{
 		List<Habitacion> lista = new ArrayList<Habitacion>();
 		int min, max;
 		try {
 			if(ciudad.equals("")) ciudad="%";
+			if(tipo.equals("no importa")) tipo="%";
 			if(precioMax.equals("")) precioMax = "9999999";
 			if(precioMin.equals("")) precioMin = "0";
 			min=Integer.valueOf(precioMin);
@@ -42,10 +43,11 @@ public class DAOHabitacion {
 			while(rs.next()) {
 				lista.add(new Habitacion(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getInt(8)));
 			}
+		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}
 		
 		return lista.toArray(new Habitacion[0]);		
 	}

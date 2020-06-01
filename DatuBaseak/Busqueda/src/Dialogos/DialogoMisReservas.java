@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
@@ -30,13 +31,20 @@ public class DialogoMisReservas extends JDialog implements ActionListener, ListS
 	public DialogoMisReservas(JFrame ventana, String titulo, boolean modo,String username) {
 		super(ventana,titulo,modo);
 		this.username=username;
-		this.setSize(900, 700);
+		this.setSize(1200, 800);
 		this.setLocation((int)Toolkit.getDefaultToolkit().getScreenSize().width/2 - (int)(this.getSize().getWidth()/2), (int) (java.awt.Toolkit.getDefaultToolkit().getScreenSize().height/2 - (this.getSize().getHeight()/2)));
 		
 		this.getContentPane().add(crearPanelVentana(), BorderLayout.CENTER);
 		this.setResizable(true);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		this.setVisible(true);
+		if(lista.getModel().getSize()==0) {
+			JOptionPane.showMessageDialog(this, "¡No tienes reservas!", "¡ERROR!",
+					JOptionPane.ERROR_MESSAGE);
+			this.dispose();
+		}else {
+			this.setVisible(true);
+		}
+		
 		
 	}
 	private Component crearPanelVentana() {

@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.time.LocalDate;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -17,11 +18,11 @@ import javax.swing.SwingConstants;
 import Objetos.Reserva;
 
 public class RendererMisReservas implements ListCellRenderer<Reserva> {
-	
+	Reserva reserva;
 	@Override
 	public Component getListCellRendererComponent(JList<? extends Reserva> list, Reserva re, int index, 
 			boolean isSelected,	boolean cellHasFocus) {
-
+		this.reserva=re;
 		JPanel panel = new JPanel(new BorderLayout(10,10));
 		panel.setSize(150,75);
 		panel.add(crearFotoHabitacion(), BorderLayout.WEST);
@@ -114,7 +115,25 @@ public class RendererMisReservas implements ListCellRenderer<Reserva> {
 
 	private Component crearFotoHabitacion() {
 		JPanel panel= new JPanel();
+		String url=elegirFoto();
+		ImageIcon icon = new ImageIcon(url);
+		JLabel label = new JLabel();
+		label.setSize(50, 50);
+		label.setIcon(icon);
+		panel.add(label);
 		return panel;
+	}
+
+	private String elegirFoto() {
+		
+		String ret="";
+
+		switch(reserva.getnombreHotel()) {
+		case "President Wilson": ret="img/president.png"; break;
+		case "Burj Khalifa": ret="img/khalifa.png";break;
+		case "Rincón de Pepe": ret="img/pepe.png"; break;
+		}
+		return ret;
 	}
 
 }
