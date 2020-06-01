@@ -125,6 +125,8 @@ public class Ventana extends JFrame implements ListSelectionListener {
 		JPanel panel_5 = new JPanel();
 		Opciones.add(panel_5);
 		cbTipo = new JComboBox<String>();
+		cbTipo.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		cbTipo.setModel(new DefaultComboBoxModel(new String[] {"estandar","luxury"}));
 		
 		JLabel lblTipo = new JLabel("Tipo: ");
 		lblTipo.setFont(new Font("Tahoma", Font.PLAIN, 22));
@@ -214,7 +216,7 @@ public class Ventana extends JFrame implements ListSelectionListener {
 			public void actionPerformed(ActionEvent arg0) {
 				conn.Conectar();
 				//conn.filtrar(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem());
-				listaHabitaciones=DAOHabitacion.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendarIn.getDate(),calendarOut.getDate());
+				listaHabitaciones=DAOHabitacion.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendarIn.getDate(),calendarOut.getDate(), (String) cbTipo.getSelectedItem());
 				list.setListData(listaHabitaciones);
                 conn.desconectar();
                 
@@ -270,7 +272,7 @@ public class Ventana extends JFrame implements ListSelectionListener {
 		if(seleccionado != -1 ) {
 			DialogoReservar confirmarReserva = new DialogoReservar(this, "Confirmar Reserva", true,list.getSelectedValue(),calendarIn.getDate(),calendarOut.getDate(), usuario);
 			confirmarReserva.setVisible(true);
-			listaHabitaciones=DAOHabitacion.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendarIn.getDate(),calendarOut.getDate());
+			listaHabitaciones=DAOHabitacion.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendarIn.getDate(),calendarOut.getDate(), (String) cbTipo.getSelectedItem());
 			list.setListData(listaHabitaciones);
 			list.clearSelection();
 			

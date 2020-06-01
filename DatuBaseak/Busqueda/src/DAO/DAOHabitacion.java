@@ -19,7 +19,7 @@ public class DAOHabitacion {
 	private static final String password = "";
 	
 
-	static public Habitacion[] filtrarHabitaciones(String ciudad, int personas, Date fechaIN, Date fechaOut){
+	static public Habitacion[] filtrarHabitaciones(String ciudad, int personas, Date fechaIN, Date fechaOut, String tipo){
 		List<Habitacion> lista = new ArrayList<Habitacion>();
 		try {
 			if(ciudad.equals("")) ciudad="%";
@@ -29,7 +29,7 @@ public class DAOHabitacion {
 			String strFechaIn=formatter.format(fechaIN);
 			String strFechaOut=formatter.format(fechaOut);
 			
-			String strSQL="CALL filtrarHabitaciones('"+ciudad+"',"+personas+",\""+strFechaIn+"\",\""+strFechaOut+"\");";
+			String strSQL="CALL filtrarHabitaciones('"+ciudad+"',"+personas+",\""+strFechaIn+"\",\""+strFechaOut+"\",'"+tipo+"');";
 			ResultSet rs = stm.executeQuery(strSQL);
 			
 			
