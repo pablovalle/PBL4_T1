@@ -1,6 +1,6 @@
 USE mutel;
 DELIMITER $$
-CREATE PROCEDURE filtrarHabitaciones(in ciudad VARCHAR(30),in personas SMALLINT UNSIGNED,in strFechaIn DATE ,in strFechaOut DATE, in tipo VARCHAR(20)) 
+CREATE PROCEDURE filtrarHabitaciones(in ciudad VARCHAR(30),in personas SMALLINT UNSIGNED,in strFechaIn DATE ,in strFechaOut DATE, in tipo VARCHAR(20), IN precioMin INT UNSIGNED, IN precioMax INT UNSIGNED) 
 BEGIN
   SELECT haa.numHabitacion, hoo.nombre, haa.aforo, haa.orientacion, haa.precio, haa.categoria, hoo.ciudad, hoo.idHotel
 	FROM (hotel hoo JOIN habitacion haa ON hoo.idHotel=haa.idHotel) LEFT JOIN 
@@ -12,7 +12,7 @@ BEGIN
 					GROUP BY ha.numHabitacion,ho.nombre) T1
 
 ON (hoo.nombre=T1.nombre AND haa.numHabitacion=T1.numHabitacion)
-WHERE hoo.ciudad LIKE ciudad AND haa.aforo =personas AND T1.idReserva IS NULL AND haa.categoria LIKE tipo
+WHERE hoo.ciudad LIKE ciudad AND haa.aforo =personas AND T1.idReserva IS NULL AND haa.categoria LIKE tipo AND haa.precio >= precioMin AND haa.precio <= precioMax
 GROUP BY haa.numHabitacion,hoo.nombre
 ORDER BY haa.precio, haa.numHabitacion;
 END$$

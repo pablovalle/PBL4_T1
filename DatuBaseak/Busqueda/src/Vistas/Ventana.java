@@ -216,7 +216,7 @@ public class Ventana extends JFrame implements ListSelectionListener {
 			public void actionPerformed(ActionEvent arg0) {
 				conn.Conectar();
 				//conn.filtrar(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem());
-				listaHabitaciones=DAOHabitacion.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendarIn.getDate(),calendarOut.getDate(), (String) cbTipo.getSelectedItem());
+				listaHabitaciones=DAOHabitacion.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendarIn.getDate(),calendarOut.getDate(), (String) cbTipo.getSelectedItem(), tfPrecioMin.getText(), tfPrecioMax.getText());
 				list.setListData(listaHabitaciones);
                 conn.desconectar();
                 
@@ -272,7 +272,7 @@ public class Ventana extends JFrame implements ListSelectionListener {
 		if(seleccionado != -1 ) {
 			DialogoReservar confirmarReserva = new DialogoReservar(this, "Confirmar Reserva", true,list.getSelectedValue(),calendarIn.getDate(),calendarOut.getDate(), usuario);
 			confirmarReserva.setVisible(true);
-			listaHabitaciones=DAOHabitacion.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendarIn.getDate(),calendarOut.getDate(), (String) cbTipo.getSelectedItem());
+			listaHabitaciones=DAOHabitacion.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendarIn.getDate(),calendarOut.getDate(), (String) cbTipo.getSelectedItem(), tfPrecioMin.getText(), tfPrecioMax.getText());
 			list.setListData(listaHabitaciones);
 			list.clearSelection();
 			

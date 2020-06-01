@@ -19,17 +19,22 @@ public class DAOHabitacion {
 	private static final String password = "";
 	
 
-	static public Habitacion[] filtrarHabitaciones(String ciudad, int personas, Date fechaIN, Date fechaOut, String tipo){
+	static public Habitacion[] filtrarHabitaciones(String ciudad, int personas, Date fechaIN, Date fechaOut, String tipo, String precioMin, String precioMax){
 		List<Habitacion> lista = new ArrayList<Habitacion>();
+		int min, max;
 		try {
 			if(ciudad.equals("")) ciudad="%";
+			if(precioMax.equals("")) precioMax = "999999";
+			if(precioMin.equals("")) precioMin = "0";
+			min=Integer.valueOf(precioMin);
+			max= Integer.valueOf(precioMax);
 			
 			Statement stm = DriverManager.getConnection(url,usuario,password).createStatement();
 			DateFormat formatter =new SimpleDateFormat("yyyy-MM-dd");
 			String strFechaIn=formatter.format(fechaIN);
 			String strFechaOut=formatter.format(fechaOut);
 			
-			String strSQL="CALL filtrarHabitaciones('"+ciudad+"',"+personas+",\""+strFechaIn+"\",\""+strFechaOut+"\",'"+tipo+"');";
+			String strSQL="CALL filtrarHabitaciones('"+ciudad+"',"+personas+",\""+strFechaIn+"\",\""+strFechaOut+"\",'"+tipo+"',"+min+ ","+ max+ ");";
 			ResultSet rs = stm.executeQuery(strSQL);
 			
 			
