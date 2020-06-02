@@ -16,7 +16,7 @@ INSERT INTO usuario VALUE('jon_mutel','123456789aA','jon', 'legaristi', 'jon.leg
 INSERT INTO usuario VALUE('irati_mutel','123456789aA','irati', 'izagirre', 'irati.izagirre@alumni.mondragon.edu');
 
 /*HOTELES*/
-INSERT INTO hotel VALUE(1,'Burj Khalifa','Dubai',1630,163,1234,9876);
+INSERT INTO hotel VALUE(1,'Burj Khalifa','Dubai',1630,163,1234,3776);
 INSERT INTO hotel VALUE(2,'President Wilson','Ginebra',40,4,5678,5432);
 INSERT INTO hotel VALUE(3,'Rincón de Pepe','Murcia',30,3,2468,1357);
 

@@ -39,9 +39,14 @@ public class DAOReservas {
 		boolean ret=false;
 		try {
 			CallableStatement sp = DriverManager.getConnection(url,usuario,password).prepareCall(" CALL crearReserva(?,?,?,?,?,?,?)");
+			int c1=(int)(Math.random()*8);
+			int c2=(int)(Math.random()*8)*10;
+			int c3=(int)(Math.random()*8)*100;
+			int c4=(int)(Math.random()*8)*1000;
+			int contraseña=c1+c2+c3+c4;
 			sp.setString(1, checkin);
 			sp.setString(2, checkout);
-			sp.setInt(3,(int)(Math.random()*10000));
+			sp.setInt(3,contraseña);
 			sp.setString(4, username);
 			sp.setInt(5, habitacion.getIdHotel());
 			sp.setInt(6, habitacion.getNumhabitacion());
