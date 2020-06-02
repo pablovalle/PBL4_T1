@@ -19,8 +19,8 @@ import Objetos.Habitacion;
 
 public class DAOHabitacion {
 	private static final String url = "jdbc:mysql://localhost:3306/mutel?serverTimezone=UTC";
-	private static final String usuario = "root";
-	private static final String password = "";
+	private static final String usuario = "huesped";
+	private static final String password = "SoyHuesped";
 	
 
 	static public Habitacion[] filtrarHabitaciones(String ciudad, int personas, Date fechaIN, Date fechaOut, String tipo, String precioMin, String precioMax) throws NumberFormatException, StringFormatException{

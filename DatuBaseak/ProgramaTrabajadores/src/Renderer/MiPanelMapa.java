@@ -21,6 +21,7 @@ public class MiPanelMapa extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	    this.setBackground(Color.WHITE);
 	    Dimension size = new Dimension(img.getWidth(null), img.getHeight(null));
 	    setPreferredSize(size);
 	    setMinimumSize(size);

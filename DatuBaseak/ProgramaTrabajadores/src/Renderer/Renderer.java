@@ -26,7 +26,7 @@ public class Renderer implements ListCellRenderer<Tarea> {
 		panel.add(crearDatos(tarea,index),BorderLayout.CENTER);
 		panel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(2,5,2,5),
         		BorderFactory.createLineBorder(Color.black)));
-    	       
+    	panel.setBackground(isSelected? Color.BLACK: Color.WHITE);       
 		return panel;
 	}
 
@@ -44,13 +44,14 @@ public class Renderer implements ListCellRenderer<Tarea> {
 		
 		JPanel panelDatos = new JPanel(new GridLayout(1,2,0,0));
 		JLabel numHabitacoin = new JLabel("Habitacion:");
-		numHabitacoin.setText(String.valueOf(tarea.getNumHabitacion()));
-		numHabitacoin.setFont(new Font("Tahoma", Font.BOLD, 16));
+		numHabitacoin.setText(" Habitación: "+String.valueOf(tarea.getNumHabitacion()));
+		numHabitacoin.setFont(new Font("Tahoma", Font.BOLD, 20));
 		panelDatos.add(numHabitacoin);
 		JLabel fecha = new JLabel("Fecha");
 		fecha.setHorizontalAlignment(SwingConstants.RIGHT);
-		
-		fecha.setText(tarea.getFecha());
+		fecha.setForeground(Color.RED);
+		fecha.setText(tarea.getFecha()+" ");
+		fecha.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		panelDatos.add(fecha);
 		panelDatos.setBackground(Color.WHITE);
 		panel.add(panelDescripcion);

@@ -18,6 +18,8 @@ ORDER BY haa.precio, haa.numHabitacion;
 END$$
 DELIMITER ;
 
+
+
 DELIMITER $$
 CREATE PROCEDURE getHabitacionesPiso(IN numPequeño SMALLINT UNSIGNED, IN numGrande SMALLINT unsigned)
 BEGIN
@@ -71,9 +73,30 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
+CREATE PROCEDURE comprobarUsernameWorker(in nombre_usuario VARCHAR(20))
+BEGIN
+  SELECT username FROM trabajador WHERE username LIKE nombre_usuario;
+END$$
+DELIMITER ;
+
+DELIMITER $$
 CREATE PROCEDURE comprobarContraseña(in nombre_usuario VARCHAR(20))
 BEGIN
   SELECT contraseña FROM usuario WHERE username LIKE nombre_usuario;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE comprobarContraseñaWorker(in nombre_usuario VARCHAR(20))
+BEGIN
+  SELECT contraseña FROM trabajador WHERE username LIKE nombre_usuario;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE getTrabajador(in nombre_usuario VARCHAR(20))
+BEGIN
+  SELECT idEmpleado, idHotel FROM trabajador WHERE username LIKE nombre_usuario;
 END$$
 DELIMITER ;
 

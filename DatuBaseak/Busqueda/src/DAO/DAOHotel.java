@@ -9,8 +9,8 @@ import java.util.List;
 public class DAOHotel {
 	
 	private static final String url = "jdbc:mysql://localhost:3306/mutel?serverTimezone=UTC";
-	private static final String usuario = "root";
-	private static final String password = "";
+	private static final String usuario = "huesped";
+	private static final String password = "SoyHuesped";
 	
 	
 	public static List<String> getCiudades() {

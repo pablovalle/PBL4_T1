@@ -2086,9 +2086,9 @@ INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,prec
 INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-05-1","2020-05-4",0015,'pablo_mutel',1,2401,2561);
 
 /*TRABAJADORES*/
-INSERT INTO trabajador VALUE(1,'dimitri','esnarov',2,'123456789aA');
-INSERT INTO trabajador VALUE(1,'abdul','elyamahi',1,'123456789aA');
-INSERT INTO trabajador VALUE(1,'santiago','abascal',3,'123456789aA');
+INSERT INTO trabajador VALUE(1,'dimitrix','dimitri','esnarov',2,'123456789aA');
+INSERT INTO trabajador VALUE(1,'abduliux','abdul','elyamahi',1,'123456789aA');
+INSERT INTO trabajador VALUE(1,'santiagox','santiago','abascal',3,'123456789aA');
 
 /*TAREA*/
 INSERT INTO tarea (idHotel,fecha,idEmpleado,numHabitacion,descripcion, estado) VALUE(1,"2020-05-19",1,101,"Realizar mantenimiento del inodoro",FALSE);
