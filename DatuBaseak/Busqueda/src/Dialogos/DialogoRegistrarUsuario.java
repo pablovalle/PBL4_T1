@@ -40,7 +40,7 @@ public class DialogoRegistrarUsuario extends JDialog implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	//JOptionPane panelInfo;
-	JTextField txtNombre, txtApellido, txtEdad, txtPeso, txtAltura, txtNombreUsuario;
+	JTextField txtNombre, txtApellido, txtEmail, txtPeso, txtAltura, txtNombreUsuario;
 	JPasswordField txtPassword1, txtPassword2;
 	JRadioButton rdbtnHombre, rdbtnMujer,rdbtnOtro;
 	ButtonGroup buttonGroup;
@@ -58,7 +58,7 @@ public class DialogoRegistrarUsuario extends JDialog implements ActionListener {
 		//this.user=null;
 		//panelInfo = new JOptionPane();
 
-		this.getContentPane().add(crearToolBar(), BorderLayout.NORTH);
+		
 		ImageIcon ImageIcon = new ImageIcon("img/Logo_MUFit.png");
 		Image image = ImageIcon.getImage();
 		this.setIconImage(image);
@@ -66,30 +66,6 @@ public class DialogoRegistrarUsuario extends JDialog implements ActionListener {
 		this.setResizable(false);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setVisible(true);
-	}
-
-	private Component crearToolBar() {
-		JToolBar toolBar = new JToolBar();
-		
-		toolBar.setFloatable(false);
-		toolBar.add(Box.createHorizontalGlue());
-		toolBar.setBackground(Color.BLACK);
-		toolBar.setOpaque(true);
-		labelInfo = new JLabel(new ImageIcon("icons/info.png"));
-		labelInfo.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		labelInfo.setToolTipText("<html>" +  "<br>" + "REQUISITOS" + "<br>" + "<br>" + "EDAD" + "<br>" + "1- El usuario debe ser mayor de 15 años." + "<br>"
-				+ "2- El usuario debe ser menor de 65 años." + "<br>" + "<br>" + "PESO" + "<br>"
-				+ "1- El usuario debe pesar más de 35.0 Kg." + "<br>" + "2- El usuario debe pesar menos de 150.0 Kg."
-				+ "<br>" + "<br>" + "ALTURA" + "<br>" + "1- El usuario debe medir más de 1.20 m." + "<br>"
-				+ "2- El usuario debe medir menos de 2.50 m." + "<br>" + "<br>" + "NOMBRE DE USUARIO" + "<br>"
-				+ "1- El nombre de usuario debe ser inexistente." + "<br>"
-				+ "2- El nombre de usuario debe contener 15 caracteres como máximo." + "<br>" + "<br>" + "CONTRASEÑA"
-				+ "<br>" + "1- La contraseña debe contener 8 caracteres como mínimo." + "<br>"
-				+ "2- La contraseña debe contener como mínimo una minúscula." + "<br>"
-				+ "3- La contraseña debe contener como mínimo una mayúscula." + "<br>"
-				+ "4- La contraseña debe contener como mínimo un número." + "<br>" + "<br>" + "</html>");
-		toolBar.add(labelInfo);
-		return toolBar;
 	}
 
 	private Container crearPanelVentana() {
@@ -111,8 +87,8 @@ public class DialogoRegistrarUsuario extends JDialog implements ActionListener {
 		txtNombre.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Nombre"));
 		txtApellido = new JTextField();
 		txtApellido.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Apellido"));
-		txtEdad = new JTextField();
-		txtEdad.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Edad (p.e. 25)"));
+		txtEmail = new JTextField();
+		txtEmail.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Email"));
 		txtNombreUsuario = new JTextField();
 		txtNombreUsuario.setBorder(
 				BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Nombre de usuario"));
@@ -126,7 +102,7 @@ public class DialogoRegistrarUsuario extends JDialog implements ActionListener {
 		panel.add(txtNombre);
 		panel.add(txtApellido);
 		panel.add(crearPanelRadioButton());
-		panel.add(txtEdad);
+		panel.add(txtEmail);
 		panel.add(txtNombreUsuario);
 		panel.add(txtPassword1);
 		panel.add(txtPassword2);
@@ -184,7 +160,7 @@ public class DialogoRegistrarUsuario extends JDialog implements ActionListener {
 		case "aceptar":
 			
 			try {
-				if(DAOUsuario.registrarse(txtNombre.getText(), txtApellido.getText(), txtNombreUsuario.getText(), String.valueOf(txtPassword1.getPassword()),String.valueOf(txtPassword2.getPassword()), txtNombreUsuario.getText()+"@mutel.es")) {
+				if(DAOUsuario.registrarse(txtNombre.getText(), txtApellido.getText(), txtNombreUsuario.getText(), String.valueOf(txtPassword1.getPassword()),String.valueOf(txtPassword2.getPassword()), txtEmail.getText())) {
 					this.dispose();
 				}
 				else{

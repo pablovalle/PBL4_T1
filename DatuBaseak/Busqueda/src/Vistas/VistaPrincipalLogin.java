@@ -52,7 +52,7 @@ public class VistaPrincipalLogin extends JFrame {
 
 //	this.setIconImage(new ImageIcon(getClass().getResource("icons/Logo_MUFit.png")).getClass());
 
-		ImageIcon ImageIcon = new ImageIcon("img/Logo_PBL4_b.png");
+		ImageIcon ImageIcon = new ImageIcon("img/Logo_PBL4.png");
 		Image image = ImageIcon.getImage();
 		this.setIconImage(image);
 		this.setContentPane(crearPanelVentana());

@@ -37,6 +37,7 @@ import DAO.DAOHabitacion;
 import DAO.DAOHotel;
 import Dialogos.DialogoMisReservas;
 import Dialogos.DialogoReservar;
+import Excepciones.StringFormatException;
 import Objetos.Conexion;
 import Objetos.Habitacion;
 import Renderers.RectangleBorder;
@@ -62,7 +63,7 @@ public class Ventana extends JFrame implements ListSelectionListener, ActionList
 	Habitacion[] listaHabitaciones;
 	JCalendar calendarIn;
 	JCalendar calendarOut;
-	JComboBox cbPersonas, cbTipo;
+	JComboBox<String> cbPersonas, cbTipo;
 	
 
 	/**
@@ -168,9 +169,6 @@ public class Ventana extends JFrame implements ListSelectionListener, ActionList
 		
 		Opciones.add(panel_6);
 		
-		
-
-		
 		JPanel panel_3 = new JPanel();
 		Opciones.add(panel_3);
 		panel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -205,10 +203,6 @@ public class Ventana extends JFrame implements ListSelectionListener, ActionList
 		scrollPane.setViewportView(list);
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		
-		
-		
-		
-	
 		
 	}
 	private Component crearPanelFiltrar() {
@@ -267,9 +261,15 @@ public class Ventana extends JFrame implements ListSelectionListener, ActionList
 		if(seleccionado != -1 ) {
 			DialogoReservar confirmarReserva = new DialogoReservar(this, "Confirmar Reserva", true,list.getSelectedValue(),calendarIn.getDate(),calendarOut.getDate(), usuario);
 			confirmarReserva.setVisible(true);
-			listaHabitaciones=DAOHabitacion.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendarIn.getDate(),calendarOut.getDate(), (String) cbTipo.getSelectedItem(), tfPrecioMin.getText(), tfPrecioMax.getText());
-			list.setListData(listaHabitaciones);
-			list.clearSelection();
+			try {
+				listaHabitaciones=DAOHabitacion.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendarIn.getDate(),calendarOut.getDate(), (String) cbTipo.getSelectedItem(), tfPrecioMin.getText(), tfPrecioMax.getText());
+				list.setListData(listaHabitaciones);
+				list.clearSelection();
+			} catch (NumberFormatException | StringFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			
 		}
 		else if (seleccionado==-1) {
@@ -283,13 +283,17 @@ public class Ventana extends JFrame implements ListSelectionListener, ActionList
 		//conn.filtrar(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem());
 		try {
 			listaHabitaciones=DAOHabitacion.filtrarHabitaciones(tfCiudad.getText(), (Integer)cbPersonas.getSelectedItem(),calendarIn.getDate(),calendarOut.getDate(), (String) cbTipo.getSelectedItem(), tfPrecioMin.getText(), tfPrecioMax.getText());
-			
-		} catch (NumberFormatException e1) {
+			list.setListData(listaHabitaciones);
+	        conn.desconectar();
+	        if(list.getModel().getSize()==0) {
+	        	JOptionPane.showMessageDialog(this, "¡No existe ninguna habitación con esas características!", "¡ERROR!",
+						JOptionPane.ERROR_MESSAGE);
+	        }
+		} catch (NumberFormatException | StringFormatException e1) {
 			JOptionPane.showMessageDialog(this, "¡Los datos no son correctos!", "¡ERROR!",
 					JOptionPane.ERROR_MESSAGE);
 		}
-		list.setListData(listaHabitaciones);
-        conn.desconectar();
+		
 		
 	}
 

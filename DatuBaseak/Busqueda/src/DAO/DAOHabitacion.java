@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
+
+
+import Excepciones.StringFormatException;
 import Objetos.Habitacion;
 
 
@@ -19,7 +23,7 @@ public class DAOHabitacion {
 	private static final String password = "";
 	
 
-	static public Habitacion[] filtrarHabitaciones(String ciudad, int personas, Date fechaIN, Date fechaOut, String tipo, String precioMin, String precioMax) throws NumberFormatException{
+	static public Habitacion[] filtrarHabitaciones(String ciudad, int personas, Date fechaIN, Date fechaOut, String tipo, String precioMin, String precioMax) throws NumberFormatException, StringFormatException{
 		List<Habitacion> lista = new ArrayList<Habitacion>();
 		int min, max;
 		try {
@@ -29,6 +33,8 @@ public class DAOHabitacion {
 			if(precioMin.equals("")) precioMin = "0";
 			min=Integer.valueOf(precioMin);
 			max= Integer.valueOf(precioMax);
+			
+			checkString(ciudad);
 			
 			Statement stm = DriverManager.getConnection(url,usuario,password).createStatement();
 			DateFormat formatter =new SimpleDateFormat("yyyy-MM-dd");
@@ -50,5 +56,18 @@ public class DAOHabitacion {
 		}
 		
 		return lista.toArray(new Habitacion[0]);		
+	}
+
+
+	private static void checkString(String ciudad) throws StringFormatException{
+		char [] palabra=ciudad.toUpperCase().toCharArray();
+		int ascii;
+		for(int i=0; i<palabra.length; i++) {
+			ascii=(int)palabra[i];
+			if(!String.valueOf(palabra[i]).equals("%") && (ascii<=64 || ascii>90) ) {
+				throw new StringFormatException("Los datos no son correctos");
+			}
+		}
+		
 	}
 }
