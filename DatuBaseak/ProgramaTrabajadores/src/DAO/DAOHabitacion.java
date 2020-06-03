@@ -13,11 +13,12 @@ public class DAOHabitacion {
 	private static final String password = "SoyTrabajador";
 	private static final String driver = "com.mysql.cj.jdbc.Driver";
 	
-	public static boolean cambiarEstadoHabitacion(int numHabitacion) {
+	public static boolean cambiarEstadoHabitacion(int numHabitacion, int hotelId) {
 		boolean ret=false;
 		try {
-			CallableStatement sp = DriverManager.getConnection(url,usuario,password).prepareCall(" CALL toggleEstadoHabitacion(?)");
+			CallableStatement sp = DriverManager.getConnection(url,usuario,password).prepareCall(" CALL toggleEstadoHabitacion(?,?)");
 			sp.setInt(1, numHabitacion);
+			sp.setInt(2, hotelId);
 			sp.execute();
 			ret=true;
 			
@@ -28,11 +29,11 @@ public class DAOHabitacion {
 		
 		return ret;
 	}
-	public static String[] getHabitacionesPiso(int piso){
+	public static String[] getHabitacionesPiso(int piso, int idHotel){
 		List<String> lista = new ArrayList<String>();
 		try {
 			Statement stm = DriverManager.getConnection(url,usuario,password).createStatement();
-			String strSQL="CALL getHabitacionesPiso("+piso*100+","+(piso+1)*100+");";
+			String strSQL="CALL getHabitacionesPiso("+piso*100+","+(piso+1)*100+","+idHotel+");";
 			ResultSet rs = stm.executeQuery(strSQL);
 			while(rs.next()) {
 				lista.add(rs.getString(1));

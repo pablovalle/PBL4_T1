@@ -14,8 +14,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import DAO.DAOHabitacion;
 import DAO.DAOTarea;
 import Objetos.Tarea;
+import Objetos.Trabajador;
 import Renderer.RectangleBorder;
 import Vistas.VistaPrincipal;
 
@@ -26,8 +28,10 @@ public class DialogoTarea extends JDialog implements ActionListener{
 	 */
 	private static final long serialVersionUID = 1L;
 	Tarea tarea;
-	public DialogoTarea(VistaPrincipal vistaPrincipal, String string, boolean b, Tarea selectedValue) {
+	Trabajador trabajador;
+	public DialogoTarea(VistaPrincipal vistaPrincipal, String string, boolean b, Tarea selectedValue, Trabajador trabajador) {
 		super(vistaPrincipal,string,b);
+		this.trabajador=trabajador;
 		this.tarea=selectedValue;
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.CENTER);
@@ -86,6 +90,7 @@ public class DialogoTarea extends JDialog implements ActionListener{
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "¡TAREA ACTUALIZADA!");
+				DAOHabitacion.cambiarEstadoHabitacion(tarea.getNumHabitacion(), trabajador.getIdHotel());
 				this.dispose();
 			}
 			

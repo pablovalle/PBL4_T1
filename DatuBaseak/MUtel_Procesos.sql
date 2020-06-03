@@ -19,11 +19,10 @@ END$$
 DELIMITER ;
 
 
-
 DELIMITER $$
-CREATE PROCEDURE getHabitacionesPiso(IN numPequeño SMALLINT UNSIGNED, IN numGrande SMALLINT unsigned)
+CREATE PROCEDURE getHabitacionesPiso(IN numPequeño SMALLINT UNSIGNED, IN numGrande SMALLINT UNSIGNED, IN hotelId SMALLINT UNSIGNED)
 BEGIN
-  SELECT estado FROM habitacion WHERE numHabitacion >numPequeño AND numHabitacion<numGrande;
+  SELECT estado FROM habitacion WHERE numHabitacion >numPequeño AND numHabitacion<numGrande AND idHotel=hotelId;
 END$$
 DELIMITER ;
 
@@ -122,10 +121,12 @@ BEGIN
 END$$
 DELIMITER ;
 
+
+
 DELIMITER $$
-CREATE PROCEDURE toggleEstadoHabitacion(IN habitacionid SMALLINT UNSIGNED)
+CREATE PROCEDURE toggleEstadoHabitacion(IN habitacionid SMALLINT UNSIGNED, IN hotelId SMALLINT UNSIGNED)
 BEGIN
-	UPDATE habitacion SET estado='Hecha' WHERE numHabitacoin= habitacionid;
+	UPDATE habitacion SET estado='hecho' WHERE numHabitacion= habitacionid AND idHotel=hotelId;
 END$$
 DELIMITER ;
 

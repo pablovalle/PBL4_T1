@@ -70,7 +70,7 @@ public class DialogoMapa extends JDialog implements ActionListener {
 		panelBoton.add(btnSalir);
 		contentPanel.add(panelBoton, BorderLayout.SOUTH);
 			
-		panelMapa=new MiPanelMapa("img/Hotel.jpg", DAOHabitacion.getHabitacionesPiso(comboBox.getSelectedIndex()+1));
+		panelMapa=new MiPanelMapa("img/Hotel.jpg", DAOHabitacion.getHabitacionesPiso(comboBox.getSelectedIndex()+1, trabajador.getIdHotel()));
 		panelMapa.setBackground(Color.WHITE);
 		contentPanel.add(panelMapa, BorderLayout.CENTER);
 
@@ -81,7 +81,7 @@ public class DialogoMapa extends JDialog implements ActionListener {
 		case "Salir":this.dispose();			
 			break;
 		case "ComboBox":
-			String[] estadoPisos = DAOHabitacion.getHabitacionesPiso(comboBox.getSelectedIndex()+1);
+			String[] estadoPisos = DAOHabitacion.getHabitacionesPiso(comboBox.getSelectedIndex()+1,trabajador.getIdHotel());
 			panelMapa.setEstados(estadoPisos);
 			panelMapa.repaint();
 			lbPiso.setText("Piso: "+(comboBox.getSelectedIndex()+1));

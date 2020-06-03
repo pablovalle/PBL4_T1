@@ -90,7 +90,7 @@ public class VistaPrincipal extends JFrame implements ListSelectionListener, Act
 		panel_1.add(btnNewButton_1);
 		
 		JButton btnSalir= new JButton("Salir");
-		btnNewButton_1.addActionListener(this);
+		btnSalir.addActionListener(this);
 		JPanel panel2= new JPanel();
 		panel2.setBackground(Color.BLACK);
 		panel2.setBorder(new RectangleBorder(Color.WHITE));
@@ -105,7 +105,7 @@ public class VistaPrincipal extends JFrame implements ListSelectionListener, Act
 	public void valueChanged(ListSelectionEvent e) {
 		int seleccionado=list.getSelectedIndex();
 		if(seleccionado!=-1) {
-			DialogoTarea dialogo= new DialogoTarea(this, "Terminar Tarea", true,list.getSelectedValue());
+			DialogoTarea dialogo= new DialogoTarea(this, "Terminar Tarea", true,list.getSelectedValue(), this.trabajador);
 			dialogo.setVisible(true);
 			listaTareas=DAOTarea.getTareas(trabajador);
 			list.setListData(listaTareas);

@@ -13,7 +13,7 @@ public class Principal {
 		Random random = new Random();
 		FileWriter fileWriter = null;
 		try {
-			fileWriter = new FileWriter("habitaciones");
+			fileWriter = new FileWriter("habitaciones.sql");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
