@@ -11,15 +11,14 @@
 #define END_CHAR '$'
 
 void initBuffer(void);
-void clearBuffer(int tx);
-int isBufferFull(int tx);
-int isBufferEmpty(int tx);
-int getBufferHead(int tx);
-int getBufferTail(int tx);
-uint8_t readFromBuffer(int tx);
-void addToBuffer(int tx, uint8_t c);
-int getBufferSize(int tx);
-void setEndCharReceived (int tx, uint32_t value);
-uint32_t getEndCharReceived(int tx);
+int isBufferFull(void);
+int isBufferEmpty(void);
+int getBufferHead(void);
+int getBufferTail(void);
+uint8_t readFromBuffer(void);
+void addToBuffer(uint8_t c);
+int getBufferSize(void);
+void setEndCharReceived (uint32_t value);
+uint32_t getEndCharReceived(void);
 
 #endif

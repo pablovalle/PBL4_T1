@@ -52,6 +52,7 @@ public class ControladorPuerta implements ActionListener, PropertyChangeListener
 	public void cambiarEstadoHabitacion(String cambioEstado) {
 		String ret = "";
 		ret = DAOHabitacion.setEstadoHabitacion(vista.getNumHabitacion(), vista.getNumHotel(),cambioEstado);
+		DAOTarea.crearTarea(vista.getNumHotel(), vista.getNumHabitacion(), 1);
 		vista.escribirLinea("Resultado del cambio: " + ret);
 	}
 
@@ -84,6 +85,7 @@ public class ControladorPuerta implements ActionListener, PropertyChangeListener
 			comunicador.desconectar();
 			vista.setBotonConectar(true);
 			vista.setbotonDesconectar(false);
+			vista.setEstadoTexfields(true);
 			break;
 		case "empezar":
 			if (vista.getNumHotel().length()<1) {
@@ -101,15 +103,14 @@ public class ControladorPuerta implements ActionListener, PropertyChangeListener
 					comunicador.enviarDatos("Puerta habitacion$");
 					vista.escribirLinea("Configurada simulación: puerta HABITACION." );
 					vista.setBotonEmpezar(false);
+					vista.setEstadoTexfields(false);
 
 				}
 				else vista.escribirLinea("Introduzca número de habitación.");
 			}
 			break;
 		default:
-			vista.escribirLinea("TODO No está preparado aun para el comando: " + comando);
-		
-		
+			vista.escribirLinea("TODO No está preparado aun para el comando: " + comando);		
 		}
 	}
 	
@@ -124,8 +125,8 @@ public class ControladorPuerta implements ActionListener, PropertyChangeListener
 			if(comprobarClave(clave)) { 
 				comunicador.enviarDatos(MENSAJE_CORRECTO);
 				vista.getTextArea().append("Entrada correcta. Pase.\n");
-				if (!puertaRecepcion) {
-					cambiarEstadoHabitacion("limpieza NO");
+				if(puertaRecepcion) {
+					cambiarEstadoHabitacion("hecho");
 				}
 			}
 			else {
@@ -136,10 +137,12 @@ public class ControladorPuerta implements ActionListener, PropertyChangeListener
 			break;
 		case "reset":
 			vista.setBotonEmpezar(true);
-			vista.getTextArea().append("Reset correcto.\n");
+			vista.escribirLinea("Reset correcto");
 			break;
 		case "cambio":
-			String cambioEstado = (String) evt.getNewValue();
+			String value = (String) evt.getNewValue();
+			String cambioEstado = ((value.contains("si"))? "para hacer" : "hecho");
+			vista.escribirLinea(cambioEstado);
 			cambiarEstadoHabitacion(cambioEstado);
 			break;
 		case "out":

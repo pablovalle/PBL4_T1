@@ -1,6 +1,3 @@
-
-//using ADC1, IN10 from PC0 (trimmer) - TRIMMER -> PIN: PC0-ra konektatuta
-
 #include <ctype.h>
 #include <string.h>
 #include <stdint.h>
@@ -16,20 +13,29 @@
 #define N_DIGITOS_PASSWORD 4
 
 #define MENSAJE_RESET "reset$"
-#define MENSAJE_LIMPIEZA_SI "para hacer$"
-#define MENSAJE_LIMPIEZA_NO "hecho$"
+#define MENSAJE_LIMPIEZA_SI "tarea si$"
+#define MENSAJE_LIMPIEZA_NO "tarea no$"
+#define MENSAJE_ERROR "Error$"
+#define MENSAJE_CORRECTO "Correcto$"
+#define MENSAJE_PUERTA_RECEPCION "Puerta recepcion$"
+#define MENSAJE_PUERTA_HABITACION "Puerta habitacion$"
+#define MENSAJE_SALIR_HABITACION "Ha salido de la habitacion$"
+
+#define RED_LED_PIN 8
+#define ORANGE_LED_PIN 7
+#define GREEN_LED_PIN 6
 
 uint32_t ledPins[N_LEDS]={6,7,8,9};
 
-//uint32_t password[N_DIGITOS_PASSWORD];
+uint32_t password[N_DIGITOS_PASSWORD];
 uint32_t adcValue;
-uint32_t pos_password;
+uint32_t pos_password = 0;
 
-enum estado {INIT, ESCRIBIR_CONTRASENA, ENVIAR_CONTRASENA, COMPROBAR_CONTRASENA, INTERIOR};
+enum estado {INIT, ESCRIBIR_CONTRASENA, ENVIAR_CONTRASENA, COMPROBAR_CONTRASENA, INTERIOR, ITXI_ATEA};
 enum tipoPuerta {RECEPCION, HABITACION};
 
 volatile enum estado estado_actual;
-volatile 	int estadoHabitacion;
+static int estadoHabitacion = 0;
 
 void initGPIO(void);
 void turnOffAllLeds(void);
@@ -40,16 +46,13 @@ int main(void)
 {
   int i ;
 	char str[128];
-	char str2[128];
-	char str3[128];
 	int estadoAnterior;
 	enum tipoPuerta puerta;
-	char str_sarrera[] = MENSAJE_RESET;
 	
+	char str_frogak[128];
+
 	pos_password = 0;
 	estado_actual = INIT;
-	
-
 	
 	initSysTick(1000);
 	initGPIO();
@@ -57,76 +60,97 @@ int main(void)
 	initBuffer();
 	hasieratuUSART(USED_COM_PORT, 9600); 	
 	enablePA0interruptOnExti0WhenRising();
-	USART_write(USED_COM_PORT, (uint8_t *) str_sarrera, strlen(str_sarrera));
 	
+	strcpy(str, MENSAJE_RESET);
+	USART_write(USED_COM_PORT, (uint8_t *) str, strlen(str));
+	memset(str, 0, strlen(str));
   for(;;)
   {
 		switch(estado_actual){
 			case INIT: //---------------------------------------------
-			if (getEndCharReceived(0)){
-				readBuffer((uint8_t*) str2);
-				if (strcmp(str2, "Puerta recepcion") == 0){
+			if (getEndCharReceived()){
+				readBuffer((uint8_t*) str);
+				if (strcmp(str, MENSAJE_PUERTA_RECEPCION) == 0){
 					puerta = RECEPCION;
 				}
-				else if (strcmp(str2, "Puerta habitacion") == 0){
+				else if (strcmp(str, MENSAJE_PUERTA_HABITACION) == 0){
 					puerta = HABITACION;
 				}
 				estado_actual = ESCRIBIR_CONTRASENA;
-		  }
+  			initBuffer();
+			}
+			memset(str, 0, strlen(str));
+			
 			break;
 			
 			case ESCRIBIR_CONTRASENA: //-------------------------------
 			while (pos_password < N_DIGITOS_PASSWORD){
 				adcValue=sinchronousGetSample(); 
-				adcValue=adcValue>>8; 
-				for(i=0;i<N_LEDS;i++){
+				adcValue=adcValue/8; //Nahi dugu maximoa 7 izatea
+				for(i=0;i<4;i++){
 					setGpioPinValue(GPIOF, ledPins[i],adcValue & (0x01<<i));
 				}
+				
 			}
 			estado_actual = ENVIAR_CONTRASENA;
 			break;
 			
 			case ENVIAR_CONTRASENA: //----------------------------------
 			turnOffAllLeds(); 
-			str[0] = '\0';
-			sendBufferTx(USED_COM_PORT);
-			strcpy(str, "\0");
+			memset(str, 0, strlen(str));
+			for (i = 0; i < N_DIGITOS_PASSWORD; i++){
+				str[i] = password[i] + 48 ;
+			}
+			str[strlen(str)] = '\0'; //Amaiera jarri, gero strcat-ek jakiteko nun amaitzen den
+			strcat(str, "$");
+			USART_write(USED_COM_PORT, (uint8_t*)str, strlen(str));
 			estado_actual = COMPROBAR_CONTRASENA;
-			clearBuffer(0);
+			initBuffer();
 			break;
 			
 			case COMPROBAR_CONTRASENA: //---------------------------------
       // $- arte irakurtzen
-			if (getEndCharReceived(0)){
-				readBuffer((uint8_t*) str2);
-				USART_write(USED_COM_PORT, (uint8_t*) str2, strlen(str2));
-				if (strcmp(str2, "Error")== 0){
-					setGpioPinValue(GPIOF, ledPins[2], 1);
+			if (getEndCharReceived()){
+				memset(str, 0, strlen(str));
+				readBuffer((uint8_t*) str);
+				if (strcmp(str, MENSAJE_ERROR)== 0){
+					setGpioPinValue(GPIOF, RED_LED_PIN, 1);
 					estado_actual = ESCRIBIR_CONTRASENA;
 				}
-				if (strcmp(str2, "Correcto")== 0){
-					setGpioPinValue(GPIOF, ledPins[0], 1);
+				if (strcmp(str, MENSAJE_CORRECTO) == 0){
+					setGpioPinValue(GPIOF, GREEN_LED_PIN, 1);
 					if (puerta == RECEPCION) estado_actual = ESCRIBIR_CONTRASENA;
 					else if (puerta == HABITACION) estado_actual = INTERIOR;
 				}
-				for (i = 0; i < 2000000; i++);
-				//for (i = 0; i < 2; i++) waitSysTick();
+				memset(str, 0, strlen(str));
 				resetPassword();
+				initBuffer();
+				for (i = 0; i < 2000000; i++);
 				turnOffAllLeds();
+
 		  }
 			break;
 			
-			case INTERIOR: //------------------------------------			
+			case INTERIOR: //------------------------------------		
+			//memset(str, 0, strlen(str));				
 			estadoHabitacion = 0;
 			estadoAnterior = estadoHabitacion;
 			while(estado_actual == INTERIOR){
-				setGpioPinValue(GPIOF, ledPins[1], estadoHabitacion);
+				setGpioPinValue(GPIOF, ORANGE_LED_PIN, estadoHabitacion);
 				if (estadoAnterior!=estadoHabitacion){
-					strcpy(str3, (estadoHabitacion == 1)? MENSAJE_LIMPIEZA_SI : MENSAJE_LIMPIEZA_NO);
-					USART_write(USED_COM_PORT, (uint8_t*)str3, strlen(str3));
+					strcpy(str, (estadoHabitacion == 1)? MENSAJE_LIMPIEZA_SI : MENSAJE_LIMPIEZA_NO);
+					USART_write(USED_COM_PORT, (uint8_t*)str, strlen(str));
+					memset(str, 0 , strlen(str));
 					estadoAnterior = estadoHabitacion;
 				}
 			}
+			break;
+			
+			case ITXI_ATEA:
+				initBuffer();
+				memset(str, 0, strlen(str));
+			  
+				estado_actual = ESCRIBIR_CONTRASENA;
 			break;
 		}
 
@@ -144,13 +168,7 @@ void initGPIO(void)
 		initGpioPinMode(GPIOF, ledPins[i], GPIO_Mode_OUT) ;
 }
 
-void salirHabitacion(){
-	char str[128] = "Ha salido de la habitacion$";
-	USART_write(USED_COM_PORT, (uint8_t*) str, strlen(str));
-}
-
 void resetPassword(){
-	clearBuffer(1);
 	pos_password = 0;
 }
 
@@ -159,26 +177,21 @@ void turnOffAllLeds(void){
 	for (i = 0; i < N_LEDS; i++) setGpioPinValue(GPIOF, ledPins[i], 0);
 }
 
-void cambiarEstadoHabitacion(void){
-	estadoHabitacion = !estadoHabitacion;
-}
-
 // TODO : Mugitu bi handlerrak OurExti.c-ra
 
 void ourExti0Handler(void){
 	EXTI->PR |= 0x01; 
 	if (estado_actual ==  ESCRIBIR_CONTRASENA && pos_password < N_DIGITOS_PASSWORD){
-		addToBuffer(1, adcValue + 48);
-		pos_password++;
+		password[pos_password++] = adcValue;
 	}
-	else if (estado_actual == INTERIOR) cambiarEstadoHabitacion();
+	else if (estado_actual == INTERIOR) estadoHabitacion = !estadoHabitacion;
 }
 
 void ourExti13Handler(void){
 	EXTI->PR |= 0x01<<13;
+
 	if (estado_actual ==  ESCRIBIR_CONTRASENA) resetPassword();
 	else if (estado_actual == INTERIOR) {
-		salirHabitacion();
-		estado_actual = ESCRIBIR_CONTRASENA;
+		estado_actual = ITXI_ATEA;
 	}
 }

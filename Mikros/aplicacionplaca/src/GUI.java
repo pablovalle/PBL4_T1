@@ -216,6 +216,10 @@ public class GUI extends JFrame {
 		bDesconectar.setEnabled(estado);
 	}
 
+	public void setEstadoTexfields(boolean estado) {
+		numHabitacion.setEditable(estado);
+		numHotel.setEditable(estado);
+	}
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

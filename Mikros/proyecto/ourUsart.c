@@ -1,4 +1,3 @@
-
 #include "ourUsart.h"
 
 void hasieratuUSART(USART_TypeDef* usart, uint32_t baudRate){

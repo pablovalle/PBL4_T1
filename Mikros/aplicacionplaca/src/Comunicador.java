@@ -7,6 +7,8 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.TooManyListenersException;
 
+import javax.swing.JList;
+
 import gnu.io.CommPort;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
@@ -75,7 +77,7 @@ public class Comunicador implements SerialPortEventListener {
 	public boolean conectar() {
 		String puertoSeleccionado = vista.getComboBoxSeleccionado();
 		puertoEnUso = (CommPortIdentifier) mapaPuertos.get(puertoSeleccionado);
-		CommPort commPort = null;
+		CommPort commPort = null;		
 		boolean exito = false;
 		try {
 			commPort = puertoEnUso.open("Controlador MUTel", DELAY);
@@ -86,7 +88,6 @@ public class Comunicador implements SerialPortEventListener {
 			exito = true;
 		} catch (PortInUseException e) {
 			texto = puertoSeleccionado + " está en uso ( " + e.toString() + ")";
-			vista.getTextArea().append(texto + "\n");
 		} catch (UnsupportedCommOperationException e) {
 			texto = "Los parámetros de configuración no son correctos";
 
@@ -105,15 +106,11 @@ public class Comunicador implements SerialPortEventListener {
 			input = puertoSerial.getInputStream();
 			output = puertoSerial.getOutputStream();
 			texto = "Streams I/O inicializados correctamente.";
-			vista.getTextArea().append(texto + "\n");
-
 			exito = true;
 		} catch (IOException e) {
 			texto = "Streams de input y output no se han abierto correctamente. ( " + e.toString() + ")";
-			vista.getTextArea().append(texto + "\n");
-
 		}
-		
+		vista.escribirLinea(texto);
 		
 		return exito;
 	}
@@ -167,11 +164,9 @@ public class Comunicador implements SerialPortEventListener {
 		} catch (IOException e) {
 			texto = "No se ha enviado correctamente. ( " + e.toString() + ")";
 		}
-		vista.escribirLinea(texto);
-		
+		vista.escribirLinea(texto);	
 	}
 	
-
 	@Override
 	public void serialEvent(SerialPortEvent evento) {
 		if (evento.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
@@ -179,13 +174,13 @@ public class Comunicador implements SerialPortEventListener {
 			try {
 				byte dato = (byte)input.read();
 				
-				if (dato != ASCII_LINEA_NUEVA && dato != '$' && dato != 0) {
+				if (dato != ASCII_LINEA_NUEVA && dato != '$') {
 					texto = new String(new byte[] {dato});
 					datosRecibidos += texto;
 				}
-				else {	
-					vista.escribirLinea(datosRecibidos);
-					if (datosRecibidos.contains("limpieza")) {
+				else {
+					if (datosRecibidos.contains("tarea")) {
+						System.out.println("cambio en tarea");
 						soporte.firePropertyChange("cambio", null, datosRecibidos);
 					}
 					else if (datosRecibidos.contains("reset")) {
@@ -198,9 +193,7 @@ public class Comunicador implements SerialPortEventListener {
 						soporte.firePropertyChange("clave", null, datosRecibidos);
 					}
 					datosRecibidos = "";
-
 				}
-				
 				
 			} catch (IOException e) {
 				texto = "No se ha podido leer. ( "+ e.toString() + ")";

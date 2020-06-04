@@ -5,8 +5,8 @@ import java.sql.Statement;
 
 public class DAOHabitacion {
 	private static final String url = "jdbc:mysql://localhost:3306/mutel?serverTimezone=UTC";
-	private static final String usuario = "root";
-	private static final String password = "root";
+	private static final String usuario = "huesped";
+	private static final String password = "SoyHuesped";
 	
 	public static String getClaveHabitacion(String numHabitacion) {
 		String ret = "";

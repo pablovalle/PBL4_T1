@@ -1,4 +1,4 @@
-DROP DATABASE Mutel;
+DROP DATABASE if exists Mutel;
 CREATE DATABASE if NOT EXISTS MUtel;
 
 USE MUtel;

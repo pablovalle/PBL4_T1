@@ -118,9 +118,7 @@ void readBuffer(uint8_t* msg){
 
 
 void ourUSART6Handler(){
-	
-	char c;
-		
+	char c;	
 	if (USART6->SR & USART_SR_RXNE){
 		c =  USART6->DR & 0xFF;
 		addToBuffer(0,c);

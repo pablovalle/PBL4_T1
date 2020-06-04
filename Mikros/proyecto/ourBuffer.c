@@ -9,110 +9,61 @@ typedef struct buffer_struct{
 }buffer_st;
 
 
-static buffer_st rxBuf = {0,0,};
-static buffer_st txBuf = {0,0,};
+volatile buffer_st rxBuf = {0,0,};
 
-
-void initBuffer(){
+void initBuffer(void){
 	rxBuf.head = 0;
 	rxBuf.tail = 0;
 	rxBuf.bufferFull = 0;
 	rxBuf.endCharReceived = 0;
-	
-	txBuf.head = 0;
-	txBuf.tail = 0;
-	txBuf.bufferFull = 0;
-	txBuf.endCharReceived = 0;
 }
 
-void clearBuffer(int tx){
-	buffer_st *p;
-	if(tx==1) p = &txBuf;
-	else p = &rxBuf;
-	
-	p->head = 0;
-	p->tail = 0;
-	p->bufferFull = 0;
-	p->endCharReceived = 0;
-		
+int isBufferFull(void){
+	return rxBuf.bufferFull;
 }
 
-int isBufferFull(int tx){
-	buffer_st *p;
-	if(tx==1) p = &txBuf;
-	else p = &rxBuf;
-	return p->bufferFull;
-}
-
-int isBufferEmpty(int tx){
+int isBufferEmpty(void){
 	int bufferEmpty = 0;
-	buffer_st *p;
-	if(tx==1) p = &txBuf;
-	else p = &rxBuf;
-	if (p->head == p->tail && p->bufferFull == 0) bufferEmpty = 1;	
+	if (rxBuf.head == rxBuf.tail && rxBuf.bufferFull == 0) bufferEmpty = 1;	
 	return bufferEmpty;
 }
 
-void addToBuffer(int tx, uint8_t c){
-	buffer_st *p;
-	if(tx==1) p = &txBuf;
-	else p = &rxBuf;
-	
-	if (isBufferFull(tx) == 1) return;
+void addToBuffer(uint8_t c){
+	if (isBufferFull() == 1) return;
 	else if (c == END_CHAR){
-		c = '\0';
-		p->endCharReceived = 1;
+		rxBuf.endCharReceived = 1;
 	}
-	p->buffer[p->head] = c;
-	p->head = p->head + 1;
-	if (p->head == p->tail)
-		p->bufferFull = 1;	
+	rxBuf.buffer[rxBuf.head] = c;
+	rxBuf.head++;
+	if (rxBuf.head == rxBuf.tail)
+		rxBuf.bufferFull = 1;	
 }
 
-void setEndCharReceived (int tx, uint32_t value){
-	buffer_st *p;
-	if(tx==1) p = &txBuf;
-	else p = &rxBuf;
-	p->endCharReceived = value;
+void setEndCharReceived (uint32_t value){
+	rxBuf.endCharReceived = value;
 }
 
-uint32_t getEndCharReceived(int tx){	
-	buffer_st *p;
-	if(tx==1) p = &txBuf;
-	else p = &rxBuf;
-	return p->endCharReceived;
+uint32_t getEndCharReceived(void){
+	return rxBuf.endCharReceived;
 }
 
-uint8_t readFromBuffer(int tx){
+uint8_t readFromBuffer(void){
 	uint8_t c;
-	buffer_st *p;
-	if(tx==1) p = &txBuf;
-	else p = &rxBuf;
-	if (isBufferEmpty(tx) == 1) return '\0';
-	c = p->buffer[p->tail];
-	p->tail = p->tail +1 ;
-	p->bufferFull = 0;
+
+	if (isBufferEmpty() == 1) return '\0';
+	c = rxBuf.buffer[rxBuf.tail];
+	rxBuf.tail++;
+	rxBuf.bufferFull = 0;
 	return c;
 }
 
-int getBufferHead(int tx){
-	buffer_st *p;
-	if(tx==1) p = &txBuf;
-	else p = &rxBuf;
-	return p->head;
+int getBufferHead(void){
+	return rxBuf.head;
 }
-int getBufferTail(int tx){
-	buffer_st *p;
-	if(tx==1) p = &txBuf;
-	else p = &rxBuf;
-	return p->tail;
+int getBufferTail(void){
+	return rxBuf.tail;
 }
 
-int getBufferSize(int tx){
-	buffer_st *p;
-	if(tx==1) p = &txBuf;
-	else p = &rxBuf;
-	return p->head - p->tail;
+int getBufferSize(void){
+	return rxBuf.head - rxBuf.tail;
 }
-
-
