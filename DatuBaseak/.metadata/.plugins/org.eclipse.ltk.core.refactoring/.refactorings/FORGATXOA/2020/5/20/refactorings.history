@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;principal.java&apos; to &apos;BarraT.java&apos;&#x0D;&#x0A;- Original project: &apos;FORGATXOA&apos;&#x0D;&#x0A;- Original element: &apos;principal.java&apos;&#x0D;&#x0A;- Renamed element: &apos;BarraT.java&apos;" description="Rename compilation unit &apos;principal.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;{principal.java" name="BarraT.java" references="false" stamp="1589559067586" version="1.0"/>
+</session>

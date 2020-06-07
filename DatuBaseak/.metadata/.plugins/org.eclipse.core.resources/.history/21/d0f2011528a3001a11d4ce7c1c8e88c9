@@ -1,0 +1,15 @@
+package Objetos;
+
+import Excepciones.ExcepcionCampos;
+import Excepciones.ExcepcionPassword;
+import Excepciones.ExcepcionUsername;
+
+public class Check {
+
+	public static void check(String password1, String password2, String username, String nombre, String apellidos,
+			String email)throws ExcepcionPassword,ExcepcionUsername, ExcepcionCampos {
+		validarCamposVacios(nombre, apellidos, username);
+		
+	}
+
+}
