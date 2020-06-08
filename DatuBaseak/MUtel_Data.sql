@@ -1979,30 +1979,30 @@ INSERT INTO habitacion VALUE(16311,1,3,'exterior','vacio',5061,'estandar');
 INSERT INTO habitacion VALUE(16312,1,1,'exterior','vacio',126,'estandar');
 
 /*HABITACION PRESIDENT WILSON*/
-INSERT INTO habitacion VALUE(101,2,3,'exterior','vacio',946,'luxury');
-INSERT INTO habitacion VALUE(102,2,2,'exterior','vacio',1072,'estandar');
-INSERT INTO habitacion VALUE(103,2,2,'exterior','vacio',462,'estandar');
-INSERT INTO habitacion VALUE(104,2,2,'exterior','vacio',292,'estandar');
-INSERT INTO habitacion VALUE(105,2,4,'exterior','vacio',772,'estandar');
+INSERT INTO habitacion VALUE(101,2,3,'exterior','hecho',946,'luxury');
+INSERT INTO habitacion VALUE(102,2,2,'exterior','para hacer',1072,'estandar');
+INSERT INTO habitacion VALUE(103,2,2,'exterior','para hacer',462,'estandar');
+INSERT INTO habitacion VALUE(104,2,2,'exterior','para hacer',292,'estandar');
+INSERT INTO habitacion VALUE(105,2,4,'exterior','hecho',772,'estandar');
 INSERT INTO habitacion VALUE(106,2,4,'exterior','vacio',208,'estandar');
 INSERT INTO habitacion VALUE(107,2,2,'exterior','vacio',889,'estandar');
-INSERT INTO habitacion VALUE(108,2,3,'exterior','vacio',129,'estandar');
+INSERT INTO habitacion VALUE(108,2,3,'exterior','para hacer',129,'estandar');
 INSERT INTO habitacion VALUE(109,2,3,'exterior','vacio',77,'estandar');
 INSERT INTO habitacion VALUE(110,2,1,'exterior','vacio',1196,'estandar');
-INSERT INTO habitacion VALUE(111,2,1,'exterior','vacio',89,'estandar');
+INSERT INTO habitacion VALUE(111,2,1,'exterior','hecho',89,'estandar');
 INSERT INTO habitacion VALUE(112,2,3,'exterior','vacio',483,'estandar');
-INSERT INTO habitacion VALUE(201,2,4,'exterior','vacio',2055,'luxury');
-INSERT INTO habitacion VALUE(202,2,3,'exterior','vacio',1672,'luxury');
+INSERT INTO habitacion VALUE(201,2,4,'exterior','hecho',2055,'luxury');
+INSERT INTO habitacion VALUE(202,2,3,'exterior','hecho',1672,'luxury');
 INSERT INTO habitacion VALUE(203,2,4,'exterior','vacio',2255,'luxury');
 INSERT INTO habitacion VALUE(204,2,4,'exterior','vacio',1729,'luxury');
-INSERT INTO habitacion VALUE(205,2,3,'exterior','vacio',257,'estandar');
-INSERT INTO habitacion VALUE(206,2,4,'exterior','vacio',749,'estandar');
-INSERT INTO habitacion VALUE(207,2,3,'exterior','vacio',969,'estandar');
-INSERT INTO habitacion VALUE(208,2,4,'exterior','vacio',1410,'luxury');
+INSERT INTO habitacion VALUE(205,2,3,'exterior','para hacer',257,'estandar');
+INSERT INTO habitacion VALUE(206,2,4,'exterior','hecho',749,'estandar');
+INSERT INTO habitacion VALUE(207,2,3,'exterior','para hacer',969,'estandar');
+INSERT INTO habitacion VALUE(208,2,4,'exterior','hecho',1410,'luxury');
 INSERT INTO habitacion VALUE(209,2,3,'exterior','vacio',532,'estandar');
 INSERT INTO habitacion VALUE(210,2,2,'exterior','vacio',282,'estandar');
-INSERT INTO habitacion VALUE(211,2,3,'exterior','vacio',2461,'luxury');
-INSERT INTO habitacion VALUE(212,2,3,'exterior','vacio',741,'estandar');
+INSERT INTO habitacion VALUE(211,2,3,'exterior','para hacer',2461,'luxury');
+INSERT INTO habitacion VALUE(212,2,3,'exterior','hecho',741,'estandar');
 INSERT INTO habitacion VALUE(301,2,3,'exterior','vacio',1164,'luxury');
 INSERT INTO habitacion VALUE(302,2,1,'exterior','vacio',525,'estandar');
 INSERT INTO habitacion VALUE(303,2,3,'exterior','vacio',1806,'luxury');
@@ -2085,6 +2085,20 @@ INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,prec
 INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-05-11","2020-05-14",0014,'irati_mutel',3,105,30);
 INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-05-1","2020-05-4",0015,'pablo_mutel',1,2401,2561);
 
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-06-9","2020-06-11",0015,'pablo_mutel',2,101,2561);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-06-9","2020-06-11",0015,'pablo_mutel',2,102,2561);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-06-9","2020-06-11",0015,'pablo_mutel',2,104,2561);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-06-9","2020-06-11",0015,'pablo_mutel',2,105,2561);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-06-9","2020-06-11",0015,'pablo_mutel',2,108,2561);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-06-9","2020-06-11",0015,'pablo_mutel',2,111,2561);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-06-9","2020-06-11",0015,'pablo_mutel',2,202,2561);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-06-9","2020-06-11",0015,'pablo_mutel',2,205,2561);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-06-9","2020-06-11",0015,'pablo_mutel',2,206,2561);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-06-9","2020-06-11",0015,'pablo_mutel',2,208,2561);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-06-9","2020-06-11",0015,'pablo_mutel',2,212,2561);
+INSERT INTO reserva (checkin, checkout,llave,username,idHotel,numHabitacion,precioActual) VALUE("2020-06-9","2020-06-11",0015,'pablo_mutel',2,201,2561);
+
+
 /*TRABAJADORES*/
 INSERT INTO trabajador VALUE(1,'dimitrix','dimitri','esnarov',2,'123456789aA');
 INSERT INTO trabajador VALUE(1,'abduliux','abdul','elyamahi',1,'123456789aA');
@@ -2095,3 +2109,10 @@ INSERT INTO tarea (idHotel,fecha,idEmpleado,numHabitacion,descripcion, estado) V
 INSERT INTO tarea (idHotel,fecha,idEmpleado,numHabitacion,descripcion, estado) VALUE(2,"2020-05-19",1,108,"Realizar mantenimiento del frigo",FALSE);
 INSERT INTO tarea (idHotel,fecha,idEmpleado,numHabitacion,descripcion, estado) VALUE(3,"2020-05-19",1,106,"Realizar mantenimiento de la cama",FALSE);
 INSERT INTO tarea (idHotel,fecha,idEmpleado,numHabitacion,descripcion, estado) VALUE(1,"2020-05-19",1,102,"Realizar mantenimiento del baño",FALSE);
+
+INSERT INTO tarea (idHotel,fecha,idEmpleado,numHabitacion,descripcion, estado) VALUE(2,"2020-05-19",1,102,"Limpiar habitacion",FALSE);
+INSERT INTO tarea (idHotel,fecha,idEmpleado,numHabitacion,descripcion, estado) VALUE(2,"2020-05-19",1,103,"Limpiar habitacion",FALSE);
+INSERT INTO tarea (idHotel,fecha,idEmpleado,numHabitacion,descripcion, estado) VALUE(2,"2020-05-19",1,104,"Limpiar habitacion",FALSE);
+INSERT INTO tarea (idHotel,fecha,idEmpleado,numHabitacion,descripcion, estado) VALUE(2,"2020-05-19",1,207,"Limpiar habitacion",FALSE);
+INSERT INTO tarea (idHotel,fecha,idEmpleado,numHabitacion,descripcion, estado) VALUE(2,"2020-05-19",1,211,"Realizar mantenimiento del baño",FALSE);
+INSERT INTO tarea (idHotel,fecha,idEmpleado,numHabitacion,descripcion, estado) VALUE(2,"2020-05-19",1,205,"Realizar mantenimiento del baño",FALSE);

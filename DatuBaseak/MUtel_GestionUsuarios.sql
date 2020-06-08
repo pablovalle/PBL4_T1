@@ -21,4 +21,6 @@ GRANT EXECUTE ON PROCEDURE mutel.comprobarContraseñaWorker TO trabajador@'%' ID
 GRANT EXECUTE ON PROCEDURE mutel.getTrabajador TO trabajador@'%' IDENTIFIED BY 'SoyTrabajador';
 GRANT SELECT ON mysql.proc TO trabajador@'%' IDENTIFIED BY 'SoyTrabajador';
 
-
+GRANT SELECT ON mutel.reserva TO huesped@'%' IDENTIFIED BY 'SoyHuesped';
+GRANT SELECT ON mutel.hotel TO huesped@'%' IDENTIFIED BY 'SoyHuesped';
+GRANT UPDATE ON mutel.habitacion TO huesped@'%' IDENTIFIED BY 'SoyHuesped';
