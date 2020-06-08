@@ -43,14 +43,14 @@ IC_B0=[B_0_hipotetico-(tinv(1-0.05/2,size(X,2)-2)*std(X)*sqrt((1/size(X,2))+((me
 
 %%%%% INTERVALO DE ESTIMACIÓN APRA LA RESPUESTA MEDIA XP = 60 %%%%%%%%%%
 
-xp=60
-u=B_0_hipotetico+(xp*B_1_hipotetico)
-ICMedia=[u-t*S*sqrt((1/length(X))+(((xp-mean(X)).^2)/SSxx));u+t*S*sqrt((1/length(X))+(((xp-mean(X)).^2)/SSxx))]
+xp=60;
+u=B_0_hipotetico+(xp*B_1_hipotetico);
+ICMedia=[u-t*S*sqrt((1/length(X))+(((xp-mean(X)).^2)/SSxx));u+t*S*sqrt((1/length(X))+(((xp-mean(X)).^2)/SSxx))];
 
 %%%%%% INTERVALO DE PREDICCIÓN PARA UNA OBSERVACIÓN FUTURA %%%%%%
 
 %intervalo de predicción para una observación futura
-ICPredict=[u-t*S*sqrt(1+(1/length(X))+(((xp-mean(X)).^2)/SSxx));u+t*S*sqrt(1+(1/length(X))+(((xp-mean(X)).^2)/SSxx))]
+ICPredict=[u-t*S*sqrt(1+(1/length(X))+(((xp-mean(X)).^2)/SSxx));u+t*S*sqrt(1+(1/length(X))+(((xp-mean(X)).^2)/SSxx))];
 
 
 %%%%%%%%%%  COEFICIENTE DE RELACIÓN  %%%%%%%%%%%%%
