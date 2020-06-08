@@ -7,6 +7,7 @@ GRANT EXECUTE ON PROCEDURE mutel.getReservas TO  huesped@'%' IDENTIFIED BY 'SoyH
 GRANT EXECUTE ON PROCEDURE mutel.cancelarReserva TO  huesped@'%' IDENTIFIED BY 'SoyHuesped';
 GRANT EXECUTE ON PROCEDURE mutel.filtrarHabitaciones TO  huesped@'%' IDENTIFIED BY 'SoyHuesped';
 GRANT EXECUTE ON PROCEDURE mutel.getCiudades TO  huesped@'%' IDENTIFIED BY 'SoyHuesped';
+GRANT EXECUTE ON PROCEDURE mutel.crearTarea TO  huesped@'%' IDENTIFIED BY 'SoyHuesped';
 GRANT SELECT ON mysql.proc TO  huesped@'%' IDENTIFIED BY 'SoyHuesped';
 
 /*Trabajador*/

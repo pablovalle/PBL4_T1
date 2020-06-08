@@ -107,6 +107,13 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
+CREATE PROCEDURE crearTarea(IN hotelId SMALLINT UNSIGNED, IN fechaIn DATE, IN empleadoId SMALLINT UNSIGNED, IN habitacionId SMALLINT UNSIGNED, IN descripcionIn VARCHAR(128), IN estadoIn TINYINT)
+BEGIN
+INSERT INTO tarea (idHotel,fecha,idEmpleado,numHabitacion,descripcion, estado) VALUE(hotelId,fechaIn,empleadoId,habitacionId,descripcionIn,estadoIn);
+END$$
+DELIMITER ;
+
+DELIMITER $$
 CREATE PROCEDURE getTareas(IN trabajadorid SMALLINT UNSIGNED, IN hotelid SMALLINT UNSIGNED)
 BEGIN
   SELECT idTarea, fecha, numHabitacion, descripcion FROM tarea
