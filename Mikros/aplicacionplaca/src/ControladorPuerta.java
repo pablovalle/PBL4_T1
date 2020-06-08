@@ -52,7 +52,7 @@ public class ControladorPuerta implements ActionListener, PropertyChangeListener
 	public void cambiarEstadoHabitacion(String cambioEstado) {
 		String ret = "";
 		ret = DAOHabitacion.setEstadoHabitacion(vista.getNumHabitacion(), vista.getNumHotel(),cambioEstado);
-		DAOTarea.crearTarea(vista.getNumHotel(), vista.getNumHabitacion(), 1);
+		if (cambioEstado.contentEquals("para hacer")) DAOTarea.crearTarea(vista.getNumHotel(), vista.getNumHabitacion(), 1);
 		vista.escribirLinea("Resultado del cambio: " + ret);
 	}
 

@@ -159,7 +159,8 @@ public class Comunicador implements SerialPortEventListener {
 		
 		try {
 			output.write(string.getBytes());
-			texto = "Envío correcto: " + string;
+			texto = "";
+			//texto = "Envío correcto: " + string;
 			output.flush();
 		} catch (IOException e) {
 			texto = "No se ha enviado correctamente. ( " + e.toString() + ")";

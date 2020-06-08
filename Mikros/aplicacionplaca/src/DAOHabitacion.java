@@ -14,7 +14,7 @@ public class DAOHabitacion {
 		
 		try {
 			Statement stm = DriverManager.getConnection(url, usuario, password).createStatement();
-			String strSQL = "SELECT r.llave FROM reserva r WHERE r.numHabitacion = " + numHabitacion;			
+			String strSQL = "SELECT r.llave FROM reserva r WHERE r.numHabitacion = " + numHabitacion + " AND CURDATE() BETWEEN r.checkin AND r.checkout";			
 			ResultSet rs = stm.executeQuery(strSQL);
 			while (rs.next())  key = rs.getShort("llave");		
 			ret = String.format("%04d", key);
