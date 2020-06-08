@@ -45,6 +45,7 @@ IC_B0=[B_0_hipotetico-(tinv(1-0.05/2,size(X,2)-2)*std(X)*sqrt((1/size(X,2))+((me
 
 xp=60;
 u=B_0_hipotetico+(xp*B_1_hipotetico);
+t=tinv(1-(0.05/2),length(X)-2);
 ICMedia=[u-t*S*sqrt((1/length(X))+(((xp-mean(X)).^2)/SSxx));u+t*S*sqrt((1/length(X))+(((xp-mean(X)).^2)/SSxx))];
 
 %%%%%% INTERVALO DE PREDICCIÓN PARA UNA OBSERVACIÓN FUTURA %%%%%%
@@ -73,6 +74,7 @@ T_absoluto_r=tinv(1-0.05/2,size(X,2)-2);
 %R=1-(SSE/SSyy)=r^2
 R=r^2;
 
+S_r=S^2
 %%%%%%%%%%%%%%%%%    PLOT    %%%%%%%%%%%%%%%%%%%%%%%
 [fx,fy]=conseguirPuntosFuncion(B_1_hipotetico,B_0_hipotetico, min(X)-5 , max(X)+5);
 plot(X,Y,'s','MarkerSize',9,'MarkerEdgeColor','b','MarkerFaceColor',[0.5,0.5,0.5])
