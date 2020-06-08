@@ -41,6 +41,18 @@ T_absoluta_b=tinv(1-0.05/2,size(X,2)-2);
 IC_B1=[B_1_hipotetico-(tinv(1-0.05/2,size(X,2)-2)*(std(X)/sqrt(SSxx))),B_1_hipotetico+(tinv(1-0.05/2,size(X,2)-2)*(std(X)/sqrt(SSxx)))];
 IC_B0=[B_0_hipotetico-(tinv(1-0.05/2,size(X,2)-2)*std(X)*sqrt((1/size(X,2))+((mediaX^2)/SSxx))),B_0_hipotetico+(tinv(1-0.05/2,size(X,2)-2)*std(X)*sqrt((1/size(X,2))+((mediaX^2)/SSxx)))];
 
+%%%%% INTERVALO DE ESTIMACIÓN APRA LA RESPUESTA MEDIA XP = 60 %%%%%%%%%%
+
+xp=60
+u=B_0_hipotetico+(xp*B_1_hipotetico)
+ICMedia=[u-t*S*sqrt((1/length(X))+(((xp-mean(X)).^2)/SSxx));u+t*S*sqrt((1/length(X))+(((xp-mean(X)).^2)/SSxx))]
+
+%%%%%% INTERVALO DE PREDICCIÓN PARA UNA OBSERVACIÓN FUTURA %%%%%%
+
+%intervalo de predicción para una observación futura
+ICPredict=[u-t*S*sqrt(1+(1/length(X))+(((xp-mean(X)).^2)/SSxx));u+t*S*sqrt(1+(1/length(X))+(((xp-mean(X)).^2)/SSxx))]
+
+
 %%%%%%%%%%  COEFICIENTE DE RELACIÓN  %%%%%%%%%%%%%
 %r puede tomar valores -1<r<1 si es 0 significa que no hay relación, en
 %cambio si está cerca del -1 o 1 es que si hay fuerte relación.
@@ -71,3 +83,7 @@ ylim([min(fy) max(fy)])
 title('MUTel')
 xlabel('Número de habitaciones ocupadas al dia')
 ylabel('Ingresos diarios')
+
+
+
+
