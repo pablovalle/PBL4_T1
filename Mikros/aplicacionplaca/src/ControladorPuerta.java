@@ -36,7 +36,7 @@ public class ControladorPuerta implements ActionListener, PropertyChangeListener
 		else {
 			claveDB = DAOHabitacion.getClaveHabitacion(vista.getNumHabitacion());
 		}
-		vista.escribirLinea("Clave BBDD: " + claveDB);	
+		//vista.escribirLinea("Clave BBDD: " + claveDB);	
 		return claveIntro.contentEquals(claveDB);
 	}
 	
@@ -125,7 +125,7 @@ public class ControladorPuerta implements ActionListener, PropertyChangeListener
 			if(comprobarClave(clave)) { 
 				comunicador.enviarDatos(MENSAJE_CORRECTO);
 				vista.getTextArea().append("Entrada correcta. Pase.\n");
-				if(puertaRecepcion) {
+				if(!puertaRecepcion) {
 					cambiarEstadoHabitacion("hecho");
 				}
 			}

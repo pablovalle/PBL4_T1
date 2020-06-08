@@ -21,7 +21,7 @@ public class DAOHabitacion {
 		} catch (SQLException e) {
 			ret = "Error: " + e.toString();
 		}
-		
+		if (ret.contentEquals("-001")) ret = "No hay reservas para esa habitación hoy.";
 		return ret;
 	}
 	
