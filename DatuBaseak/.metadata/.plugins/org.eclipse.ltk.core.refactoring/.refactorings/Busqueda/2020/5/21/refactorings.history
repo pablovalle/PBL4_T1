@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename type &apos;DialogoReserva&apos; to &apos;DialogoMisReservas&apos;&#x0D;&#x0A;- Original project: &apos;Busqueda&apos;&#x0D;&#x0A;- Original element: &apos;DialogoReserva&apos;&#x0D;&#x0A;- Renamed element: &apos;DialogoMisReservas&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;DialogoReserva&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;{DialogoReserva.java[DialogoReserva" matchStrategy="1" name="DialogoMisReservas" qualified="false" references="true" similarDeclarations="false" stamp="1589814117318" textual="false" version="1.0"/>
-</session>
